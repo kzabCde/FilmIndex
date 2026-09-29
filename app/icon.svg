@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="FilmIndex">
+  <rect width="64" height="64" rx="12" fill="#111111"/>
+  <rect x="7" y="7" width="50" height="50" rx="7" fill="#F4F1EA"/>
+  <g fill="#111111">
+    <rect x="11" y="10" width="7" height="4" rx="1"/>
+    <rect x="23" y="10" width="7" height="4" rx="1"/>
+    <rect x="35" y="10" width="7" height="4" rx="1"/>
+    <rect x="47" y="10" width="6" height="4" rx="1"/>
+    <rect x="11" y="50" width="7" height="4" rx="1"/>
+    <rect x="23" y="50" width="7" height="4" rx="1"/>
+    <rect x="35" y="50" width="7" height="4" rx="1"/>
+    <rect x="47" y="50" width="6" height="4" rx="1"/>
+    <path d="M16 20h17v5H22v5h9v5h-9v10h-6V20Z"/>
+    <path d="M40 20h7v25h-7V20Z"/>
+  </g>
+</svg>
