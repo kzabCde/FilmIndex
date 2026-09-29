@@ -1,9 +1,28 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { techniques } from "@/lib/data";
+import { CatalogFilters } from "@/components/catalog-filters";
+import { techniques } from "@/lib/catalog";
+import { difficultyLabel, messages, parseLocale, pick, techniqueCategoryLabel, withLocale } from "@/lib/i18n";
 
 export const metadata: Metadata = { title: "Techniques", description: "Learn analog photography techniques, exposure, processing, and film handling." };
 
-export default function TechniquesPage() {
-  return <section className="shell listing-page"><header><p className="eyebrow">Knowledge Base</p><h1>Techniques</h1><p>Clear explanations for exposure, film handling, processing, and creative analog workflows.</p></header><div className="article-grid large">{techniques.map((item) => <Link key={item.slug} href={`/techniques/${item.slug}`}><span>{item.category}</span><h2>{item.name}</h2><p>{item.summary}</p><small>{item.minutes} min · {item.difficulty}</small></Link>)}</div></section>;
+const stringParam = (value: string | string[] | undefined) => typeof value === "string" ? value : "";
+
+export default async function TechniquesPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+  const params = await searchParams;
+  const locale = parseLocale(params.lang);
+  const copy = messages[locale];
+  const category = stringParam(params.category);
+  const difficulty = stringParam(params.difficulty);
+  const visible = techniques.filter((item) => (!category || item.category === category) && (!difficulty || item.difficulty === difficulty));
+  const categories = [...new Set(techniques.map((item) => item.category))].sort();
+  const difficulties = ["Beginner", "Intermediate", "Advanced"].filter((value) => techniques.some((item) => item.difficulty === value));
+  const filterCopy = locale === "th"
+    ? { category: "หมวดหมู่", difficulty: "ระดับ", apply: "ใช้ตัวกรอง", clear: "ล้างตัวกรอง", results: "บทความ" }
+    : { category: "Category", difficulty: "Difficulty", apply: "Apply filters", clear: "Clear filters", results: "articles" };
+
+  return <section className="shell listing-page"><header><p className="eyebrow">{copy.techniques.eyebrow}</p><h1>{copy.techniques.title}</h1><p>{copy.techniques.copy}</p></header><CatalogFilters action="/techniques" locale={locale} values={{ category, difficulty }} applyLabel={filterCopy.apply} clearLabel={filterCopy.clear} resultLabel={filterCopy.results} resultCount={visible.length} filters={[
+    { name: "category", label: filterCopy.category, options: categories.map((value) => ({ value, label: techniqueCategoryLabel(value, locale) })) },
+    { name: "difficulty", label: filterCopy.difficulty, options: difficulties.map((value) => ({ value, label: difficultyLabel(value, locale) })) },
+  ]} /><div className="article-grid large">{visible.map((item) => <Link key={item.slug} href={withLocale(`/techniques/${item.slug}`, locale)}><span>{techniqueCategoryLabel(item.category, locale)}</span><h2>{pick(locale, item.name, item.nameTh)}</h2><p>{pick(locale, item.summary, item.summaryTh)}</p><small>{item.minutes} {copy.misc.minutes} · {difficultyLabel(item.difficulty, locale)}</small></Link>)}</div>{!visible.length && <p className="empty-state">{locale === "th" ? "ไม่พบบทความที่ตรงกับตัวกรอง" : "No techniques match these filters."}</p>}</section>;
 }

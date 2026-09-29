@@ -18,6 +18,7 @@ export type Film = {
   process: string;
   formats: string[];
   description: string;
+  descriptionTh?: string;
   characteristics: Record<string, string>;
   uses: string[];
   image?: ImageCredit;
@@ -40,6 +41,7 @@ export type Camera = {
   weight: string;
   flashSync: string;
   description: string;
+  descriptionTh?: string;
   image: ImageCredit;
 };
 
@@ -47,11 +49,14 @@ export type Technique = {
   kind: "technique";
   slug: string;
   name: string;
+  nameTh?: string;
   category: string;
   difficulty: "Beginner" | "Intermediate" | "Advanced";
   minutes: number;
   summary: string;
+  summaryTh?: string;
   sections: { heading: string; body: string }[];
+  sectionsTh?: { heading: string; body: string }[];
   image?: ImageCredit;
 };
 

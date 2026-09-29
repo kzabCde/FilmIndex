@@ -1,6 +1,10 @@
 import { Suspense } from "react";
 import { CompareClient } from "@/components/compare-client";
+import { messages, parseLocale } from "@/lib/i18n";
 
-export default function ComparePage() {
-  return <section className="shell listing-page"><header><p className="eyebrow">Side by side</p><h1>Compare</h1><p>Compare 2–4 films or cameras. Factual data and editorial film characteristics remain visibly distinct.</p></header><Suspense fallback={<p>Loading comparison…</p>}><CompareClient /></Suspense></section>;
+export default async function ComparePage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+  const params = await searchParams;
+  const locale = parseLocale(params.lang);
+  const copy = messages[locale].compare;
+  return <section className="shell listing-page"><header><p className="eyebrow">{copy.eyebrow}</p><h1>{copy.title}</h1><p>{copy.copy}</p></header><Suspense fallback={<p>…</p>}><CompareClient /></Suspense></section>;
 }

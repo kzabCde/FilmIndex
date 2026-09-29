@@ -14,6 +14,7 @@ button,input { font:inherit; }
 .header-actions { display:flex; justify-content:flex-end; gap:8px; align-items:center; }
 .icon-button,.search-trigger,.compare-toolbar button,.picker-grid button { border:1px solid var(--line); background:transparent; color:var(--text); border-radius:999px; cursor:pointer; }
 .icon-button { width:40px; height:40px; }
+.lang-button { width:auto; min-width:44px; padding:0 10px; font-size:12px; font-weight:800; letter-spacing:.06em; }
 .search-trigger { display:flex; justify-content:space-between; align-items:center; width:min(680px,100%); padding:16px 18px; background:var(--panel); text-align:left; }
 .search-trigger.compact { width:190px; padding:10px 13px; font-size:13px; }
 kbd { color:var(--muted); font-size:11px; }
