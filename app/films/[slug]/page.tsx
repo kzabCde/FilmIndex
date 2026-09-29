@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { EntityCard } from "@/components/entity-card";
 import { FavoriteButton } from "@/components/favorite-button";
+import { FilmSampleGallery } from "@/components/film-sample-gallery";
 import { filmSamples } from "@/data/film-samples";
 import { films, findBySlug } from "@/lib/catalog";
 import { relatedFilms } from "@/lib/discovery";
@@ -26,13 +27,11 @@ export default async function FilmDetail({ params, searchParams }: { params: Pro
       eyebrow: "ภาพจากฟิล์มจริง",
       title: "ภาพตัวอย่างจากฟิล์มนี้",
       note: "ภาพตัวอย่างช่วยให้เห็นแนวทางของฟิล์ม แต่ผลลัพธ์จริงยังขึ้นอยู่กับกล้อง เลนส์ การวัดแสง การล้าง และการสแกน",
-      source: "เปิดแหล่งที่มาของภาพ ↗",
     }
     : {
       eyebrow: "Real film examples",
       title: "Sample photographs",
       note: "Samples illustrate the film in real use. Camera, lens, exposure, development, and scanning can all change the final rendering.",
-      source: "Open photograph source ↗",
     };
 
   return (
@@ -64,20 +63,7 @@ export default async function FilmDetail({ params, searchParams }: { params: Pro
         <p className="eyebrow">{sampleCopy.eyebrow}</p>
         <h2>{sampleCopy.title}</h2>
         <p className="notice">{sampleCopy.note}</p>
-        <div className={styles.grid}>
-          {samples.map((image) => (
-            <figure className={styles.card} key={image.sourceUrl}>
-              <a href={image.sourceUrl} target="_blank" rel="noreferrer">
-                <div className={styles.image}><Image src={image.url} alt={image.alt} fill sizes="(max-width: 720px) 100vw, 50vw" /></div>
-              </a>
-              <figcaption className={styles.caption}>
-                <strong>{image.alt}</strong>
-                <span>{image.creator} · {image.license}</span>
-                <a href={image.sourceUrl} target="_blank" rel="noreferrer">{sampleCopy.source}</a>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
+        <FilmSampleGallery images={samples} locale={locale} />
       </section>
 
       <section>
