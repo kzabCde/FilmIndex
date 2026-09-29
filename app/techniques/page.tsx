@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { techniques } from "@/lib/data";
+import { techniques } from "@/lib/catalog";
 import { difficultyLabel, messages, parseLocale, pick, techniqueCategoryLabel, withLocale } from "@/lib/i18n";
 
 export const metadata: Metadata = { title: "Techniques", description: "Learn analog photography techniques, exposure, processing, and film handling." };
