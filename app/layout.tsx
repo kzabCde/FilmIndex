@@ -3,10 +3,11 @@ import { Suspense } from "react";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import "./globals.css";
+import "./v02.css";
 
 export const metadata: Metadata = {
   title: { default: "FilmIndex — Analog Photography Database", template: "%s | FilmIndex" },
-  description: "Explore films, classic cameras, analog techniques, specifications, sources, and comparisons in one modern archive.",
+  description: "Explore films, classic cameras, analog techniques, discovery tools, specifications, sources, and comparisons in one modern archive.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
