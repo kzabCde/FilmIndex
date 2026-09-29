@@ -11,8 +11,9 @@ export const metadata: Metadata = {
   title: { default: "FilmIndex — Analog Photography Database", template: "%s | FilmIndex" },
   description: "Explore films, classic cameras, analog techniques, discovery tools, specifications, sources, and comparisons in one modern archive.",
   icons: {
-    icon: "/icon.svg",
-    shortcut: "/icon.svg",
+    icon: "/filmindex-icon.png",
+    shortcut: "/filmindex-icon.png",
+    apple: "/filmindex-icon.png",
   },
 };
 
