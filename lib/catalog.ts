@@ -9,6 +9,19 @@ export const cameras = [...baseCameras, ...extraCameras];
 export const techniques = [...baseTechniques, ...extraTechniques];
 export const allEntities: SearchEntity[] = [...films, ...cameras, ...techniques];
 
+export const catalogStats = {
+  films: films.length,
+  cameras: cameras.length,
+  techniques: techniques.length,
+} as const;
+
+const minimums = { films: 20, cameras: 20, techniques: 15 } as const;
+for (const key of Object.keys(minimums) as Array<keyof typeof minimums>) {
+  if (catalogStats[key] < minimums[key]) {
+    throw new Error(`FilmIndex catalog regression: ${key} has ${catalogStats[key]} entries; v0.1.0 requires at least ${minimums[key]}.`);
+  }
+}
+
 export function findBySlug<T extends { slug: string }>(items: T[], slug: string) {
   return items.find((item) => item.slug === slug);
 }
