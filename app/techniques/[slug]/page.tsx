@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { findBySlug, techniques } from "@/lib/data";
+import { findBySlug, techniques } from "@/lib/catalog";
 import { difficultyLabel, messages, parseLocale, pick, techniqueCategoryLabel, withLocale } from "@/lib/i18n";
 
 export function generateStaticParams() { return techniques.map(({ slug }) => ({ slug })); }
