@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Locale } from "@/lib/i18n";
 import { withLocale } from "@/lib/i18n";
+import styles from "./catalog-filters.module.css";
 
 type FilterOption = { value: string; label: string };
 type FilterDefinition = { name: string; label: string; options: FilterOption[] };
@@ -25,8 +26,8 @@ export function CatalogFilters({
   resultCount: number;
 }) {
   return (
-    <div className="catalog-filter-panel">
-      <form method="get" action={action} className="catalog-filter-form">
+    <div className={styles.panel}>
+      <form method="get" action={action} className={styles.form}>
         <input type="hidden" name="lang" value={locale} />
         {filters.map((filter) => (
           <label key={filter.name}>
@@ -37,12 +38,12 @@ export function CatalogFilters({
             </select>
           </label>
         ))}
-        <div className="catalog-filter-actions">
+        <div className={styles.actions}>
           <button type="submit">{applyLabel}</button>
           <Link href={withLocale(action, locale)}>{clearLabel}</Link>
         </div>
       </form>
-      <p className="catalog-result-count"><strong>{resultCount}</strong> {resultLabel}</p>
+      <p className={styles.count}><strong>{resultCount}</strong> {resultLabel}</p>
     </div>
   );
 }
