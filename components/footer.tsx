@@ -18,6 +18,8 @@ export function Footer() {
       <Link href={withLocale("/compare", locale)}>{copy.nav.compare}</Link>
       <Link href={withLocale("/sources", locale)}>{copy.nav.sources}</Link>
     </div>
-    <p className="footer-note">{copy.footer.note}</p>
+    <p className="footer-note">
+      {copy.footer.note} · <a href="https://nowheredev.vercel.app/" target="_blank" rel="noreferrer">by NowhereDev ↗</a>
+    </p>
   </footer>;
 }
