@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { cameras, findBySlug } from "@/lib/data";
+import { cameras, findBySlug } from "@/lib/catalog";
 import { cameraTypeLabel, messages, parseLocale, pick, withLocale } from "@/lib/i18n";
 
 export function generateStaticParams() { return cameras.map(({ slug }) => ({ slug })); }
