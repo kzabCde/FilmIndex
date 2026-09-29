@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { EntityCard } from "@/components/entity-card";
 import { GlobalSearch } from "@/components/search";
-import { cameras, films, techniques } from "@/lib/data";
+import { cameras, films, techniques } from "@/lib/catalog";
 import { difficultyLabel, messages, parseLocale, pick, techniqueCategoryLabel, withLocale } from "@/lib/i18n";
 
 export default async function Home({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
@@ -30,7 +30,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<Rec
 
       <section className="shell section-block">
         <div className="section-heading"><div><p className="eyebrow">{copy.home.knowledge}</p><h2>{copy.home.learn}</h2></div><Link href={withLocale("/techniques", locale)}>{copy.home.viewAll}</Link></div>
-        <div className="article-grid">{techniques.map((item) => <Link key={item.slug} href={withLocale(`/techniques/${item.slug}`, locale)}><span>{techniqueCategoryLabel(item.category, locale)}</span><h3>{pick(locale, item.name, item.nameTh)}</h3><p>{pick(locale, item.summary, item.summaryTh)}</p><small>{item.minutes} {copy.misc.minutes} · {difficultyLabel(item.difficulty, locale)}</small></Link>)}</div>
+        <div className="article-grid">{techniques.slice(0, 8).map((item) => <Link key={item.slug} href={withLocale(`/techniques/${item.slug}`, locale)}><span>{techniqueCategoryLabel(item.category, locale)}</span><h3>{pick(locale, item.name, item.nameTh)}</h3><p>{pick(locale, item.summary, item.summaryTh)}</p><small>{item.minutes} {copy.misc.minutes} · {difficultyLabel(item.difficulty, locale)}</small></Link>)}</div>
       </section>
     </>
   );
