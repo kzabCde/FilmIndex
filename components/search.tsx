@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { allEntities } from "@/lib/data";
+import { allEntities } from "@/lib/catalog";
 import { cameraTypeLabel, filmTypeLabel, messages, parseLocale, pick, techniqueCategoryLabel, withLocale } from "@/lib/i18n";
 
 const routeFor = (kind: string, slug: string) => kind === "film" ? `/films/${slug}` : kind === "camera" ? `/cameras/${slug}` : `/techniques/${slug}`;
@@ -31,15 +31,15 @@ export function GlobalSearch({ compact = false }: { compact?: boolean }) {
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return allEntities.slice(0, 8);
+    if (!q) return allEntities.slice(0, 10);
     return allEntities.filter((item) => {
       const haystack = item.kind === "film"
-        ? `${item.name} ${item.brand} ${item.filmType} ${item.process} ${item.descriptionTh ?? ""}`
+        ? `${item.name} ${item.brand} ${item.filmType} ${item.process} ${item.formats.join(" ")} ${item.description} ${item.descriptionTh ?? ""} ${item.uses.join(" ")}`
         : item.kind === "camera"
-          ? `${item.name} ${item.brand} ${item.cameraType} ${item.lensMount} ${item.descriptionTh ?? ""}`
+          ? `${item.name} ${item.brand} ${item.cameraType} ${item.filmFormat} ${item.lensMount} ${item.exposureModes.join(" ")} ${item.description} ${item.descriptionTh ?? ""}`
           : `${item.name} ${item.nameTh ?? ""} ${item.category} ${item.summary} ${item.summaryTh ?? ""}`;
       return haystack.toLowerCase().includes(q);
-    }).slice(0, 10);
+    }).slice(0, 12);
   }, [query]);
 
   return (
