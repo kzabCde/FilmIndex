@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Suspense } from "react";
 import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -12,13 +13,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <Header />
+        <Suspense fallback={<header className="site-header"><strong className="wordmark">FILMINDEX</strong></header>}><Header /></Suspense>
         <main>{children}</main>
-        <footer>
-          <div><strong>FILMINDEX</strong><p>Explore analog photography.</p></div>
-          <div><Link href="/films">Films</Link><Link href="/cameras">Cameras</Link><Link href="/techniques">Techniques</Link><Link href="/compare">Compare</Link><Link href="/sources">Sources</Link></div>
-          <p className="footer-note">FilmIndex is an independent analog photography reference project. Manufacturer names and trademarks belong to their respective owners.</p>
-        </footer>
+        <Suspense fallback={null}><Footer /></Suspense>
       </body>
     </html>
   );
