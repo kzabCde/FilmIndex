@@ -49,7 +49,10 @@ export function Header() {
 
   return (
     <header className="site-header">
-      <Link className="wordmark" href={withLocale("/", locale)}>FILMINDEX</Link>
+      <Link className="wordmark" href={withLocale("/", locale)} aria-label="FilmIndex home">
+        <span className="brand-mark" aria-hidden="true">FI</span>
+        <span>FILMINDEX</span>
+      </Link>
       <nav aria-label="Primary navigation">
         <Link href={withLocale("/films", locale)}>{copy.nav.films}</Link>
         <Link href={withLocale("/cameras", locale)}>{copy.nav.cameras}</Link>
