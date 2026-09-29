@@ -13,7 +13,7 @@ FilmIndex is a modern analog photography knowledge database for films, cameras, 
 - Multi-dimensional catalog filters
 - Real sample photographs for every film stock
 
-The v0.1.0 catalog ships with at least 20 films, 20 cameras, and 15 techniques. A build-time guard prevents the catalog from dropping below these minimums and also requires every film stock to have at least one real sample photograph.
+The v0.1.0 catalog ships with at least 20 films, 20 cameras, and 15 techniques. A build-time guard prevents the catalog from dropping below these minimums and also requires every film stock to have at least one sample photograph record.
 
 The app uses authentic external photography with explicit provenance and attribution metadata. Subjective film characteristics are labeled as editorial guidance and kept separate from factual specifications.
 
@@ -30,7 +30,7 @@ Open `http://localhost:3000`.
 
 FilmIndex is intentionally local-first and does not use a hosted database, CMS, authentication service, or runtime catalog API. Films, cameras, techniques, source metadata, translations, and sample-photo records are version-controlled with the application and bundled into the build.
 
-The initial catalog remains in `lib/data.ts`; expanded v0.1.0 records live in `data/films-extra.ts`, `data/cameras-extra.ts`, and `data/techniques-extra.ts`. Real film sample photographs and their attribution metadata live in `data/film-samples.ts`. `lib/catalog.ts` combines these modules into the application-facing catalog.
+The initial catalog remains in `lib/data.ts`; expanded v0.1.0 records live in `data/films-extra.ts`, `data/cameras-extra.ts`, and `data/techniques-extra.ts`. Film sample photographs and their attribution metadata live in `data/film-samples.ts`. `lib/catalog.ts` combines these modules into the application-facing catalog.
 
 Search, filters, detail pages, related content, and compare read from the bundled catalog. `localStorage` is reserved for local preferences such as theme, language, recent searches, recently viewed entries, and compare state.
 
@@ -46,7 +46,7 @@ Film catalog filters can be combined by brand, film type, ISO range, format, and
 
 ## Film sample photographs
 
-Every film detail page includes at least one real photograph made on that film stock where a verifiable source is available. These images are displayed separately from packaging/product imagery because development, exposure, lens choice, scanning, and post-processing can affect the final look.
+Every film detail page includes at least one sourced sample photograph associated with that film stock. These images are displayed separately from packaging/product imagery because development, exposure, lens choice, scanning, and post-processing can affect the final look.
 
 Sample records include source URL, creator, license information when confirmed, attribution requirement, and alt text. `/sources` includes both catalog imagery and film sample photography.
 
