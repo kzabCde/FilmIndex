@@ -9,44 +9,9 @@ FilmIndex is a modern analog photography knowledge database for films, cameras, 
 - Techniques
 - Global Search
 - Compare
+- English / Thai i18n
 
-The app uses authentic photography with explicit provenance and attribution metadata. Subjective film characteristics are labeled as editorial guidance and kept separate from factual specifications.
-
-## Local-first data architecture
-
-FilmIndex does **not** use an online database, CMS, authentication service, or runtime content API for its catalog.
-
-All FilmIndex knowledge data is version-controlled with the application and shipped as part of the website build. The current source of truth is the typed dataset in `lib/data.ts` together with the TypeScript contracts in `types/index.ts`.
-
-This includes:
-
-- film specifications and editorial characteristics
-- camera specifications
-- technique articles
-- source/provenance metadata
-- image attribution metadata
-- search and compare records
-
-Pages, filters, search, related-content lookup, and comparison operate directly on this bundled dataset. Updates are made through normal Git commits and reviewed through pull requests, so every content change has version history.
-
-Future dataset growth should remain file-based. If the catalog becomes large, split it into domain modules such as `data/films.ts`, `data/cameras.ts`, `data/techniques.ts`, and `data/sources.ts` or generated static JSON. Do not introduce Supabase or another hosted database unless the product direction is explicitly changed later.
-
-## Images
-
-Real photographs may be referenced from external archival/manufacturer sources when their usage terms allow it. Every image record must store its source page, creator when known, license/status, attribution requirement, and alt text.
-
-Where redistribution is permitted and repository size remains reasonable, images may instead be stored under `public/` so they ship with the site. Do not copy or self-host an image unless its license allows redistribution.
-
-## Local user state
-
-Browser storage may be used only for user-side preferences such as:
-
-- theme
-- recent searches
-- recently viewed entries
-- compare selections
-
-No account or server-side persistence is required.
+The app uses authentic external photography with explicit provenance and attribution metadata. Subjective film characteristics are labeled as editorial guidance and kept separate from factual specifications.
 
 ## Local development
 
@@ -57,6 +22,20 @@ npm run dev
 
 Open `http://localhost:3000`.
 
+## Data architecture
+
+FilmIndex is intentionally local-first and does not use a hosted database, CMS, authentication service, or runtime catalog API. Films, cameras, techniques, source metadata, and translations are version-controlled with the application and bundled into the build.
+
+`lib/data.ts` and the TypeScript contracts in `types/` are the current source of truth. As the catalog grows, data can be split into `data/films.ts`, `data/cameras.ts`, `data/techniques.ts`, and `data/sources.ts` or generated static JSON without changing the local-first model.
+
+Search, filters, detail pages, related content, and compare read from the bundled catalog. `localStorage` is reserved for local preferences such as theme, language, recent searches, recently viewed entries, and compare state.
+
+## Internationalization
+
+English is the default language. Thai can be selected from the header. Language state is represented in the URL with `?lang=en|th` so links remain shareable, while the most recent preference is also remembered locally in the browser.
+
+Translations are bundled with the site. Film and camera model names remain in their original names, while navigation, descriptions, techniques, labels, comparison fields, and editorial terminology can be localized.
+
 ## Image policy
 
-Every external image record stores its source page, creator, license/status, attribution requirement, and alt text. Never fabricate attribution and do not add imagery with unclear provenance as if it were freely licensed.
+Every external image record stores its source page, creator, license, attribution requirement, and alt text. Do not add images with unclear provenance. Images may remain externally referenced when their source permits display; self-host images only when redistribution rights allow it.
