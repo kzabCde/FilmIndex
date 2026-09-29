@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { messages, parseLocale, withLocale } from "@/lib/i18n";
+import { BrandIcon } from "./brand-icon";
 import { GlobalSearch } from "./search";
 
 export function Header() {
@@ -50,7 +51,7 @@ export function Header() {
   return (
     <header className="site-header">
       <Link className="wordmark" href={withLocale("/", locale)} aria-label="FilmIndex home">
-        <span className="brand-mark" aria-hidden="true">FI</span>
+        <BrandIcon />
         <span>FILMINDEX</span>
       </Link>
       <nav aria-label="Primary navigation">
