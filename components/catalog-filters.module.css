@@ -1,0 +1,86 @@
+.panel {
+  margin: 0 0 38px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+
+.form label {
+  min-width: 0;
+  display: grid;
+  gap: 7px;
+}
+
+.form label > span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.form select {
+  min-width: 0;
+  width: 100%;
+  padding: 11px 34px 11px 11px;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.actions button,
+.actions a {
+  padding: 10px 13px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.actions button {
+  background: var(--invert);
+  color: var(--invert-text);
+  border-color: var(--invert);
+}
+
+.count {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.count strong {
+  color: var(--text);
+}
+
+@media (max-width: 1000px) {
+  .form { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 680px) {
+  .panel { padding: 12px; }
+  .form { grid-template-columns: 1fr 1fr; }
+  .actions { grid-column: 1 / -1; }
+}
+
+@media (max-width: 460px) {
+  .form { grid-template-columns: 1fr; }
+  .actions { grid-column: auto; }
+}
