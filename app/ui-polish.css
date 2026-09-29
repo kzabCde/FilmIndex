@@ -81,9 +81,8 @@ dt {
   height: 32px;
   flex: 0 0 32px;
   display: block;
-  color: var(--invert);
-  --brand-paper: var(--invert-text);
-  filter: drop-shadow(0 1px 0 color-mix(in srgb, var(--line) 60%, transparent));
+  object-fit: contain;
+  filter: none;
 }
 
 /* Thai glyphs need more vertical room for marks above/below the base characters. */
