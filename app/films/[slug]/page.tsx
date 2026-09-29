@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { filmSamples } from "@/data/film-samples";
 import { films, findBySlug } from "@/lib/catalog";
 import { characteristicKeyLabel, characteristicValueLabel, filmTypeLabel, messages, parseLocale, pick, useLabel, withLocale } from "@/lib/i18n";
+import styles from "./film-samples.module.css";
 
 export function generateStaticParams() { return films.map(({ slug }) => ({ slug })); }
 
@@ -54,17 +55,17 @@ export default async function FilmDetail({ params, searchParams }: { params: Pro
         <div className="tag-row">{film.uses.map((use) => <span key={use}>{useLabel(use, locale)}</span>)}</div>
       </section>
 
-      <section className="film-samples-section">
+      <section className={styles.section}>
         <p className="eyebrow">{sampleCopy.eyebrow}</p>
         <h2>{sampleCopy.title}</h2>
         <p className="notice">{sampleCopy.note}</p>
-        <div className="film-sample-grid">
+        <div className={styles.grid}>
           {samples.map((image) => (
-            <figure className="film-sample-card" key={image.sourceUrl}>
+            <figure className={styles.card} key={image.sourceUrl}>
               <a href={image.sourceUrl} target="_blank" rel="noreferrer">
-                <div className="film-sample-image"><Image src={image.url} alt={image.alt} fill sizes="(max-width: 720px) 100vw, 50vw" /></div>
+                <div className={styles.image}><Image src={image.url} alt={image.alt} fill sizes="(max-width: 720px) 100vw, 50vw" /></div>
               </a>
-              <figcaption>
+              <figcaption className={styles.caption}>
                 <strong>{image.alt}</strong>
                 <span>{image.creator} · {image.license}</span>
                 <a href={image.sourceUrl} target="_blank" rel="noreferrer">{sampleCopy.source}</a>
