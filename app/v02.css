@@ -1,0 +1,36 @@
+select { font:inherit; color:var(--text); background:var(--bg); }
+.shelf-link { display:grid; place-items:center; font-size:20px; }
+.favorite-button { margin-top:20px; border:1px solid var(--line); background:transparent; color:var(--text); border-radius:999px; padding:10px 14px; cursor:pointer; }
+.favorite-button.active { background:var(--invert); color:var(--invert-text); }
+.discovery-form { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; padding:20px; border:1px solid var(--line); background:var(--panel); margin-bottom:54px; }
+.discovery-form label,.tool-controls label { display:grid; gap:7px; }
+.discovery-form label>span,.tool-controls label>span { font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); font-weight:700; }
+.discovery-form select,.tool-controls select,.tool-controls input { min-width:0; width:100%; border:1px solid var(--line); background:var(--bg); color:var(--text); padding:11px 12px; border-radius:8px; }
+.discovery-actions { grid-column:1/-1; display:flex; align-items:center; gap:10px; margin-top:4px; }
+.discovery-actions button,.discovery-actions a { border:1px solid var(--line); background:transparent; color:var(--text); border-radius:999px; padding:10px 15px; cursor:pointer; }
+.discovery-actions button { background:var(--invert); color:var(--invert-text); }
+.finder-results { margin-top:54px; }
+.finder-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; }
+.finder-match { min-width:0; }
+.match-reasons { display:flex; flex-wrap:wrap; gap:6px; border-top:1px solid var(--line); padding-top:10px; }
+.match-reasons strong,.match-reasons span { font-size:11px; border:1px solid var(--line); border-radius:999px; padding:5px 8px; }
+.match-reasons strong { background:var(--invert); color:var(--invert-text); }
+.tools-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+.tool-card { border:1px solid var(--line); background:var(--panel); padding:28px; }
+.tool-card h2 { font-size:clamp(28px,4vw,46px); }
+.tool-card>p:not(.eyebrow):not(.micro) { color:var(--muted); line-height:1.6; }
+.tool-controls { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:26px 0 18px; }
+.tool-card:nth-child(2) .tool-controls { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.tool-result { border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:18px 0; display:flex; justify-content:space-between; gap:20px; align-items:baseline; margin-bottom:14px; }
+.tool-result span { color:var(--muted); font-size:12px; }
+.tool-result strong { font-size:30px; }
+.compact-tool { grid-column:1/-1; }
+.recent-searches { display:flex; align-items:center; gap:7px; flex-wrap:wrap; padding:10px 14px; border-bottom:1px solid var(--line); }
+.recent-searches>span { color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
+.recent-searches button { border:1px solid var(--line); background:transparent; color:var(--text); border-radius:999px; padding:5px 9px; cursor:pointer; font-size:12px; }
+.search-group-title { margin:8px 12px 4px; color:var(--muted); font-size:10px; text-transform:uppercase; letter-spacing:.12em; font-weight:800; }
+.search-results a.active { background:var(--panel); outline:1px solid var(--line); }
+.search-hints { display:flex; justify-content:flex-end; gap:14px; padding:9px 14px; border-top:1px solid var(--line); color:var(--muted); font-size:10px; }
+@media (max-width:1100px) { .site-header nav { gap:12px; font-size:12px; } .search-trigger.compact { width:140px; } }
+@media (max-width:900px) { .discovery-form { grid-template-columns:repeat(2,minmax(0,1fr)); } .finder-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .tools-grid { grid-template-columns:1fr; } .compact-tool { grid-column:auto; } }
+@media (max-width:600px) { .discovery-form,.finder-grid,.tool-controls,.tool-card:nth-child(2) .tool-controls { grid-template-columns:1fr; } .tool-card { padding:20px; } .tool-result { align-items:flex-start; flex-direction:column; gap:6px; } .search-hints { justify-content:flex-start; overflow-x:auto; } .shelf-link { width:40px; } }
