@@ -77,18 +77,13 @@ dt {
 }
 
 .brand-mark {
-  width: 30px;
-  height: 30px;
-  flex: 0 0 30px;
-  display: grid;
-  place-items: center;
-  border-radius: 7px;
-  background: var(--invert);
-  color: var(--invert-text);
-  font-size: 9px;
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--line) 70%, transparent);
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  display: block;
+  color: var(--invert);
+  --brand-paper: var(--invert-text);
+  filter: drop-shadow(0 1px 0 color-mix(in srgb, var(--line) 60%, transparent));
 }
 
 /* Thai glyphs need more vertical room for marks above/below the base characters. */
@@ -184,6 +179,12 @@ html:lang(th) .tool-card h2 {
   .article-grid h3,
   .tool-card h2 {
     line-height: 1.24;
+  }
+
+  .brand-mark {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
   }
 
   html:lang(th) h1,
