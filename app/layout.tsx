@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { BrandIcon } from "@/components/brand-icon";
 import "./globals.css";
 import "./v02.css";
 import "./ui-polish.css";
@@ -19,7 +20,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <Suspense fallback={<header className="site-header"><strong className="wordmark"><span className="brand-mark" aria-hidden="true">FI</span><span>FILMINDEX</span></strong></header>}><Header /></Suspense>
+        <Suspense fallback={<header className="site-header"><strong className="wordmark"><BrandIcon /><span>FILMINDEX</span></strong></header>}><Header /></Suspense>
         <main>{children}</main>
         <Suspense fallback={null}><Footer /></Suspense>
       </body>
