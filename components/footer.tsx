@@ -14,6 +14,9 @@ export function Footer() {
     <div>
       <Link href={withLocale("/films", locale)}>{copy.nav.films}</Link>
       <Link href={withLocale("/cameras", locale)}>{copy.nav.cameras}</Link>
+      <Link href={withLocale("/finder", locale)}>{locale === "th" ? "ค้นหาฟิล์ม" : "Film Finder"}</Link>
+      <Link href={withLocale("/tools", locale)}>{locale === "th" ? "เครื่องมือ" : "Tools"}</Link>
+      <Link href={withLocale("/favorites", locale)}>{locale === "th" ? "ชั้นฟิล์ม" : "My Film Shelf"}</Link>
       <Link href={withLocale("/techniques", locale)}>{copy.nav.techniques}</Link>
       <Link href={withLocale("/compare", locale)}>{copy.nav.compare}</Link>
       <Link href={withLocale("/sources", locale)}>{copy.nav.sources}</Link>

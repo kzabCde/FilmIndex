@@ -8,6 +8,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<Rec
   const params = await searchParams;
   const locale = parseLocale(params.lang);
   const copy = messages[locale];
+  const isTh = locale === "th";
   return (
     <>
       <section className="hero shell">
@@ -15,7 +16,16 @@ export default async function Home({ searchParams }: { searchParams: Promise<Rec
         <h1>{copy.home.titleTop}<br />{copy.home.titleBottom}</h1>
         <p className="hero-copy">{copy.home.copy}</p>
         <GlobalSearch />
-        <div className="quick-links"><Link href={withLocale("/films", locale)}>{copy.nav.films}</Link><Link href={withLocale("/cameras", locale)}>{copy.nav.cameras}</Link><Link href={withLocale("/techniques", locale)}>{copy.nav.techniques}</Link><Link href={withLocale("/compare", locale)}>{copy.nav.compare}</Link></div>
+        <div className="quick-links"><Link href={withLocale("/finder", locale)}>{isTh ? "ค้นหาฟิล์ม" : "Film Finder"}</Link><Link href={withLocale("/tools", locale)}>{isTh ? "เครื่องมือช่วยถ่าย" : "Shooting Tools"}</Link><Link href={withLocale("/films", locale)}>{copy.nav.films}</Link><Link href={withLocale("/cameras", locale)}>{copy.nav.cameras}</Link><Link href={withLocale("/compare", locale)}>{copy.nav.compare}</Link></div>
+      </section>
+
+      <section className="shell section-block">
+        <div className="section-heading"><div><p className="eyebrow">{isTh ? "00 / Discovery" : "00 / Discovery"}</p><h2>{isTh ? "เลือกฟิล์มและออกไปถ่าย" : "Choose. Plan. Shoot."}</h2></div></div>
+        <div className="article-grid large">
+          <Link href={withLocale("/finder", locale)}><span>{isTh ? "แนะนำฟิล์ม" : "Guided discovery"}</span><h3>Film Finder</h3><p>{isTh ? "ตอบโจทย์สั้น ๆ เรื่องงานที่ถ่าย แสง ประเภทฟิล์ม และเกรน แล้วดูคำแนะนำพร้อมเหตุผล" : "Rank the local catalog by subject, light, film family, and grain preference with explainable matches."}</p><small>{isTh ? "เปิดเครื่องมือ →" : "Open finder →"}</small></Link>
+          <Link href={withLocale("/tools", locale)}><span>{isTh ? "ช่วยตั้งค่าแสง" : "Shooting utilities"}</span><h3>{isTh ? "เครื่องมือช่วยถ่าย" : "Shooting Tools"}</h3><p>{isTh ? "Sunny 16, Effective ISO สำหรับ Push/Pull และ reference ที่คำนวณใน browser" : "Sunny 16, effective ISO planning for push/pull, and practical references calculated in the browser."}</p><small>{isTh ? "เปิดเครื่องมือ →" : "Open tools →"}</small></Link>
+          <Link href={withLocale("/favorites", locale)}><span>{isTh ? "เก็บไว้ในเครื่อง" : "Local collection"}</span><h3>My Film Shelf</h3><p>{isTh ? "บันทึกฟิล์มที่สนใจไว้ใน browser เครื่องนี้โดยไม่ต้องสมัครสมาชิก" : "Save film stocks you want to revisit in this browser without creating an account."}</p><small>{isTh ? "เปิดชั้นฟิล์ม →" : "Open shelf →"}</small></Link>
+        </div>
       </section>
 
       <section className="shell section-block">

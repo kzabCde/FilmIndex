@@ -1,8 +1,20 @@
 # FilmIndex
 
-FilmIndex is a modern analog photography knowledge database for films, cameras, techniques, search, and comparison.
+FilmIndex is a modern analog photography knowledge database and local-first shooting companion for films, cameras, techniques, discovery, and comparison.
 
-## v0.1.0 scope
+## v0.2.0 scope
+
+v0.2.0 builds on the v0.1.0 reference catalog with discovery and shooting workflows:
+
+- Film Finder with explainable local ranking
+- Shooting Tools with Sunny 16 and Push/Pull effective ISO planning
+- Related Films on film detail pages
+- Advanced Global Search with multi-token matching, light typo tolerance, keyboard navigation, Thai/English aliases, and recent searches
+- My Film Shelf using browser `localStorage`
+- English / Thai UI preserved across the new tools
+- No hosted database, accounts, or runtime recommendation API
+
+## v0.1.0 foundation
 
 - Films
 - Cameras
@@ -28,17 +40,29 @@ Open `http://localhost:3000`.
 
 ## Data architecture
 
-FilmIndex is intentionally local-first and does not use a hosted database, CMS, authentication service, or runtime catalog API. Films, cameras, techniques, source metadata, translations, and sample-photo records are version-controlled with the application and bundled into the build.
+FilmIndex is intentionally local-first and does not use a hosted database, CMS, authentication service, or runtime catalog API. Films, cameras, techniques, source metadata, translations, sample-photo records, discovery scoring, and shooting calculators are version-controlled with the application and bundled into the build.
 
-The initial catalog remains in `lib/data.ts`; expanded v0.1.0 records live in `data/films-extra.ts`, `data/cameras-extra.ts`, and `data/techniques-extra.ts`. Film sample photographs and their attribution metadata live in `data/film-samples.ts`. `lib/catalog.ts` combines these modules into the application-facing catalog.
+The initial catalog remains in `lib/data.ts`; expanded records live in `data/films-extra.ts`, `data/cameras-extra.ts`, and `data/techniques-extra.ts`. Film sample photographs and their attribution metadata live in `data/film-samples.ts`. `lib/catalog.ts` combines these modules into the application-facing catalog. `lib/discovery.ts` contains deterministic Film Finder and Related Film scoring.
 
-Search, filters, detail pages, related content, and compare read from the bundled catalog. `localStorage` is reserved for local preferences such as theme, language, recent searches, recently viewed entries, and compare state.
+Search, filters, detail pages, Film Finder, related-film recommendations, and compare read from the bundled catalog. `localStorage` is reserved for local preferences and user-side state such as theme, language, recent searches, and My Film Shelf.
 
 ## Internationalization
 
 English is the default language. Thai can be selected from the header. Language state is represented in the URL with `?lang=en|th` so links remain shareable, while the most recent preference is also remembered locally in the browser.
 
-Translations are bundled with the site. Film and camera model names remain in their original names, while navigation, descriptions, techniques, labels, filters, comparison fields, and editorial terminology can be localized.
+Translations are bundled with the site. Film and camera model names remain in their original names, while navigation, descriptions, techniques, labels, filters, comparison fields, discovery tools, and editorial terminology can be localized.
+
+## Discovery and shooting tools
+
+`/finder` ranks the local film catalog using the user's selected subject/use, available light, film family, and grain preference. The UI displays the reasons behind each match instead of presenting recommendations as an opaque score.
+
+`/tools` contains browser-side shooting helpers. Sunny 16 provides an approximate daylight exposure starting point and the Push/Pull planner calculates the effective ISO to meter for. FilmIndex does not invent development times; users should follow the relevant film/developer datasheet or laboratory guidance.
+
+Each film detail page also shows locally calculated related films based on film family, ISO proximity, process, typical uses, and grain characteristics.
+
+## Local collection
+
+My Film Shelf stores selected film slugs only in the current browser's `localStorage`. It does not create an account or upload the collection anywhere.
 
 ## Filters
 

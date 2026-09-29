@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { messages, parseLocale, withLocale } from "@/lib/i18n";
+import { BrandIcon } from "./brand-icon";
 import { GlobalSearch } from "./search";
 
 export function Header() {
@@ -49,15 +50,21 @@ export function Header() {
 
   return (
     <header className="site-header">
-      <Link className="wordmark" href={withLocale("/", locale)}>FILMINDEX</Link>
+      <Link className="wordmark" href={withLocale("/", locale)} aria-label="FilmIndex home">
+        <BrandIcon />
+        <span>FILMINDEX</span>
+      </Link>
       <nav aria-label="Primary navigation">
         <Link href={withLocale("/films", locale)}>{copy.nav.films}</Link>
         <Link href={withLocale("/cameras", locale)}>{copy.nav.cameras}</Link>
+        <Link href={withLocale("/finder", locale)}>{locale === "th" ? "ค้นหาฟิล์ม" : "Finder"}</Link>
+        <Link href={withLocale("/tools", locale)}>{locale === "th" ? "เครื่องมือ" : "Tools"}</Link>
         <Link href={withLocale("/techniques", locale)}>{copy.nav.techniques}</Link>
         <Link href={withLocale("/compare", locale)}>{copy.nav.compare}</Link>
       </nav>
       <div className="header-actions">
         <GlobalSearch compact />
+        <Link className="icon-button shelf-link" href={withLocale("/favorites", locale)} aria-label={locale === "th" ? "ชั้นฟิล์มของฉัน" : "My Film Shelf"}>♡</Link>
         <button className="icon-button lang-button" onClick={toggleLocale} aria-label={locale === "en" ? "Switch to Thai" : "เปลี่ยนเป็นภาษาอังกฤษ"}>{locale === "en" ? "TH" : "EN"}</button>
         <button className="icon-button" onClick={toggleTheme} aria-label="Toggle color theme">{dark ? "☀" : "◐"}</button>
       </div>

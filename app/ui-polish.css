@@ -1,0 +1,290 @@
+/* v0.2.0 typography and brand polish.
+   Loaded after the base styles so we can fix wrapping without changing the visual system. */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+select,
+textarea {
+  line-height: 1.35;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+h1 {
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+h2 {
+  line-height: 1.07;
+  letter-spacing: -0.03em;
+}
+
+h3 {
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+p,
+li,
+dd,
+dt {
+  line-height: 1.6;
+}
+
+.hero h1 {
+  line-height: 0.98;
+}
+
+.detail-hero h1,
+.article-page h1 {
+  line-height: 1.03;
+}
+
+.entity-copy h3,
+.article-grid h2,
+.article-grid h3,
+.tool-card h2 {
+  line-height: 1.18;
+}
+
+.listing-page > header > p:not(.eyebrow),
+.hero-copy,
+.lede,
+.notice,
+.article-grid p,
+.tool-card > p:not(.eyebrow):not(.micro) {
+  line-height: 1.62;
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  line-height: 1;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.brand-mark {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  display: block;
+  object-fit: contain;
+  filter: none;
+}
+
+/* Thai glyphs need more vertical room for marks above/below the base characters. */
+html:lang(th) body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans Thai", Tahoma, Arial, sans-serif;
+  line-height: 1.7;
+}
+
+html:lang(th) h1 {
+  line-height: 1.16;
+  letter-spacing: -0.018em;
+}
+
+html:lang(th) h2 {
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+}
+
+html:lang(th) h3 {
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+html:lang(th) .hero h1,
+html:lang(th) .detail-hero h1,
+html:lang(th) .article-page h1 {
+  line-height: 1.16;
+}
+
+html:lang(th) .eyebrow,
+html:lang(th) .result-kind,
+html:lang(th) .search-group-title,
+html:lang(th) .recent-searches > span,
+html:lang(th) .discovery-form label > span,
+html:lang(th) .tool-controls label > span {
+  letter-spacing: 0.035em;
+  line-height: 1.55;
+}
+
+html:lang(th) .hero-copy,
+html:lang(th) .lede,
+html:lang(th) .notice,
+html:lang(th) .listing-page > header > p:not(.eyebrow),
+html:lang(th) .article-grid p,
+html:lang(th) .article-body p,
+html:lang(th) .tool-card > p:not(.eyebrow):not(.micro) {
+  line-height: 1.78;
+}
+
+html:lang(th) .entity-copy h3,
+html:lang(th) .article-grid h2,
+html:lang(th) .article-grid h3,
+html:lang(th) .tool-card h2 {
+  line-height: 1.32;
+}
+
+@media (max-width: 900px) {
+  h1 {
+    font-size: clamp(48px, 10vw, 86px);
+  }
+
+  h2 {
+    font-size: clamp(32px, 7vw, 54px);
+  }
+
+  .detail-hero h1,
+  .article-page h1 {
+    font-size: clamp(46px, 9vw, 72px);
+  }
+}
+
+/* v0.2 header: v02.css expands compact search to 140px at tablet widths.
+   Override it here (this file loads last) before it can crowd the wordmark on phones. */
+@media (max-width: 720px) {
+  .site-header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 8px;
+  }
+
+  .wordmark {
+    font-size: 13px;
+    letter-spacing: 0.055em;
+  }
+
+  .header-actions {
+    min-width: 0;
+    gap: 6px;
+  }
+
+  .search-trigger.compact {
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    padding: 0;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .search-trigger.compact > span {
+    display: none;
+  }
+
+  .search-trigger.compact kbd {
+    width: 18px;
+    overflow: hidden;
+    font-size: 0;
+    line-height: 1;
+    text-align: center;
+  }
+
+  .search-trigger.compact kbd::after {
+    content: "⌕";
+    font-size: 18px;
+    line-height: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  h1,
+  .hero h1 {
+    font-size: clamp(42px, 13vw, 64px);
+    line-height: 1.03;
+    letter-spacing: -0.035em;
+  }
+
+  h2 {
+    font-size: clamp(30px, 9vw, 44px);
+    line-height: 1.1;
+  }
+
+  .detail-hero h1,
+  .article-page h1 {
+    font-size: clamp(40px, 12vw, 58px);
+    line-height: 1.07;
+  }
+
+  .entity-copy h3,
+  .article-grid h2,
+  .article-grid h3,
+  .tool-card h2 {
+    line-height: 1.24;
+  }
+
+  .brand-mark {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+
+  html:lang(th) h1,
+  html:lang(th) .hero h1,
+  html:lang(th) .detail-hero h1,
+  html:lang(th) .article-page h1 {
+    font-size: clamp(38px, 11vw, 54px);
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+  }
+
+  html:lang(th) h2 {
+    line-height: 1.25;
+  }
+}
+
+@media (max-width: 420px) {
+  .site-header {
+    min-height: 58px;
+    padding-inline: 10px;
+    column-gap: 6px;
+  }
+
+  .wordmark {
+    gap: 7px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+    flex-basis: 28px;
+  }
+
+  .header-actions {
+    gap: 4px;
+  }
+
+  .search-trigger.compact,
+  .header-actions .icon-button {
+    width: 36px;
+    min-width: 36px;
+    height: 36px;
+  }
+
+  .header-actions .lang-button {
+    width: auto;
+    min-width: 38px;
+    padding-inline: 7px;
+  }
+
+  .search-trigger.compact kbd::after {
+    font-size: 17px;
+  }
+}
