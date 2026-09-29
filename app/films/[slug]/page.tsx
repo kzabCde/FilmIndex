@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { films, findBySlug } from "@/lib/data";
+import { films, findBySlug } from "@/lib/catalog";
 import { characteristicKeyLabel, characteristicValueLabel, filmTypeLabel, messages, parseLocale, pick, useLabel, withLocale } from "@/lib/i18n";
 
 export function generateStaticParams() { return films.map(({ slug }) => ({ slug })); }
