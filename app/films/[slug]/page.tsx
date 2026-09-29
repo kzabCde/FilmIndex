@@ -1,8 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { EntityCard } from "@/components/entity-card";
+import { FavoriteButton } from "@/components/favorite-button";
 import { filmSamples } from "@/data/film-samples";
 import { films, findBySlug } from "@/lib/catalog";
+import { relatedFilms } from "@/lib/discovery";
 import { characteristicKeyLabel, characteristicValueLabel, filmTypeLabel, messages, parseLocale, pick, useLabel, withLocale } from "@/lib/i18n";
 import styles from "./film-samples.module.css";
 
@@ -17,6 +20,7 @@ export default async function FilmDetail({ params, searchParams }: { params: Pro
   if (!film) notFound();
 
   const samples = filmSamples[film.slug] ?? [];
+  const related = relatedFilms(film, films, 4);
   const sampleCopy = locale === "th"
     ? {
       eyebrow: "ภาพจากฟิล์มจริง",
@@ -40,6 +44,7 @@ export default async function FilmDetail({ params, searchParams }: { params: Pro
           <h1>{film.name}</h1>
           <p className="lede">{pick(locale, film.description, film.descriptionTh)}</p>
           <div className="facts"><span>ISO <strong>{film.iso}</strong></span><span>{filmTypeLabel(film.filmType, locale)}</span><span>{film.process}</span><span>{film.formats.join(" / ")}</span></div>
+          <FavoriteButton slug={film.slug} locale={locale} />
         </div>
       </div>
 
@@ -73,6 +78,12 @@ export default async function FilmDetail({ params, searchParams }: { params: Pro
             </figure>
           ))}
         </div>
+      </section>
+
+      <section>
+        <div className="section-heading"><div><p className="eyebrow">{locale === "th" ? "ตัวเลือกใกล้เคียง" : "Discovery"}</p><h2>{locale === "th" ? "ฟิล์มที่คล้ายกัน" : "Related films"}</h2></div><Link href={withLocale("/finder", locale)}>{locale === "th" ? "เปิด Film Finder →" : "Open Film Finder →"}</Link></div>
+        <div className="card-grid">{related.map((match, index) => <EntityCard key={match.film.slug} item={match.film} index={index} locale={locale} />)}</div>
+        <p className="notice">{locale === "th" ? "รายการใกล้เคียงคำนวณจากประเภทฟิล์ม ISO กระบวนการล้าง งานที่เหมาะ และลักษณะเกรนใน catalog" : "Related items are calculated locally from film family, ISO, process, typical uses, and grain characteristics in the catalog."}</p>
       </section>
 
       {film.image && <section className="source-card"><h2>{copy.imageSource}</h2><p>{film.image.creator} · {film.image.license}</p><a href={film.image.sourceUrl} target="_blank" rel="noreferrer">{copy.openSource}</a></section>}
