@@ -1,16 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="FilmIndex">
-  <rect width="64" height="64" rx="12" fill="#111111"/>
-  <rect x="7" y="7" width="50" height="50" rx="7" fill="#F4F1EA"/>
-  <g fill="#111111">
-    <rect x="11" y="10" width="7" height="4" rx="1"/>
-    <rect x="23" y="10" width="7" height="4" rx="1"/>
-    <rect x="35" y="10" width="7" height="4" rx="1"/>
-    <rect x="47" y="10" width="6" height="4" rx="1"/>
-    <rect x="11" y="50" width="7" height="4" rx="1"/>
-    <rect x="23" y="50" width="7" height="4" rx="1"/>
-    <rect x="35" y="50" width="7" height="4" rx="1"/>
-    <rect x="47" y="50" width="6" height="4" rx="1"/>
-    <path d="M16 20h17v5H22v5h9v5h-9v10h-6V20Z"/>
-    <path d="M40 20h7v25h-7V20Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="FilmIndex">
+  <rect width="512" height="512" rx="92" fill="#171717"/>
+  <g fill="#F4F1EA">
+    <rect x="32" y="66" width="44" height="44" rx="11"/>
+    <rect x="32" y="132" width="44" height="44" rx="11"/>
+    <rect x="32" y="198" width="44" height="44" rx="11"/>
+    <rect x="32" y="264" width="44" height="44" rx="11"/>
+    <rect x="32" y="330" width="44" height="44" rx="11"/>
+    <rect x="32" y="396" width="44" height="44" rx="11"/>
+    <rect x="436" y="66" width="44" height="44" rx="11"/>
+    <rect x="436" y="132" width="44" height="44" rx="11"/>
+    <rect x="436" y="198" width="44" height="44" rx="11"/>
+    <rect x="436" y="264" width="44" height="44" rx="11"/>
+    <rect x="436" y="330" width="44" height="44" rx="11"/>
+    <rect x="436" y="396" width="44" height="44" rx="11"/>
   </g>
+  <g fill="#F4F1EA">
+    <path d="M116 115h156c26 0 47 6 64 18 17 12 30 29 39 50l-30 13c-8-16-17-27-28-34-11-7-25-10-43-10h-69v75h117v38H205v132h-48V152h-41v-37Z"/>
+    <path d="M337 115h62v282h-62V115Z"/>
+  </g>
+  <rect x="220" y="278" width="54" height="54" rx="12" fill="#E5A128"/>
 </svg>
