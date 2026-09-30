@@ -20,7 +20,6 @@ export function Header() {
     const initial = savedTheme ? savedTheme === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
     setDark(initial);
     document.documentElement.dataset.theme = initial ? "dark" : "light";
-
     const savedLocale = localStorage.getItem("filmindex-locale");
     if (!search.get("lang") && (savedLocale === "th" || savedLocale === "en")) {
       const params = new URLSearchParams(search.toString());
@@ -29,9 +28,7 @@ export function Header() {
     }
   }, [pathname, router, search]);
 
-  useEffect(() => {
-    document.documentElement.lang = locale;
-  }, [locale]);
+  useEffect(() => { document.documentElement.lang = locale; }, [locale]);
 
   function toggleTheme() {
     const next = !dark;
@@ -50,13 +47,11 @@ export function Header() {
 
   return (
     <header className="site-header">
-      <Link className="wordmark" href={withLocale("/", locale)} aria-label="FilmIndex home">
-        <BrandIcon />
-        <span>FILMINDEX</span>
-      </Link>
+      <Link className="wordmark" href={withLocale("/", locale)} aria-label="FilmIndex home"><BrandIcon /><span>FILMINDEX</span></Link>
       <nav aria-label="Primary navigation">
         <Link href={withLocale("/films", locale)}>{copy.nav.films}</Link>
         <Link href={withLocale("/cameras", locale)}>{copy.nav.cameras}</Link>
+        <Link href={withLocale("/lenses", locale)}>{locale === "th" ? "เลนส์" : "Lenses"}</Link>
         <Link href={withLocale("/finder", locale)}>{locale === "th" ? "ค้นหาฟิล์ม" : "Finder"}</Link>
         <Link href={withLocale("/tools", locale)}>{locale === "th" ? "เครื่องมือ" : "Tools"}</Link>
         <Link href={withLocale("/techniques", locale)}>{copy.nav.techniques}</Link>
