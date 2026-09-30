@@ -1,0 +1,78 @@
+import type { Camera } from "@/types";
+
+const commonsFile = (name: string) =>
+  `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(name)}?width=1400`;
+const commonsSource = (name: string) =>
+  `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(name).replaceAll("%20", "_")}`;
+const image = (name: string, creator: string, license: string, alt: string) => ({
+  url: commonsFile(name),
+  sourceName: "Wikimedia Commons",
+  sourceUrl: commonsSource(name),
+  creator,
+  license,
+  attributionRequired: !["Public Domain", "CC0 1.0"].includes(license),
+  alt,
+});
+
+export const compactWave3Cameras: Camera[] = [
+  {
+    kind: "camera",
+    slug: "olympus-mju-i",
+    name: "Olympus μ[mju:] / Stylus",
+    brand: "Olympus",
+    releaseYear: 1991,
+    cameraType: "Point & Shoot",
+    filmFormat: "35mm",
+    lensMount: "Fixed Olympus 35mm f/3.5",
+    shutter: "Programmed electronic lens shutter",
+    shutterSpeed: "1/15s–1/500s",
+    metering: "Automatic programmed exposure with DX film-speed input",
+    exposureModes: ["Program"],
+    battery: "1× CR123A 3V lithium",
+    weight: "Approx. 170 g without battery",
+    flashSync: "Built-in flash synchronized automatically",
+    description: "The first Olympus μ[mju:] / Stylus compact, introduced in 1991 with a sliding clamshell cover, fixed 35mm f/3.5 lens, autofocus, automatic film transport, and programmed exposure.",
+    descriptionTh: "Olympus μ[mju:] / Stylus รุ่นแรก เปิดตัวปี 1991 ใช้ฝาปิดเลื่อนแบบ clamshell เลนส์ติดตาย 35mm f/3.5 ออโต้โฟกัส เดินฟิล์มอัตโนมัติ และระบบ Program AE",
+    image: image("Olympus mju i.jpg", "Botaurus", "Public Domain", "Olympus mju I Stylus compact film camera"),
+  },
+  {
+    kind: "camera",
+    slug: "ricoh-ff-1",
+    name: "Ricoh FF-1",
+    brand: "Ricoh",
+    releaseYear: 1978,
+    cameraType: "Point & Shoot",
+    filmFormat: "35mm",
+    lensMount: "Fixed Color Rikenon 35mm f/2.8",
+    shutter: "Copal electronically controlled leaf shutter",
+    shutterSpeed: "2s–1/500s",
+    metering: "CdS programmed automatic exposure",
+    exposureModes: ["Program"],
+    battery: "2× SR44 / LR44",
+    weight: "Approx. 225 g",
+    flashSync: "Hot-shoe flash; shutter switches to approximately 1/30s for manual flash exposure",
+    description: "A highly compact folding-front Ricoh 35mm camera with a fixed 35mm f/2.8 Color Rikenon lens, manual distance focusing, CdS metering, and programmed electronic exposure.",
+    descriptionTh: "กล้องคอมแพค 35 มม. ของ Ricoh ที่ใช้ฝาหน้าพับเก็บชุดเลนส์ได้ ใช้ Color Rikenon 35mm f/2.8 โฟกัสระยะด้วยมือ มิเตอร์ CdS และระบบรับแสงโปรแกรมอิเล็กทรอนิกส์",
+    image: image("Ricoh FF-1.jpg", "Alfred from Germany", "See source page", "Ricoh FF-1 compact folding-front film camera"),
+  },
+  {
+    kind: "camera",
+    slug: "konica-hexar-af",
+    name: "Konica Hexar AF",
+    brand: "Konica",
+    releaseYear: 1993,
+    cameraType: "Point & Shoot",
+    filmFormat: "35mm",
+    lensMount: "Fixed Konica Hexar 35mm f/2",
+    shutter: "Stepper-motor-driven electromagnetic leaf shutter",
+    shutterSpeed: "30s–1/250s + T",
+    metering: "Silicon photodiode center-weighted metering; spot metering in manual mode",
+    exposureModes: ["Program", "Aperture Priority", "Manual"],
+    battery: "1× 2CR5 6V lithium",
+    weight: "Approx. 495 g without battery",
+    flashSync: "External hot-shoe flash synchronized through the leaf shutter up to 1/250s",
+    description: "A fixed-lens autofocus 35mm camera built around a fast 35mm f/2 Hexar lens, with Program AE, Aperture Priority, metered manual exposure, infrared autofocus, and motorized film transport.",
+    descriptionTh: "กล้องคอมแพคออโต้โฟกัสเลนส์ติดตาย 35 มม. ใช้เลนส์ Hexar 35mm f/2 รองรับ Program AE, Aperture Priority, Manual แบบมีมิเตอร์ ออโต้โฟกัสอินฟราเรด และเดินฟิล์มด้วยมอเตอร์",
+    image: image("Konica-hexar-black.jpg", "Rriemann", "See source page", "Konica Hexar AF black compact autofocus film camera"),
+  },
+];
