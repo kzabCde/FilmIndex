@@ -1,6 +1,34 @@
 # FilmIndex
 
-FilmIndex is a modern analog photography knowledge database and local-first shooting companion for films, cameras, techniques, discovery, comparison, and field tools.
+FilmIndex is a modern analog photography knowledge database and local-first shooting companion for films, cameras, techniques, discovery, comparison, and field/lab tools.
+
+## v0.4.0 scope — Film Lab Tools & Individual Tool Pages
+
+v0.4.0 turns `/tools` into a navigation hub and gives every utility a focused URL under `/tools/[tool]`.
+
+Film Lab Tools added in this version:
+
+- Development Calculator — starts from a trusted film/developer base time, applies an explicit Q10 temperature model, and calculates concentrate/water dilution volumes
+- Push / Pull Assistant — calculates shooting EI immediately and only calculates an adjusted development time when the user supplies a percentage from a datasheet or lab
+- Expired Film Calculator — offers a visible and adjustable age/storage heuristic rather than presenting the one-stop-per-decade idea as a universal rule
+- Negative Conversion — local browser Canvas workflow for inversion, optional orange-mask neutralization, exposure, contrast, RGB tuning, and PNG export; the image is not uploaded
+
+All distinct tools now have their own pages:
+
+- `/tools/exposure`
+- `/tools/reciprocity`
+- `/tools/depth-of-field`
+- `/tools/sunny-16`
+- `/tools/reciprocal-rule`
+- `/tools/film-cost`
+- `/tools/scan-resolution`
+- `/tools/roll-logbook`
+- `/tools/development`
+- `/tools/push-pull`
+- `/tools/expired-film`
+- `/tools/negative-conversion`
+
+The Push/Pull planner from earlier releases is upgraded into the Film Lab Push/Pull Assistant rather than duplicated as a second tool.
 
 ## v0.3.0 scope — Tools Expansion
 
@@ -54,11 +82,11 @@ Open `http://localhost:3000`.
 
 ## Data architecture
 
-FilmIndex is intentionally local-first and does not use a hosted database, CMS, authentication service, or runtime catalog API. Films, cameras, techniques, source metadata, translations, sample-photo records, discovery scoring, and shooting calculators are version-controlled with the application and bundled into the build.
+FilmIndex is intentionally local-first and does not use a hosted database, CMS, authentication service, or runtime catalog API. Films, cameras, techniques, source metadata, translations, sample-photo records, discovery scoring, and shooting/lab calculators are version-controlled with the application and bundled into the build.
 
-The initial catalog remains in `lib/data.ts`; expanded records live in `data/films-extra.ts`, `data/cameras-extra.ts`, and `data/techniques-extra.ts`. Film sample photographs and their attribution metadata live in `data/film-samples.ts`. `lib/catalog.ts` combines these modules into the application-facing catalog. `lib/discovery.ts` contains deterministic Film Finder and Related Film scoring. `lib/photography-tools.ts` contains pure calculation helpers for the expanded shooting toolkit.
+The initial catalog remains in `lib/data.ts`; expanded records live in `data/films-extra.ts`, `data/cameras-extra.ts`, and `data/techniques-extra.ts`. Film sample photographs and their attribution metadata live in `data/film-samples.ts`. `lib/catalog.ts` combines these modules into the application-facing catalog. `lib/discovery.ts` contains deterministic Film Finder and Related Film scoring. `lib/photography-tools.ts` contains pure calculation helpers for the expanded toolkit, and `lib/tool-catalog.ts` defines the tool hub and individual routes.
 
-Search, filters, detail pages, Film Finder, related-film recommendations, compare, and calculators read from bundled application code. `localStorage` is reserved for local preferences and user-side state such as theme, language, recent searches, My Film Shelf, and Roll Logbook entries.
+Search, filters, detail pages, Film Finder, related-film recommendations, compare, and calculators read from bundled application code. `localStorage` is reserved for local preferences and user-side state such as theme, language, recent searches, My Film Shelf, and Roll Logbook entries. Negative conversion is performed in the browser and does not require an upload endpoint.
 
 ## Internationalization
 
@@ -66,13 +94,13 @@ English is the default language. Thai can be selected from the header. Language 
 
 Translations are bundled with the site. Film and camera model names remain in their original names, while navigation, descriptions, techniques, labels, filters, comparison fields, discovery tools, and editorial terminology can be localized.
 
-## Discovery and shooting tools
+## Discovery and tools
 
 `/finder` ranks the local film catalog using the user's selected subject/use, available light, film family, and grain preference. The UI displays the reasons behind each match instead of presenting recommendations as an opaque score.
 
-`/tools` contains browser-side analog photography helpers. The expanded toolkit calculates EV100 and equivalent exposures, generic reciprocity estimates, depth of field, film costs, and scan resolution. It also includes a local Roll Logbook and preserves Sunny 16, Push/Pull effective ISO planning, and the Reciprocal Rule reference.
+`/tools` is the toolkit hub. Each utility opens on its own route so mobile layouts stay focused and tools can be bookmarked directly. Exposure, reciprocity, DOF, Sunny 16, reciprocal-rule, cost, scan, roll logging, development, push/pull, expired film, and negative conversion remain browser-side.
 
-The Reciprocity Calculator intentionally labels its exponent presets as generic planning estimates instead of pretending to provide film-specific manufacturer data. FilmIndex does not invent development times or stock-specific reciprocity tables; use the relevant manufacturer datasheet or laboratory guidance when precision matters.
+The Reciprocity Calculator intentionally labels its exponent presets as generic planning estimates instead of pretending to provide film-specific manufacturer data. Development calculations begin with user-supplied trusted base data. FilmIndex does not invent film/developer times or stock-specific reciprocity tables; use the relevant manufacturer datasheet or laboratory guidance when precision matters.
 
 Each film detail page also shows locally calculated related films based on film family, ISO proximity, process, typical uses, and grain characteristics.
 
