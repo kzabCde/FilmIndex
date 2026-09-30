@@ -26,6 +26,7 @@ import { wave8Films } from "@/data/films-wave8";
 import { wave9Films } from "@/data/films-wave9";
 import { wave10Films } from "@/data/films-wave10";
 import { extraTechniques } from "@/data/techniques-extra";
+import { techniqueGuides } from "@/data/technique-guides";
 import { lenses } from "@/data/lenses";
 import { normalizeCameraType, COMPACT_CAMERA_TYPE } from "@/lib/camera-types";
 import { filmSamples } from "@/lib/film-samples";
@@ -71,6 +72,11 @@ if (legacyPointAndShootCount > 0) {
 const filmsWithoutSamples = films.filter((film) => !filmSamples[film.slug]?.length);
 if (filmsWithoutSamples.length) {
   throw new Error(`FilmIndex sample-image regression: missing real sample photographs for ${filmsWithoutSamples.map((film) => film.slug).join(", ")}.`);
+}
+
+const techniquesWithoutGuides = techniques.filter((technique) => !techniqueGuides[technique.slug]);
+if (techniquesWithoutGuides.length) {
+  throw new Error(`FilmIndex technique-guide regression: missing practical guides for ${techniquesWithoutGuides.map((technique) => technique.slug).join(", ")}.`);
 }
 
 export function findBySlug<T extends { slug: string }>(items: T[], slug: string) {
