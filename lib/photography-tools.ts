@@ -55,6 +55,14 @@ export function formatShutter(seconds: number) {
   return `1/${Math.max(1, Math.round(1 / seconds))}s`;
 }
 
+export function formatDuration(seconds: number) {
+  if (!Number.isFinite(seconds) || seconds < 0) return "—";
+  const rounded = Math.max(0, Math.round(seconds));
+  const minutes = Math.floor(rounded / 60);
+  const secs = rounded % 60;
+  return `${minutes}:${secs.toString().padStart(2, "0")}`;
+}
+
 export function calculateReciprocityCorrection(meteredSeconds: number, exponent: number) {
   const safeTime = Math.max(0.001, meteredSeconds);
   const safeExponent = Math.min(2, Math.max(1, exponent));
@@ -144,4 +152,105 @@ export function calculateScanResolution(format: ScanFormatKey, dpi: number) {
     rgb8Mb: (pixels * 3) / (1024 * 1024),
     rgb16Mb: (pixels * 6) / (1024 * 1024),
   };
+}
+
+export function calculateDevelopmentTemperature({
+  baseTimeSeconds,
+  baseTemperatureC,
+  targetTemperatureC,
+  q10,
+}: {
+  baseTimeSeconds: number;
+  baseTemperatureC: number;
+  targetTemperatureC: number;
+  q10: number;
+}) {
+  const safeTime = Math.max(1, baseTimeSeconds);
+  const safeQ10 = Math.min(3, Math.max(1.1, q10));
+  const temperatureDelta = baseTemperatureC - targetTemperatureC;
+  const adjustedTimeSeconds = safeTime * Math.pow(safeQ10, temperatureDelta / 10);
+  return { adjustedTimeSeconds, multiplier: adjustedTimeSeconds / safeTime };
+}
+
+export function calculateDilution({
+  totalVolumeMl,
+  concentrateParts,
+  waterParts,
+}: {
+  totalVolumeMl: number;
+  concentrateParts: number;
+  waterParts: number;
+}) {
+  const total = Math.max(1, totalVolumeMl);
+  const concentrate = Math.max(0.0001, concentrateParts);
+  const water = Math.max(0, waterParts);
+  const allParts = concentrate + water;
+  return {
+    concentrateMl: total * (concentrate / allParts),
+    waterMl: total * (water / allParts),
+  };
+}
+
+export function calculatePushPullPlan({
+  boxIso,
+  stops,
+  baseTimeSeconds,
+  percentPerStop,
+}: {
+  boxIso: number;
+  stops: number;
+  baseTimeSeconds?: number;
+  percentPerStop?: number;
+}) {
+  const effectiveIso = Math.max(1, Math.round(Math.max(1, boxIso) * Math.pow(2, stops)));
+  const safeBaseTime = Math.max(0, baseTimeSeconds ?? 0);
+  const safePercent = Math.max(0, percentPerStop ?? 0) / 100;
+  let adjustedTimeSeconds: number | null = null;
+
+  if (safeBaseTime > 0 && safePercent > 0) {
+    const factor = Math.pow(1 + safePercent, Math.abs(stops));
+    adjustedTimeSeconds = stops >= 0 ? safeBaseTime * factor : safeBaseTime / factor;
+  }
+
+  return { effectiveIso, adjustedTimeSeconds };
+}
+
+export type ExpiredStorage = "frozen" | "refrigerated" | "cool" | "room" | "hot-unknown";
+
+export const EXPIRED_STORAGE_DEFAULTS: Record<ExpiredStorage, number> = {
+  frozen: 0,
+  refrigerated: 0.25,
+  cool: 0.5,
+  room: 1,
+  "hot-unknown": 1.5,
+};
+
+export function calculateExpiredFilmStartingPoint({
+  boxIso,
+  expiryYear,
+  currentYear,
+  stopsPerDecade,
+}: {
+  boxIso: number;
+  expiryYear: number;
+  currentYear: number;
+  stopsPerDecade: number;
+}) {
+  const ageYears = Math.max(0, currentYear - expiryYear);
+  const decades = ageYears / 10;
+  const compensationStops = decades * Math.max(0, stopsPerDecade);
+  const suggestedEi = Math.max(1, Math.round(Math.max(1, boxIso) / Math.pow(2, compensationStops)));
+  return { ageYears, decades, compensationStops, suggestedEi };
+}
+
+export function calculateReciprocalRule(focalLengthMm: number, cropFactor = 1, safetyStops = 0) {
+  const effectiveFocalLength = Math.max(1, focalLengthMm) * Math.max(0.1, cropFactor);
+  const denominator = effectiveFocalLength * Math.pow(2, Math.max(0, safetyStops));
+  const standard = standardizeShutterDenominator(denominator);
+  return { effectiveFocalLength, denominator: standard };
+}
+
+function standardizeShutterDenominator(value: number) {
+  const options = [15, 30, 60, 125, 250, 500, 1000, 2000, 4000, 8000];
+  return options.find((candidate) => candidate >= value) ?? 8000;
 }
