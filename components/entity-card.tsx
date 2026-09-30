@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Camera, Film } from "@/types";
 import type { Locale } from "@/lib/i18n";
-import { cameraTypeLabel, filmTypeLabel, messages, withLocale } from "@/lib/i18n";
+import { cameraTypeLabel } from "@/lib/camera-types";
+import { filmTypeLabel, messages, withLocale } from "@/lib/i18n";
 
 export function EntityCard({ item, index, locale = "en" }: { item: Film | Camera; index: number; locale?: Locale }) {
   const href = item.kind === "film" ? `/films/${item.slug}` : `/cameras/${item.slug}`;

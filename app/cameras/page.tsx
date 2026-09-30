@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { CatalogFilters } from "@/components/catalog-filters";
 import { EntityCard } from "@/components/entity-card";
 import { cameras } from "@/lib/catalog";
-import { cameraTypeLabel, messages, parseLocale } from "@/lib/i18n";
+import { cameraTypeLabel, normalizeCameraType } from "@/lib/camera-types";
+import { messages, parseLocale } from "@/lib/i18n";
 
 export const metadata: Metadata = { title: "Cameras", description: "Browse classic film cameras and technical specifications." };
 
@@ -13,7 +14,7 @@ export default async function CamerasPage({ searchParams }: { searchParams: Prom
   const locale = parseLocale(params.lang);
   const copy = messages[locale].cameras;
   const brand = stringParam(params.brand);
-  const type = stringParam(params.type);
+  const type = normalizeCameraType(stringParam(params.type));
   const format = stringParam(params.format);
   const exposure = stringParam(params.exposure);
   const lens = stringParam(params.lens);

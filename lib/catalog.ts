@@ -24,11 +24,18 @@ import { wave7Films } from "@/data/films-wave7";
 import { wave8Films } from "@/data/films-wave8";
 import { wave9Films } from "@/data/films-wave9";
 import { extraTechniques } from "@/data/techniques-extra";
+import { normalizeCameraType, COMPACT_CAMERA_TYPE } from "@/lib/camera-types";
 import { filmSamples } from "@/lib/film-samples";
 import type { SearchEntity } from "@/types";
 
 export const films = [...baseFilms, ...extraFilms, ...wave2Films, ...wave2FilmsB, ...wave3Films, ...wave4Films, ...wave5Films, ...wave6Films, ...wave7Films, ...wave8Films, ...wave9Films];
-export const cameras = [...baseCameras, ...extraCameras, ...wave2Cameras, ...wave2CamerasB, ...wave3Cameras, ...wave4Cameras, ...wave5Cameras, ...wave6Cameras, ...wave7Cameras, ...wave8Cameras, ...wave9Cameras, ...compactWave1Cameras, ...compactWave2Cameras, ...compactWave3Cameras, ...compactWave4Cameras];
+
+const rawCameras = [...baseCameras, ...extraCameras, ...wave2Cameras, ...wave2CamerasB, ...wave3Cameras, ...wave4Cameras, ...wave5Cameras, ...wave6Cameras, ...wave7Cameras, ...wave8Cameras, ...wave9Cameras, ...compactWave1Cameras, ...compactWave2Cameras, ...compactWave3Cameras, ...compactWave4Cameras];
+export const cameras = rawCameras.map((camera) => ({
+  ...camera,
+  cameraType: normalizeCameraType(camera.cameraType),
+}));
+
 export const techniques = [...baseTechniques, ...extraTechniques];
 export const allEntities: SearchEntity[] = [...films, ...cameras, ...techniques];
 
@@ -45,10 +52,15 @@ for (const key of Object.keys(minimums) as Array<keyof typeof minimums>) {
   }
 }
 
-const compactCameraCount = cameras.filter((camera) => camera.cameraType === "Point & Shoot").length;
+const compactCameraCount = cameras.filter((camera) => camera.cameraType === COMPACT_CAMERA_TYPE).length;
 const minimumCompactCameras = 28;
 if (compactCameraCount < minimumCompactCameras) {
-  throw new Error(`FilmIndex compact-camera regression: expected at least ${minimumCompactCameras} Point & Shoot cameras, found ${compactCameraCount}.`);
+  throw new Error(`FilmIndex compact-camera regression: expected at least ${minimumCompactCameras} Compact cameras, found ${compactCameraCount}.`);
+}
+
+const legacyPointAndShootCount = cameras.filter((camera) => camera.cameraType === "Point & Shoot").length;
+if (legacyPointAndShootCount > 0) {
+  throw new Error(`FilmIndex camera-type migration regression: ${legacyPointAndShootCount} Point & Shoot records remain after Compact normalization.`);
 }
 
 const filmsWithoutSamples = films.filter((film) => !filmSamples[film.slug]?.length);

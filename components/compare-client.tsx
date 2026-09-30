@@ -3,7 +3,8 @@
 import { useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { cameras, films } from "@/lib/catalog";
-import { cameraTypeLabel, characteristicValueLabel, filmTypeLabel, messages, parseLocale } from "@/lib/i18n";
+import { cameraTypeLabel } from "@/lib/camera-types";
+import { characteristicValueLabel, filmTypeLabel, messages, parseLocale } from "@/lib/i18n";
 
 type Mode = "films" | "cameras";
 
