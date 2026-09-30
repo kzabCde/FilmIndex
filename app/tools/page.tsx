@@ -9,9 +9,9 @@ export default async function ToolsPage({ searchParams }: { searchParams: Promis
   return (
     <section className="shell listing-page tools-page">
       <header>
-        <p className="eyebrow">{isTh ? "เครื่องมือช่วยถ่าย" : "Shooting utilities"}</p>
+        <p className="eyebrow">{isTh ? "Analog photography toolkit" : "Analog photography toolkit"}</p>
         <h1>{isTh ? "Tools" : "Tools"}</h1>
-        <p>{isTh ? "เครื่องมือคำนวณแบบ local สำหรับช่วยตั้งค่าแสง วางแผน Push/Pull และทบทวนหลักพื้นฐานโดยไม่ส่งข้อมูลออกจาก browser" : "Local calculators for exposure starting points, push/pull planning, and practical shooting references without sending data anywhere."}</p>
+        <p>{isTh ? "ชุดเครื่องมือ local-first สำหรับคำนวณค่าแสง Reciprocity ระยะชัด ต้นทุน ความละเอียดสแกน บันทึกม้วนฟิล์ม และเครื่องมือถ่ายภาพเดิม โดยข้อมูลส่วนตัวไม่ถูกส่งออกจาก browser" : "A local-first toolkit for exposure, reciprocity, depth of field, film costs, scan resolution, roll logging, and classic shooting helpers without sending personal data out of the browser."}</p>
       </header>
       <ShootingTools locale={locale} />
     </section>
