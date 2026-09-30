@@ -2,6 +2,24 @@
 
 FilmIndex is a modern analog photography knowledge database and local-first shooting companion for films, cameras, lenses, techniques, discovery, comparison, field tools, and film-lab workflows.
 
+## v0.6.0 scope — Technique Guides
+
+v0.6.0 turns every Technique article into a more practical field guide instead of a short two-section note.
+
+Every one of the 15 bundled technique pages now includes:
+
+- step-by-step practical workflow
+- common mistakes and failure modes
+- a pre-shoot / pre-process checklist
+- links to relevant FilmIndex tools when a calculator can help
+- reference imagery on suitable topics with visible source, creator, and license attribution
+- Thai and English copy
+- responsive layouts for desktop and mobile
+
+Reference imagery is currently used where it materially helps explain the technique, including Exposure Triangle, Film Metering, Double Exposure, Airport X-ray, C-41 Development, and Film Scanning. Images come from Wikimedia Commons and retain their source/license metadata.
+
+A build-time regression guard now requires every Technique record to have a practical guide, preventing future technique entries from shipping as thin placeholder articles.
+
 ## v0.5.0 scope — Lens & Meter Ecosystem
 
 v0.5.0 connects the film, camera, lens, and exposure data into one practical ecosystem.
@@ -27,25 +45,13 @@ The checker does not assume that matching physical dimensions guarantee metering
 
 ### Film / Camera Recommendation
 
-`/tools/film-camera-recommendation` ranks compatible film stocks using only bundled catalog data. Ranking considers:
-
-- camera film format
-- shooting scenario
-- film type preference
-- film ISO
-- typical-use metadata
-- exposure latitude for meterless cameras
-- practical ISO range for compact cameras
+`/tools/film-camera-recommendation` ranks compatible film stocks using only bundled catalog data. Ranking considers camera film format, shooting scenario, film type preference, film ISO, typical-use metadata, exposure latitude for meterless cameras, and practical ISO range for compact cameras.
 
 The output is an explainable local heuristic rather than a claim that one film stock is universally best.
 
 ### Advanced Light Meter
 
-`/tools/advanced-light-meter` provides three browser-side workflows:
-
-- manual Lux → EV100 conversion
-- Ambient Light Sensor readings when the browser/device exposes that API
-- camera-relative luminance metering after calibration to a known EV
+`/tools/advanced-light-meter` provides manual Lux → EV100 conversion, Ambient Light Sensor readings when the browser/device exposes that API, and camera-relative luminance metering after calibration to a known EV.
 
 The tool clearly separates absolute Lux/sensor readings from camera-relative readings because browser cameras usually run auto exposure and generally do not expose reliable exposure metadata. Camera preview stays local and is not uploaded.
 
@@ -121,7 +127,7 @@ Open `http://localhost:3000`.
 
 FilmIndex is intentionally local-first and does not use a hosted database, CMS, authentication service, or runtime catalog API. Films, cameras, lenses, techniques, source metadata, translations, sample-photo records, discovery scoring, recommendations, compatibility rules, and calculator logic are version-controlled with the application and bundled into the build.
 
-The initial catalog remains in `lib/data.ts`; expanded film/camera records live under `data/films-*` and `data/cameras-*`. Lens records live in `data/lenses.ts`. Film sample photographs and attribution metadata live in `data/film-samples.ts`. `lib/catalog.ts` combines application-facing entities. `lib/discovery.ts` contains Film Finder and Related Film scoring. `lib/photography-tools.ts` contains calculator functions, `lib/lens-ecosystem.ts` contains lens compatibility, film/camera recommendation, and light-meter math, and `lib/tool-catalog.ts` defines the Tool Hub.
+The initial catalog remains in `lib/data.ts`; expanded film/camera records live under `data/films-*` and `data/cameras-*`. Lens records live in `data/lenses.ts`. Film sample photographs and attribution metadata live in `data/film-samples.ts`. Practical technique-guide data lives in `data/technique-guides.ts`. `lib/catalog.ts` combines application-facing entities and validates minimum catalog/guide coverage. `lib/discovery.ts` contains Film Finder and Related Film scoring. `lib/photography-tools.ts` contains calculator functions, `lib/lens-ecosystem.ts` contains lens compatibility, film/camera recommendation, and light-meter math, and `lib/tool-catalog.ts` defines the Tool Hub.
 
 Search, filters, detail pages, recommendations, compatibility checks, and calculators operate from bundled application data. `localStorage` is reserved for local preferences and user-side state such as theme, language, recent searches, My Film Shelf, and Roll Logbook entries. Negative conversion and camera-meter preview are processed locally in the browser.
 
@@ -133,7 +139,7 @@ English is the default language. Thai can be selected from the header. Language 
 
 FilmIndex distinguishes catalog facts from estimates and heuristics. Reciprocity presets are generic unless manufacturer-specific data is explicitly added. Development calculations begin with trusted user-supplied base data. Expired-film recommendations are adjustable heuristics. Adapter compatibility is intentionally conservative. Camera-based web metering is treated as relative unless calibrated because browser auto exposure can change the video signal.
 
-When precision matters, use manufacturer datasheets, verified laboratory instructions, calibrated meters, and physically verified adapters.
+Technique guides also distinguish practical rules of thumb from manufacturer-specific procedures. Film/developer times, airport security procedures, reciprocity data, and chemistry instructions should be checked against the relevant current source when precision or safety matters.
 
 ## Local collection
 
