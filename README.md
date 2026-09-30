@@ -1,6 +1,20 @@
 # FilmIndex
 
-FilmIndex is a modern analog photography knowledge database and local-first shooting companion for films, cameras, techniques, discovery, and comparison.
+FilmIndex is a modern analog photography knowledge database and local-first shooting companion for films, cameras, techniques, discovery, comparison, and field tools.
+
+## v0.3.0 scope — Tools Expansion
+
+v0.3.0 expands `/tools` into a practical analog photography toolkit while preserving every v0.2.0 shooting helper:
+
+- Exposure Calculator with EV100 and equivalent aperture/shutter combinations
+- Reciprocity Calculator using clearly labeled generic correction models when film-specific manufacturer data is unavailable
+- Depth of Field Calculator with near/far limits, total DOF, and hyperfocal distance across common film formats
+- Film Cost Calculator with total roll cost and cost per frame
+- Scan Resolution Calculator with pixel dimensions, megapixels, and uncompressed RGB size estimates
+- Roll Logbook stored only in browser `localStorage`, including camera, film, EI, frame count, loaded date, and notes
+- Existing Sunny 16, Push/Pull Effective ISO, and Reciprocal Rule helpers remain available
+- English / Thai UI and responsive mobile layout
+- No account, hosted database, runtime calculator API, or roll-log upload
 
 ## v0.2.0 scope
 
@@ -42,9 +56,9 @@ Open `http://localhost:3000`.
 
 FilmIndex is intentionally local-first and does not use a hosted database, CMS, authentication service, or runtime catalog API. Films, cameras, techniques, source metadata, translations, sample-photo records, discovery scoring, and shooting calculators are version-controlled with the application and bundled into the build.
 
-The initial catalog remains in `lib/data.ts`; expanded records live in `data/films-extra.ts`, `data/cameras-extra.ts`, and `data/techniques-extra.ts`. Film sample photographs and their attribution metadata live in `data/film-samples.ts`. `lib/catalog.ts` combines these modules into the application-facing catalog. `lib/discovery.ts` contains deterministic Film Finder and Related Film scoring.
+The initial catalog remains in `lib/data.ts`; expanded records live in `data/films-extra.ts`, `data/cameras-extra.ts`, and `data/techniques-extra.ts`. Film sample photographs and their attribution metadata live in `data/film-samples.ts`. `lib/catalog.ts` combines these modules into the application-facing catalog. `lib/discovery.ts` contains deterministic Film Finder and Related Film scoring. `lib/photography-tools.ts` contains pure calculation helpers for the expanded shooting toolkit.
 
-Search, filters, detail pages, Film Finder, related-film recommendations, and compare read from the bundled catalog. `localStorage` is reserved for local preferences and user-side state such as theme, language, recent searches, and My Film Shelf.
+Search, filters, detail pages, Film Finder, related-film recommendations, compare, and calculators read from bundled application code. `localStorage` is reserved for local preferences and user-side state such as theme, language, recent searches, My Film Shelf, and Roll Logbook entries.
 
 ## Internationalization
 
@@ -56,13 +70,15 @@ Translations are bundled with the site. Film and camera model names remain in th
 
 `/finder` ranks the local film catalog using the user's selected subject/use, available light, film family, and grain preference. The UI displays the reasons behind each match instead of presenting recommendations as an opaque score.
 
-`/tools` contains browser-side shooting helpers. Sunny 16 provides an approximate daylight exposure starting point and the Push/Pull planner calculates the effective ISO to meter for. FilmIndex does not invent development times; users should follow the relevant film/developer datasheet or laboratory guidance.
+`/tools` contains browser-side analog photography helpers. The expanded toolkit calculates EV100 and equivalent exposures, generic reciprocity estimates, depth of field, film costs, and scan resolution. It also includes a local Roll Logbook and preserves Sunny 16, Push/Pull effective ISO planning, and the Reciprocal Rule reference.
+
+The Reciprocity Calculator intentionally labels its exponent presets as generic planning estimates instead of pretending to provide film-specific manufacturer data. FilmIndex does not invent development times or stock-specific reciprocity tables; use the relevant manufacturer datasheet or laboratory guidance when precision matters.
 
 Each film detail page also shows locally calculated related films based on film family, ISO proximity, process, typical uses, and grain characteristics.
 
 ## Local collection
 
-My Film Shelf stores selected film slugs only in the current browser's `localStorage`. It does not create an account or upload the collection anywhere.
+My Film Shelf stores selected film slugs only in the current browser's `localStorage`. Roll Logbook entries are also stored only in the current browser. FilmIndex does not create an account or upload either collection anywhere. Clearing site data/localStorage will remove these records.
 
 ## Filters
 

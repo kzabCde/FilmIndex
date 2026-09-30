@@ -6,6 +6,7 @@ import { BrandIcon } from "@/components/brand-icon";
 import "./globals.css";
 import "./v02.css";
 import "./ui-polish.css";
+import "./tools-expansion.css";
 
 export const metadata: Metadata = {
   title: { default: "FilmIndex — Analog Photography Database", template: "%s | FilmIndex" },
