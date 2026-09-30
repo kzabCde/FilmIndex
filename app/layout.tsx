@@ -9,6 +9,7 @@ import "./ui-polish.css";
 import "./tools-expansion.css";
 import "./tool-pages.css";
 import "./lens-ecosystem.css";
+import "./techniques.css";
 
 export const metadata: Metadata = {
   title: { default: "FilmIndex — Analog Photography Database", template: "%s | FilmIndex" },
