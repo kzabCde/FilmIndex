@@ -1,0 +1,46 @@
+.technique-article { display:grid; gap:34px; }
+.technique-article > header { display:grid; gap:12px; }
+.technique-hero-media { margin:0; }
+.technique-hero-media img { width:100%; height:auto; max-height:720px; object-fit:cover; border:1px solid var(--line); }
+.technique-hero-media figcaption { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; color:var(--muted); font-size:11px; }
+.technique-practical-grid { display:grid; grid-template-columns:1.45fr 1fr 1fr; gap:12px; }
+.technique-guide-card { min-width:0; border:1px solid var(--line); padding:20px; background:var(--bg); }
+.technique-guide-card h2,.technique-reference-section h2,.technique-related-tools h2 { margin:4px 0 16px; font-size:clamp(22px,3vw,36px); line-height:1.05; overflow-wrap:anywhere; }
+.technique-guide-card ol,.technique-guide-card ul { margin:0; padding-left:20px; display:grid; gap:10px; }
+.technique-guide-card li { color:var(--muted); line-height:1.55; }
+.technique-steps li::marker { color:var(--text); font-weight:700; }
+.technique-checklist { list-style:none; padding-left:0 !important; }
+.technique-checklist li { display:grid; grid-template-columns:18px 1fr; gap:8px; }
+.technique-checklist li span { color:var(--text); }
+.technique-core-sections { padding-top:10px; border-top:1px solid var(--line); }
+.technique-reference-section,.technique-related-tools,.technique-references { display:grid; gap:16px; padding-top:20px; border-top:1px solid var(--line); }
+.technique-reference-section > header,.technique-related-tools > header { display:grid; gap:4px; }
+.technique-reference-section > header p:last-child { max-width:760px; margin:0; color:var(--muted); line-height:1.6; }
+.technique-reference-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.technique-reference-grid figure { margin:0; border:1px solid var(--line); overflow:hidden; background:var(--bg); }
+.technique-reference-grid img { width:100%; height:clamp(220px,34vw,430px); object-fit:contain; background:color-mix(in srgb,var(--bg) 94%,var(--text) 6%); }
+.technique-reference-grid figcaption { display:grid; gap:5px; padding:12px 14px 14px; }
+.technique-reference-grid figcaption strong { font-size:13px; line-height:1.4; }
+.technique-reference-grid figcaption span,.technique-reference-grid figcaption a { color:var(--muted); font-size:11px; line-height:1.4; }
+.technique-reference-grid figcaption a:hover { color:var(--text); }
+.technique-tool-links { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.technique-tool-links a { min-width:0; display:grid; gap:7px; border:1px solid var(--line); padding:16px; text-decoration:none; color:var(--text); transition:transform .16s ease,border-color .16s ease; }
+.technique-tool-links a:hover { transform:translateY(-2px); border-color:var(--text); }
+.technique-tool-links span { width:max-content; border:1px solid var(--line); border-radius:999px; padding:4px 7px; font-size:10px; color:var(--muted); }
+.technique-tool-links strong { font-size:17px; line-height:1.15; overflow-wrap:anywhere; }
+.technique-tool-links small { color:var(--muted); line-height:1.5; }
+.technique-references > div { display:flex; flex-wrap:wrap; gap:8px; }
+.technique-references a { border:1px solid var(--line); border-radius:999px; padding:8px 11px; text-decoration:none; color:var(--text); font-size:12px; }
+.technique-references a:hover { border-color:var(--text); }
+@media (max-width:900px) {
+  .technique-practical-grid { grid-template-columns:1fr 1fr; }
+  .technique-steps { grid-column:1/-1; }
+  .technique-tool-links { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:600px) {
+  .technique-article { gap:26px; }
+  .technique-practical-grid,.technique-reference-grid,.technique-tool-links { grid-template-columns:1fr; }
+  .technique-steps { grid-column:auto; }
+  .technique-guide-card { padding:16px; }
+  .technique-reference-grid img { height:auto; max-height:420px; }
+}
