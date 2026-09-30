@@ -1,5 +1,5 @@
-import { filmSamples } from "@/data/film-samples";
 import { cameras, films, techniques } from "@/lib/catalog";
+import { filmSamples } from "@/lib/film-samples";
 import { messages, parseLocale } from "@/lib/i18n";
 
 export default async function SourcesPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
