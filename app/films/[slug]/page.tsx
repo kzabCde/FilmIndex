@@ -4,9 +4,9 @@ import { notFound } from "next/navigation";
 import { EntityCard } from "@/components/entity-card";
 import { FavoriteButton } from "@/components/favorite-button";
 import { FilmSampleGallery } from "@/components/film-sample-gallery";
-import { filmSamples } from "@/data/film-samples";
 import { films, findBySlug } from "@/lib/catalog";
 import { relatedFilms } from "@/lib/discovery";
+import { filmSamples } from "@/lib/film-samples";
 import { characteristicKeyLabel, characteristicValueLabel, filmTypeLabel, messages, parseLocale, pick, useLabel, withLocale } from "@/lib/i18n";
 import styles from "./film-samples.module.css";
 

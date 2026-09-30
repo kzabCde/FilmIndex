@@ -1,0 +1,112 @@
+import type { Camera } from "@/types";
+
+const commonsFile = (name: string) =>
+  `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(name)}?width=1400`;
+const commonsSource = (name: string) =>
+  `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(name).replaceAll("%20", "_")}`;
+const image = (name: string, creator: string, license: string, alt: string) => ({
+  url: commonsFile(name), sourceName: "Wikimedia Commons", sourceUrl: commonsSource(name), creator, license,
+  attributionRequired: !["Public Domain", "CC0 1.0"].includes(license), alt,
+});
+
+export const wave4Cameras: Camera[] = [
+  {
+    kind: "camera", slug: "contax-g2", name: "Contax G2", brand: "Contax", releaseYear: 1996,
+    cameraType: "Rangefinder", filmFormat: "35mm", lensMount: "Contax G",
+    shutter: "Electronically controlled vertical-travel focal-plane shutter",
+    shutterSpeed: "16s–1/6000s depending on exposure mode + B",
+    metering: "TTL ambient metering with automatic exposure control",
+    exposureModes: ["Manual", "Aperture Priority"], battery: "2× CR2 lithium batteries", weight: "Approx. 560 g body", flashSync: "1/200s",
+    description: "A premium autofocus interchangeable-lens 35mm camera in the Contax G system, combining electronic rangefinder-style handling with Zeiss G-mount lenses and fast automated operation.",
+    descriptionTh: "กล้อง 35 มม. ออโต้โฟกัสระดับพรีเมียมในระบบ Contax G ให้การใช้งานสไตล์เรนจ์ไฟน์เดอร์ร่วมกับเลนส์ Zeiss เมาท์ G แบบเปลี่ยนได้และระบบอิเล็กทรอนิกส์ที่รวดเร็ว",
+    image: image("Contax G2 Rangefinder Camera.jpg", "Wikimedia Commons contributor (see source page)", "See source page", "Contax G2 autofocus 35mm camera"),
+  },
+  {
+    kind: "camera", slug: "leica-m2", name: "Leica M2", brand: "Leica", releaseYear: 1957,
+    cameraType: "Rangefinder", filmFormat: "35mm", lensMount: "Leica M",
+    shutter: "Mechanical cloth focal-plane shutter", shutterSpeed: "1s–1/1000s + B", metering: "None built in",
+    exposureModes: ["Manual"], battery: "None", weight: "Approx. 560 g body", flashSync: "Approx. 1/50s",
+    description: "A mechanical Leica M rangefinder introduced as a simpler companion to the M3, with 35mm-friendly framelines, interchangeable M lenses, and no built-in meter.",
+    descriptionTh: "เรนจ์ไฟน์เดอร์ Leica M แบบกลไกที่ออกมาเป็นคู่หูที่เรียบง่ายกว่า M3 มีเฟรมไลน์เหมาะกับเลนส์ 35 มม. ใช้เลนส์ M แบบเปลี่ยนได้ และไม่มีมิเตอร์ในตัว",
+    image: image("Leica M2.jpg", "Wikimedia Commons contributor (see source page)", "See source page", "Leica M2 mechanical 35mm rangefinder camera"),
+  },
+  {
+    kind: "camera", slug: "leica-m5", name: "Leica M5", brand: "Leica", releaseYear: 1971,
+    cameraType: "Rangefinder", filmFormat: "35mm", lensMount: "Leica M",
+    shutter: "Mechanical cloth focal-plane shutter", shutterSpeed: "1s–1/1000s + B", metering: "TTL selective metering",
+    exposureModes: ["Manual"], battery: "Meter battery only; mechanical shutter is battery independent", weight: "Approx. 700 g body", flashSync: "Approx. 1/50s",
+    description: "A larger Leica M body notable for integrating through-the-lens metering into the M rangefinder system while retaining fully manual exposure and a mechanical shutter.",
+    descriptionTh: "Leica M บอดี้ขนาดใหญ่ที่โดดเด่นด้วยการนำระบบวัดแสงผ่านเลนส์มาไว้ในเรนจ์ไฟน์เดอร์ M ขณะยังคงการควบคุมแมนนวลและชัตเตอร์กลไก",
+    image: image("Leica M5.jpg", "Adam Rose", "CC BY-SA 2.0", "Leica M5 35mm rangefinder camera"),
+  },
+  {
+    kind: "camera", slug: "nikon-f5", name: "Nikon F5", brand: "Nikon", releaseYear: 1996,
+    cameraType: "SLR", filmFormat: "35mm", lensMount: "Nikon F",
+    shutter: "Electronically controlled vertical-travel focal-plane shutter", shutterSpeed: "30s–1/8000s + B",
+    metering: "3D Color Matrix, center-weighted, and spot metering", exposureModes: ["Manual", "Aperture Priority", "Shutter Priority", "Program"],
+    battery: "8× AA batteries", weight: "Approx. 1,210 g body", flashSync: "1/250s",
+    description: "Nikon's flagship professional autofocus film SLR of the late 1990s, built around high-speed film transport, advanced matrix metering, rugged construction, and broad F-mount compatibility.",
+    descriptionTh: "SLR ฟิล์มออโต้โฟกัสระดับเรือธงของ Nikon ช่วงปลายยุค 1990 เด่นด้วยระบบขึ้นฟิล์มความเร็วสูง Matrix metering ขั้นสูง บอดี้แข็งแรง และรองรับระบบ Nikon F อย่างกว้างขวาง",
+    image: image("Nikon F5.jpg", "Silvio Tanaka", "CC BY 2.0", "Nikon F5 professional autofocus 35mm SLR"),
+  },
+  {
+    kind: "camera", slug: "nikon-fa", name: "Nikon FA", brand: "Nikon", releaseYear: 1983,
+    cameraType: "SLR", filmFormat: "35mm", lensMount: "Nikon F",
+    shutter: "Electronically controlled vertical-travel focal-plane shutter with mechanical backup", shutterSpeed: "1s–1/4000s + B; mechanical backup speed",
+    metering: "Matrix and center-weighted TTL metering", exposureModes: ["Manual", "Aperture Priority", "Shutter Priority", "Program"],
+    battery: "2× LR44/SR44-type cells", weight: "Approx. 625 g body", flashSync: "1/250s",
+    description: "An advanced manual-focus Nikon SLR that introduced matrix metering and multi-mode exposure control in a compact F-mount body.",
+    descriptionTh: "SLR โฟกัสมือขั้นสูงของ Nikon ที่นำ Matrix metering และโหมดการรับแสงหลายแบบมาไว้ในบอดี้เมาท์ F ขนาดกะทัดรัด",
+    image: image("Nikon FA (22252503244).jpg", "Wikimedia Commons contributor (see source page)", "See source page", "Nikon FA 35mm manual-focus SLR camera"),
+  },
+  {
+    kind: "camera", slug: "canon-t90", name: "Canon T90", brand: "Canon", releaseYear: 1986,
+    cameraType: "SLR", filmFormat: "35mm", lensMount: "Canon FD",
+    shutter: "Electronically controlled vertical-travel focal-plane shutter", shutterSpeed: "30s–1/4000s + B",
+    metering: "Multi-pattern, partial, and spot TTL metering", exposureModes: ["Manual", "Aperture Priority", "Shutter Priority", "Program"],
+    battery: "4× AA batteries", weight: "Approx. 800 g body", flashSync: "1/250s",
+    description: "Canon's highly automated final-generation FD-mount flagship, combining manual-focus lenses with motorized film transport, multi-mode exposure, and a control layout that influenced later EOS cameras.",
+    descriptionTh: "เรือธงเมาท์ FD รุ่นปลายของ Canon ที่มีระบบอัตโนมัติสูง ใช้เลนส์โฟกัสมือร่วมกับมอเตอร์ขึ้นฟิล์ม โหมดรับแสงหลายแบบ และรูปแบบการควบคุมที่มีอิทธิพลต่อกล้อง EOS รุ่นหลัง",
+    image: image("Canon T90.jpg", "Lewis Collard", "Attribution license", "Canon T90 advanced manual-focus 35mm SLR"),
+  },
+  {
+    kind: "camera", slug: "minolta-xd7", name: "Minolta XD-7 / XD-11", brand: "Minolta", releaseYear: 1977,
+    cameraType: "SLR", filmFormat: "35mm", lensMount: "Minolta SR / MD",
+    shutter: "Electronically controlled vertical-travel focal-plane shutter with mechanical backup", shutterSpeed: "1s–1/1000s + B; mechanical backup speed",
+    metering: "TTL center-weighted metering", exposureModes: ["Manual", "Aperture Priority", "Shutter Priority"],
+    battery: "2× LR44/SR44-type cells", weight: "Approx. 560 g body", flashSync: "1/100s",
+    description: "A compact Minolta manual-focus SLR notable for offering both aperture-priority and shutter-priority automation alongside full manual control.",
+    descriptionTh: "SLR โฟกัสมือขนาดกะทัดรัดของ Minolta ที่โดดเด่นด้วยการมีทั้ง Aperture Priority และ Shutter Priority ควบคู่กับการควบคุมแมนนวลเต็มรูปแบบ",
+    image: image("Minolta-XD-7-auto-winder-D.jpg", "Hubert Berberich", "Public Domain", "Minolta XD-7 35mm SLR with Auto Winder D"),
+  },
+  {
+    kind: "camera", slug: "minolta-7000", name: "Minolta 7000 / Maxxum 7000", brand: "Minolta", releaseYear: 1985,
+    cameraType: "SLR", filmFormat: "35mm", lensMount: "Minolta A",
+    shutter: "Electronically controlled focal-plane shutter", shutterSpeed: "30s–1/2000s + B",
+    metering: "TTL multi-segment and center-weighted metering", exposureModes: ["Manual", "Aperture Priority", "Shutter Priority", "Program"],
+    battery: "4× AAA batteries", weight: "Approx. 555 g body", flashSync: "1/100s",
+    description: "A landmark autofocus 35mm SLR with body-integrated AF drive and the new Minolta A mount, helping establish the modern integrated autofocus SLR concept.",
+    descriptionTh: "SLR 35 มม. รุ่นสำคัญของยุคออโต้โฟกัส ใช้มอเตอร์ AF ในบอดี้และเปิดตัวเมาท์ Minolta A ช่วยวางแนวทางให้ระบบ SLR ออโต้โฟกัสแบบบูรณาการสมัยใหม่",
+    image: image("Minolta 7000.jpg", "Martin Taylor", "CC BY-SA 2.5", "Minolta 7000 autofocus 35mm SLR camera"),
+  },
+  {
+    kind: "camera", slug: "pentax-me-super", name: "Pentax ME Super", brand: "Pentax", releaseYear: 1979,
+    cameraType: "SLR", filmFormat: "35mm", lensMount: "Pentax K",
+    shutter: "Electronically controlled vertical-travel focal-plane shutter with mechanical sync speed", shutterSpeed: "4s–1/2000s + B; mechanical 1/125s backup",
+    metering: "TTL center-weighted metering", exposureModes: ["Manual", "Aperture Priority"],
+    battery: "2× LR44/SR44-type cells", weight: "Approx. 460 g body", flashSync: "1/125s",
+    description: "A compact Pentax K-mount SLR combining aperture-priority automation with push-button manual shutter selection in a notably small body.",
+    descriptionTh: "SLR เมาท์ Pentax K ขนาดกะทัดรัด ใช้ Aperture Priority และการเลือกสปีดชัตเตอร์แบบปุ่มกดในโหมดแมนนวล ภายในบอดี้ที่เล็กเป็นพิเศษ",
+    image: image("Pentax ME Super.jpg", "Vitaly baranov", "CC BY-SA 3.0", "Pentax ME Super compact 35mm SLR camera"),
+  },
+  {
+    kind: "camera", slug: "ricoh-gr1", name: "Ricoh GR1", brand: "Ricoh", releaseYear: 1996,
+    cameraType: "Point & Shoot", filmFormat: "35mm", lensMount: "Fixed GR Lens 28mm f/2.8",
+    shutter: "Electronically controlled shutter", shutterSpeed: "Approx. 2s–1/500s",
+    metering: "Automatic multi-segment exposure metering", exposureModes: ["Program", "Aperture Priority"],
+    battery: "CR2 lithium battery", weight: "Approx. 175 g", flashSync: "Integrated flash synchronization",
+    description: "A premium slim autofocus compact built around a fixed 28mm f/2.8 GR lens, pocketable magnesium-alloy body, and photographer-oriented exposure controls.",
+    descriptionTh: "กล้องคอมแพคออโต้โฟกัสระดับพรีเมียมทรงบาง ใช้เลนส์ GR 28mm f/2.8 แบบติดตาย บอดี้แมกนีเซียมขนาดพกพา และมีการควบคุมการรับแสงที่ออกแบบสำหรับช่างภาพ",
+    image: image("Ricoh GR1 at Tokyo GR Space.jpg", "John Cummings", "CC BY-SA 4.0", "Ricoh GR1 premium compact film camera"),
+  },
+];
