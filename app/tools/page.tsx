@@ -2,7 +2,7 @@ import Link from "next/link";
 import { parseLocale } from "@/lib/i18n";
 import { TOOL_CATALOG, TOOL_CATEGORY_LABELS, type ToolCategory } from "@/lib/tool-catalog";
 
-const categories: ToolCategory[] = ["shooting", "planning", "lab"];
+const categories: ToolCategory[] = ["shooting", "planning", "lab", "ecosystem"];
 
 export default async function ToolsPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const params = await searchParams;
@@ -14,7 +14,7 @@ export default async function ToolsPage({ searchParams }: { searchParams: Promis
       <header className="tool-hub-header">
         <p className="eyebrow">Analog photography toolkit</p>
         <h1>Tools</h1>
-        <p>{isTh ? "เครื่องมือทั้งหมดถูกแยกเป็นหน้าเฉพาะแล้ว เพื่อใช้งานบนมือถือได้ง่ายขึ้น ตั้งแต่การตั้งค่าแสง วางแผนม้วนฟิล์ม ไปจนถึงงานห้องล้างและการแปลงเนกาทีฟแบบ local" : "Every utility now has its own focused page, from exposure and roll planning to film-lab workflows and local negative conversion."}</p>
+        <p>{isTh ? "เครื่องมือทั้งหมดถูกแยกเป็นหน้าเฉพาะ ตั้งแต่ค่าแสง วางแผนม้วนฟิล์ม งานห้องล้าง ไปจนถึงการตรวจกล้อง/เลนส์ แนะนำฟิล์ม และ Advanced Light Meter แบบ local" : "Every utility has its own focused page, spanning exposure, roll planning, film-lab workflows, camera/lens compatibility, film matching, and local metering."}</p>
       </header>
 
       <div className="tool-hub-sections">
@@ -24,7 +24,7 @@ export default async function ToolsPage({ searchParams }: { searchParams: Promis
           return (
             <section className="tool-hub-section" key={category}>
               <header>
-                <p className="eyebrow">{category === "lab" ? "Film Lab Tools" : category === "planning" ? "Planning" : "Shooting"}</p>
+                <p className="eyebrow">{category === "lab" ? "Film Lab Tools" : category === "planning" ? "Planning" : category === "ecosystem" ? "Lens & Meter Ecosystem" : "Shooting"}</p>
                 <h2>{isTh ? label.th : label.en}</h2>
                 <p>{isTh ? label.descriptionTh : label.descriptionEn}</p>
               </header>
