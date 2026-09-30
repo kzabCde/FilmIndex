@@ -8,10 +8,11 @@ import "./v02.css";
 import "./ui-polish.css";
 import "./tools-expansion.css";
 import "./tool-pages.css";
+import "./lens-ecosystem.css";
 
 export const metadata: Metadata = {
   title: { default: "FilmIndex — Analog Photography Database", template: "%s | FilmIndex" },
-  description: "Explore films, classic cameras, analog techniques, discovery tools, specifications, sources, and comparisons in one modern archive.",
+  description: "Explore films, classic cameras, lenses, analog techniques, discovery tools, specifications, sources, and comparisons in one modern archive.",
   icons: {
     icon: "/filmindex-icon.svg",
     shortcut: "/filmindex-icon.svg",
