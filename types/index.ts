@@ -45,6 +45,23 @@ export type Camera = {
   image: ImageCredit;
 };
 
+export type Lens = {
+  kind: "lens";
+  slug: string;
+  name: string;
+  brand: string;
+  mount: string;
+  focalLength: string;
+  maxAperture: string;
+  focusType: "Manual" | "Autofocus";
+  coverage: "35mm" | "645" | "6x6" | "6x7";
+  minFocusM?: number;
+  filterThread?: string;
+  weight?: string;
+  description: string;
+  descriptionTh?: string;
+};
+
 export type Technique = {
   kind: "technique";
   slug: string;
@@ -60,4 +77,4 @@ export type Technique = {
   image?: ImageCredit;
 };
 
-export type SearchEntity = Film | Camera | Technique;
+export type SearchEntity = Film | Camera | Lens | Technique;
