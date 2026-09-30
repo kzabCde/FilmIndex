@@ -26,6 +26,7 @@ import { wave8Films } from "@/data/films-wave8";
 import { wave9Films } from "@/data/films-wave9";
 import { wave10Films } from "@/data/films-wave10";
 import { extraTechniques } from "@/data/techniques-extra";
+import { lenses } from "@/data/lenses";
 import { normalizeCameraType, COMPACT_CAMERA_TYPE } from "@/lib/camera-types";
 import { filmSamples } from "@/lib/film-samples";
 import type { SearchEntity } from "@/types";
@@ -39,15 +40,17 @@ export const cameras = rawCameras.map((camera) => ({
 }));
 
 export const techniques = [...baseTechniques, ...extraTechniques];
-export const allEntities: SearchEntity[] = [...films, ...cameras, ...techniques];
+export { lenses };
+export const allEntities: SearchEntity[] = [...films, ...cameras, ...lenses, ...techniques];
 
 export const catalogStats = {
   films: films.length,
   cameras: cameras.length,
+  lenses: lenses.length,
   techniques: techniques.length,
 } as const;
 
-const minimums = { films: 105, cameras: 130, techniques: 15 } as const;
+const minimums = { films: 105, cameras: 130, lenses: 40, techniques: 15 } as const;
 for (const key of Object.keys(minimums) as Array<keyof typeof minimums>) {
   if (catalogStats[key] < minimums[key]) {
     throw new Error(`FilmIndex catalog regression: ${key} has ${catalogStats[key]} entries; catalog expansion requires at least ${minimums[key]}.`);
