@@ -11,6 +11,7 @@ import { wave8Cameras } from "@/data/cameras-wave8";
 import { wave9Cameras } from "@/data/cameras-wave9";
 import { compactWave1Cameras } from "@/data/cameras-compact-wave1";
 import { compactWave2Cameras } from "@/data/cameras-compact-wave2";
+import { compactWave3Cameras } from "@/data/cameras-compact-wave3";
 import { extraFilms } from "@/data/films-extra";
 import { wave2Films } from "@/data/films-wave2";
 import { wave2FilmsB } from "@/data/films-wave2b";
@@ -26,7 +27,7 @@ import { filmSamples } from "@/lib/film-samples";
 import type { SearchEntity } from "@/types";
 
 export const films = [...baseFilms, ...extraFilms, ...wave2Films, ...wave2FilmsB, ...wave3Films, ...wave4Films, ...wave5Films, ...wave6Films, ...wave7Films, ...wave8Films, ...wave9Films];
-export const cameras = [...baseCameras, ...extraCameras, ...wave2Cameras, ...wave2CamerasB, ...wave3Cameras, ...wave4Cameras, ...wave5Cameras, ...wave6Cameras, ...wave7Cameras, ...wave8Cameras, ...wave9Cameras, ...compactWave1Cameras, ...compactWave2Cameras];
+export const cameras = [...baseCameras, ...extraCameras, ...wave2Cameras, ...wave2CamerasB, ...wave3Cameras, ...wave4Cameras, ...wave5Cameras, ...wave6Cameras, ...wave7Cameras, ...wave8Cameras, ...wave9Cameras, ...compactWave1Cameras, ...compactWave2Cameras, ...compactWave3Cameras];
 export const techniques = [...baseTechniques, ...extraTechniques];
 export const allEntities: SearchEntity[] = [...films, ...cameras, ...techniques];
 
@@ -36,7 +37,7 @@ export const catalogStats = {
   techniques: techniques.length,
 } as const;
 
-const minimums = { films: 100, cameras: 117, techniques: 15 } as const;
+const minimums = { films: 100, cameras: 120, techniques: 15 } as const;
 for (const key of Object.keys(minimums) as Array<keyof typeof minimums>) {
   if (catalogStats[key] < minimums[key]) {
     throw new Error(`FilmIndex catalog regression: ${key} has ${catalogStats[key]} entries; catalog expansion requires at least ${minimums[key]}.`);
@@ -44,7 +45,7 @@ for (const key of Object.keys(minimums) as Array<keyof typeof minimums>) {
 }
 
 const compactCameraCount = cameras.filter((camera) => camera.cameraType === "Point & Shoot").length;
-const minimumCompactCameras = 21;
+const minimumCompactCameras = 23;
 if (compactCameraCount < minimumCompactCameras) {
   throw new Error(`FilmIndex compact-camera regression: expected at least ${minimumCompactCameras} Point & Shoot cameras, found ${compactCameraCount}.`);
 }
