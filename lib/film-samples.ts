@@ -4,6 +4,7 @@ import { wave3FilmSamples } from "@/data/film-samples-wave3";
 import { wave4FilmSamples } from "@/data/film-samples-wave4";
 import { wave5FilmSamples } from "@/data/film-samples-wave5";
 import { wave6FilmSamples } from "@/data/film-samples-wave6";
+import { wave7FilmSamples } from "@/data/film-samples-wave7";
 
 export const filmSamples = {
   ...baseFilmSamples,
@@ -12,4 +13,5 @@ export const filmSamples = {
   ...wave4FilmSamples,
   ...wave5FilmSamples,
   ...wave6FilmSamples,
+  ...wave7FilmSamples,
 };
