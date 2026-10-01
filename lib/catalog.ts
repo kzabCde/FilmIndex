@@ -25,6 +25,7 @@ import { wave7Films } from "@/data/films-wave7";
 import { wave8Films } from "@/data/films-wave8";
 import { wave9Films } from "@/data/films-wave9";
 import { wave10Films } from "@/data/films-wave10";
+import { wave11Films } from "@/data/films-wave11";
 import { extraTechniques } from "@/data/techniques-extra";
 import { techniqueGuides } from "@/data/technique-guides";
 import { lenses as baseLenses } from "@/data/lenses";
@@ -35,7 +36,7 @@ import { normalizeCameraType, COMPACT_CAMERA_TYPE } from "@/lib/camera-types";
 import { filmSamples } from "@/lib/film-samples";
 import type { SearchEntity } from "@/types";
 
-const rawFilms = [...baseFilms, ...extraFilms, ...wave2Films, ...wave2FilmsB, ...wave3Films, ...wave4Films, ...wave5Films, ...wave6Films, ...wave7Films, ...wave8Films, ...wave9Films, ...wave10Films];
+const rawFilms = [...baseFilms, ...extraFilms, ...wave2Films, ...wave2FilmsB, ...wave3Films, ...wave4Films, ...wave5Films, ...wave6Films, ...wave7Films, ...wave8Films, ...wave9Films, ...wave10Films, ...wave11Films];
 export const films = rawFilms.map((film) => withProvenance(film));
 
 const rawCameras = [...baseCameras, ...extraCameras, ...wave2Cameras, ...wave2CamerasB, ...wave3Cameras, ...wave4Cameras, ...wave5Cameras, ...wave6Cameras, ...wave7Cameras, ...wave8Cameras, ...wave9Cameras, ...compactWave1Cameras, ...compactWave2Cameras, ...compactWave3Cameras, ...compactWave4Cameras, ...wave10Cameras];
