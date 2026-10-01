@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { DataQualityPanel } from "@/components/data-quality-panel";
 import { cameras, findBySlug, lenses } from "@/lib/catalog";
 import { parseLocale } from "@/lib/i18n";
 import { checkCameraLensCompatibility } from "@/lib/lens-ecosystem";
@@ -42,6 +43,9 @@ export default async function LensDetailPage({ params, searchParams }: { params:
       {lens.minFocusM ? <div><span>{isTh ? "โฟกัสใกล้สุด" : "Min focus"}</span><strong>{lens.minFocusM} m</strong></div> : null}
       {lens.filterThread ? <div><span>{isTh ? "ฟิลเตอร์" : "Filter"}</span><strong>Ø {lens.filterThread}</strong></div> : null}
     </div>
+
+    <DataQualityPanel provenance={lens.provenance} locale={locale} />
+
     <section className="lens-compatible-section">
       <p className="eyebrow">Native camera matches</p>
       <h2>{isTh ? "กล้องในฐานข้อมูลที่ใช้เมาท์เดียวกัน" : "Cameras with a native mount match"}</h2>
