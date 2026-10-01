@@ -16,8 +16,8 @@ type PositionedBinding = SelectBinding & {
   visible: boolean;
 };
 
-function optionText(option: HTMLOptionElement) {
-  return (option.textContent ?? "").trim();
+function optionText(option: HTMLOptionElement | undefined) {
+  return (option?.textContent ?? "").trim();
 }
 
 function labelForSelect(select: HTMLSelectElement) {
@@ -28,9 +28,9 @@ function labelForSelect(select: HTMLSelectElement) {
   return heading || select.name || "Select option";
 }
 
-function isVisible(select: HTMLSelectElement) {
-  const rect = select.getBoundingClientRect();
-  const style = window.getComputedStyle(select);
+function isVisible(element: HTMLElement) {
+  const rect = element.getBoundingClientRect();
+  const style = window.getComputedStyle(element);
   return rect.width > 0 && rect.height > 0 && style.display !== "none" && style.visibility !== "hidden";
 }
 
@@ -46,6 +46,15 @@ function positionOf(binding: SelectBinding): PositionedBinding {
   };
 }
 
+function focusAdjacent(select: HTMLSelectElement, reverse: boolean) {
+  const candidates = Array.from(document.querySelectorAll<HTMLElement>(
+    'a[href],button:not([disabled]),input:not([disabled]):not([type="hidden"]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])',
+  )).filter((element) => !element.closest(".searchable-select-layer") && isVisible(element));
+  const index = candidates.indexOf(select);
+  const target = candidates[index + (reverse ? -1 : 1)];
+  target?.focus();
+}
+
 function SearchableSelectInput({ binding }: { binding: PositionedBinding }) {
   const { select } = binding;
   const [text, setText] = useState(() => optionText(select.options[select.selectedIndex]));
@@ -58,13 +67,19 @@ function SearchableSelectInput({ binding }: { binding: PositionedBinding }) {
 
   useEffect(() => {
     const sync = () => setText(optionText(select.options[select.selectedIndex]));
+    const redirectFocus = () => {
+      const input = document.querySelector<HTMLInputElement>(`[data-searchable-select-for="${binding.id}"] input`);
+      input?.focus();
+    };
     select.addEventListener("change", sync);
     select.addEventListener("input", sync);
+    select.addEventListener("focus", redirectFocus);
     return () => {
       select.removeEventListener("change", sync);
       select.removeEventListener("input", sync);
+      select.removeEventListener("focus", redirectFocus);
     };
-  }, [select]);
+  }, [binding.id, select]);
 
   function commit(raw: string) {
     const normalized = raw.trim().toLocaleLowerCase();
@@ -96,6 +111,7 @@ function SearchableSelectInput({ binding }: { binding: PositionedBinding }) {
       <input
         type="text"
         role="combobox"
+        tabIndex={-1}
         aria-label={labelForSelect(select)}
         aria-autocomplete="list"
         aria-expanded={focused}
@@ -118,11 +134,16 @@ function SearchableSelectInput({ binding }: { binding: PositionedBinding }) {
           if (event.key === "Enter") {
             event.preventDefault();
             if (commit(text)) event.currentTarget.blur();
-          }
-          if (event.key === "Escape") {
+          } else if (event.key === "Escape") {
             event.preventDefault();
             restore();
             event.currentTarget.blur();
+          } else if (event.key === "Tab") {
+            event.preventDefault();
+            if (!commit(text)) restore();
+            focusAdjacent(select, event.shiftKey);
+          } else if (event.key === "ArrowDown" && !focused) {
+            setFocused(true);
           }
         }}
       />
@@ -167,7 +188,7 @@ export function SearchableSelectLayer() {
     };
 
     const observer = new MutationObserver(scheduleScan);
-    observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["class", "style", "hidden"] });
+    observer.observe(document.body, { childList: true, subtree: true });
     const resizeObserver = new ResizeObserver(scheduleScan);
     resizeObserver.observe(document.documentElement);
     window.addEventListener("resize", scheduleScan);
