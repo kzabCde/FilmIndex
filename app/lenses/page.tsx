@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { lenses } from "@/lib/catalog";
 import { parseLocale } from "@/lib/i18n";
@@ -20,7 +21,7 @@ export default async function LensesPage({ searchParams }: { searchParams: Promi
     <header>
       <p className="eyebrow">Lens Database</p>
       <h1>{isTh ? "ฐานข้อมูลเลนส์" : "Lenses"}</h1>
-      <p>{isTh ? `ฐานข้อมูลเลนส์ฟิล์มแบบ local จำนวน ${lenses.length} รุ่น ครอบคลุมระบบ SLR, Rangefinder และ Medium Format หลัก` : `${lenses.length} locally bundled film-camera lenses across major SLR, rangefinder, and medium-format systems.`}</p>
+      <p>{isTh ? `ฐานข้อมูลเลนส์ฟิล์มแบบ local จำนวน ${lenses.length} รุ่น ครอบคลุมระบบ SLR, Rangefinder และ Medium Format หลัก พร้อมภาพอ้างอิงและแหล่งที่มา` : `${lenses.length} locally bundled film-camera lenses across major SLR, rangefinder, and medium-format systems, now with sourced reference media.`}</p>
     </header>
 
     <form className="lens-filter-form" action="/lenses">
@@ -33,11 +34,14 @@ export default async function LensesPage({ searchParams }: { searchParams: Promi
 
     <div className="lens-results-meta"><strong>{filtered.length}</strong><span>{isTh ? "รายการ" : "lenses"}</span></div>
     <div className="lens-grid">
-      {filtered.map((lens) => <Link className="lens-card" href={`/lenses/${lens.slug}?lang=${locale}`} key={lens.slug}>
-        <div className="lens-card-top"><span>{lens.mount}</span><strong>{lens.focalLength}</strong></div>
-        <h2>{lens.name}</h2>
-        <p>{lens.brand} · {lens.maxAperture} · {lens.focusType}</p>
-        <div className="lens-card-meta"><span>{lens.coverage}</span>{lens.filterThread ? <span>Ø {lens.filterThread}</span> : null}{lens.minFocusM ? <span>{lens.minFocusM} m min</span> : null}</div>
+      {filtered.map((lens) => <Link className="lens-card lens-card-with-media" href={`/lenses/${lens.slug}?lang=${locale}`} key={lens.slug}>
+        {lens.image ? <div className="lens-card-media"><Image src={lens.image.url} alt={lens.image.alt} width={900} height={650} sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" /><span>{lens.imageMatch === "representative" ? (isTh ? "ภาพอ้างอิงระบบ/ตระกูล" : "System/family reference") : (isTh ? "ภาพอ้างอิงรุ่น" : "Model reference")}</span></div> : null}
+        <div className="lens-card-body">
+          <div className="lens-card-top"><span>{lens.mount}</span><strong>{lens.focalLength}</strong></div>
+          <h2>{lens.name}</h2>
+          <p>{lens.brand} · {lens.maxAperture} · {lens.focusType}</p>
+          <div className="lens-card-meta"><span>{lens.coverage}</span>{lens.filterThread ? <span>Ø {lens.filterThread}</span> : null}{lens.minFocusM ? <span>{lens.minFocusM} m min</span> : null}</div>
+        </div>
       </Link>)}
     </div>
   </section>;

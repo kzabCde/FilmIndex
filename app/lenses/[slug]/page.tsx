@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cameras, findBySlug, lenses } from "@/lib/catalog";
@@ -23,6 +24,16 @@ export default async function LensDetailPage({ params, searchParams }: { params:
       <div><p className="eyebrow">{lens.mount} · {lens.coverage}</p><h1>{lens.name}</h1><p>{isTh ? lens.descriptionTh : lens.description}</p></div>
       <div className="lens-hero-spec"><span>{lens.focalLength}</span><strong>{lens.maxAperture}</strong></div>
     </header>
+
+    {lens.image ? <figure className="lens-detail-media">
+      <Image src={lens.image.url} alt={lens.image.alt} width={1400} height={950} sizes="(max-width: 900px) 100vw, 1100px" priority />
+      <figcaption>
+        <span><strong>{lens.imageMatch === "representative" ? (isTh ? "ภาพอ้างอิงระบบ/ตระกูล — ไม่ใช่ภาพยืนยันรุ่นตรง" : "System/family reference — not an exact-model identification") : (isTh ? "ภาพอ้างอิงรุ่น" : "Model reference")}</strong></span>
+        <span>{lens.image.creator} · {lens.image.license}</span>
+        <a href={lens.image.sourceUrl} target="_blank" rel="noreferrer">{isTh ? "ดูแหล่งที่มา" : "View source"} ↗</a>
+      </figcaption>
+    </figure> : null}
+
     <div className="lens-spec-grid">
       <div><span>{isTh ? "แบรนด์" : "Brand"}</span><strong>{lens.brand}</strong></div>
       <div><span>{isTh ? "เมาท์" : "Mount"}</span><strong>{lens.mount}</strong></div>

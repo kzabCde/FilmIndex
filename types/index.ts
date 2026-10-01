@@ -60,6 +60,8 @@ export type Lens = {
   weight?: string;
   description: string;
   descriptionTh?: string;
+  image?: ImageCredit;
+  imageMatch?: "exact" | "representative";
 };
 
 export type Technique = {
