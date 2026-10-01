@@ -2,7 +2,8 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "git": {
     "deploymentEnabled": {
-      "feature/v0.8-data-depth-quality": false
+      "feature/v0.8-data-depth-quality": false,
+      "feature/v0.9-compatibility-ecosystem": false
     }
   }
 }
