@@ -2,6 +2,46 @@
 
 FilmIndex is a modern analog photography knowledge database and local-first shooting companion for films, cameras, lenses, techniques, discovery, comparison, field tools, and film-lab workflows.
 
+## v0.8.0 scope — Database Depth & Data Quality
+
+v0.8.0 makes data provenance a first-class part of FilmIndex instead of treating every catalog field as equally certain.
+
+### Database depth
+
+- Lens Database expands from 46 to 100 models across the existing Canon FD/EF, Nikon F, M42, Pentax K, Minolta SR, Olympus OM, Leica M, Contax/Yashica, Mamiya 645, Hasselblad V, and Pentax 67 systems.
+- New lens records deliberately stay inside already modeled mounts so compatibility logic remains conservative.
+- Existing film and camera catalogs are retained and normalized through the same provenance layer rather than being silently treated as fully verified.
+- Exact-model lens imagery is used where available; otherwise a sourced same-system reference image is shown and explicitly labelled representative.
+
+### Record provenance
+
+Film, Camera, and Lens records now expose a common provenance model:
+
+- `sources` with publisher, URL, and source scope
+- `lastVerified`
+- `confidence`: `verified`, `community-reference`, or `incomplete`
+- lifecycle status: `current`, `discontinued`, `historical`, or `unknown`
+- optional introduced/production years
+- optional country of manufacture
+- optional generation / family
+- optional variants and verification notes
+
+`verified` has a strict meaning: at least one model-level or manual-level source must support the record. Brand catalogs, system references, image pages, or community databases can support a record but do not automatically promote it to Verified.
+
+Every Film, Camera, and Lens detail page includes a Data Quality panel showing the record's current confidence, verification date, lifecycle metadata, notes, and source links. `/sources` also acts as a catalog-wide quality dashboard with confidence totals and source coverage.
+
+### Build-time quality gates
+
+The production build now rejects:
+
+- duplicate Film / Camera / Lens slugs
+- records with no provenance source
+- malformed `lastVerified` values
+- records marked `verified` without a model/manual-level source
+- a lens catalog below 100 entries
+
+Existing guards for real film samples, technique guides, compact-camera coverage, normalized camera types, and sourced lens media remain active.
+
 ## v0.6.0 scope — Technique Guides
 
 v0.6.0 turns every Technique article into a more practical field guide instead of a short two-section note.
@@ -30,7 +70,7 @@ v0.5.0 connects the film, camera, lens, and exposure data into one practical eco
 - Initial catalog contains 46 representative analog-system lenses across Canon FD/EF, Nikon F, M42, Pentax K, Minolta SR, Olympus OM, Leica M, Contax/Yashica, Mamiya 645, Hasselblad V, and Pentax 67
 - Individual `/lenses/[slug]` pages show specifications and native camera matches from the local camera catalog
 - Lenses are searchable from Global Search and accessible from primary navigation
-- Build-time catalog regression guard prevents the bundled lens database from dropping below 40 records
+- Build-time catalog regression guard prevents the bundled lens database from dropping below its versioned minimum
 
 ### Camera / Lens Compatibility
 
@@ -127,7 +167,7 @@ Open `http://localhost:3000`.
 
 FilmIndex is intentionally local-first and does not use a hosted database, CMS, authentication service, or runtime catalog API. Films, cameras, lenses, techniques, source metadata, translations, sample-photo records, discovery scoring, recommendations, compatibility rules, and calculator logic are version-controlled with the application and bundled into the build.
 
-The initial catalog remains in `lib/data.ts`; expanded film/camera records live under `data/films-*` and `data/cameras-*`. Lens records live in `data/lenses.ts`. Film sample photographs and attribution metadata live in `data/film-samples.ts`. Practical technique-guide data lives in `data/technique-guides.ts`. `lib/catalog.ts` combines application-facing entities and validates minimum catalog/guide coverage. `lib/discovery.ts` contains Film Finder and Related Film scoring. `lib/photography-tools.ts` contains calculator functions, `lib/lens-ecosystem.ts` contains lens compatibility, film/camera recommendation, and light-meter math, and `lib/tool-catalog.ts` defines the Tool Hub.
+The initial catalog remains in `lib/data.ts`; expanded film/camera records live under `data/films-*` and `data/cameras-*`. Lens records live in `data/lenses.ts` and versioned expansion waves such as `data/lenses-wave8.ts`. `data/catalog-provenance.ts` normalizes source confidence, lifecycle metadata, record families, and verification dates across Film, Camera, and Lens records. Film sample photographs and attribution metadata live under `data/film-samples*`. Practical technique-guide data lives in `data/technique-guides.ts`. `lib/catalog.ts` combines application-facing entities and enforces catalog and data-quality guards. `lib/discovery.ts` contains Film Finder and Related Film scoring. `lib/photography-tools.ts` contains calculator functions, `lib/lens-ecosystem.ts` contains lens compatibility, film/camera recommendation, and light-meter math, and `lib/tool-catalog.ts` defines the Tool Hub.
 
 Search, filters, detail pages, recommendations, compatibility checks, and calculators operate from bundled application data. `localStorage` is reserved for local preferences and user-side state such as theme, language, recent searches, My Film Shelf, and Roll Logbook entries. Negative conversion and camera-meter preview are processed locally in the browser.
 
@@ -137,7 +177,11 @@ English is the default language. Thai can be selected from the header. Language 
 
 ## Accuracy notes
 
-FilmIndex distinguishes catalog facts from estimates and heuristics. Reciprocity presets are generic unless manufacturer-specific data is explicitly added. Development calculations begin with trusted user-supplied base data. Expired-film recommendations are adjustable heuristics. Adapter compatibility is intentionally conservative. Camera-based web metering is treated as relative unless calibrated because browser auto exposure can change the video signal.
+FilmIndex distinguishes catalog facts from estimates and heuristics. A `verified` record requires a model-specific or manual-level source; catalog, series, image, and community references remain explicitly lower-confidence until their core fields are checked against direct documentation. `lastVerified` records when the local provenance assessment was last updated, not when a manufacturer last changed a product.
+
+FilmIndex also avoids inferring a current/discontinued state when current manufacturer evidence is ambiguous. Historical camera and lens entries describe their place in the catalog without implying that every production run, country, or variant is identical.
+
+Reciprocity presets are generic unless manufacturer-specific data is explicitly added. Development calculations begin with trusted user-supplied base data. Expired-film recommendations are adjustable heuristics. Adapter compatibility is intentionally conservative. Camera-based web metering is treated as relative unless calibrated because browser auto exposure can change the video signal.
 
 Technique guides also distinguish practical rules of thumb from manufacturer-specific procedures. Film/developer times, airport security procedures, reciprocity data, and chemistry instructions should be checked against the relevant current source when precision or safety matters.
 

@@ -8,6 +8,31 @@ export type ImageCredit = {
   alt: string;
 };
 
+export type RecordSourceScope = "model" | "manual" | "series" | "brand-catalog" | "community" | "image";
+
+export type RecordSource = {
+  label: string;
+  publisher: string;
+  url: string;
+  scope: RecordSourceScope;
+};
+
+export type RecordConfidence = "verified" | "community-reference" | "incomplete";
+export type ProductStatus = "current" | "discontinued" | "historical" | "unknown";
+
+export type RecordProvenance = {
+  confidence: RecordConfidence;
+  lastVerified: string;
+  productStatus: ProductStatus;
+  sources: RecordSource[];
+  introducedYear?: number;
+  productionYears?: { from?: number; to?: number | null };
+  countryOfManufacture?: string;
+  generation?: string;
+  variants?: string[];
+  notes?: string[];
+};
+
 export type Film = {
   kind: "film";
   slug: string;
@@ -22,6 +47,7 @@ export type Film = {
   characteristics: Record<string, string>;
   uses: string[];
   image?: ImageCredit;
+  provenance?: RecordProvenance;
 };
 
 export type Camera = {
@@ -43,6 +69,7 @@ export type Camera = {
   description: string;
   descriptionTh?: string;
   image: ImageCredit;
+  provenance?: RecordProvenance;
 };
 
 export type Lens = {
@@ -62,6 +89,7 @@ export type Lens = {
   descriptionTh?: string;
   image?: ImageCredit;
   imageMatch?: "exact" | "representative";
+  provenance?: RecordProvenance;
 };
 
 export type Technique = {
