@@ -27,7 +27,8 @@ import { wave9Films } from "@/data/films-wave9";
 import { wave10Films } from "@/data/films-wave10";
 import { extraTechniques } from "@/data/techniques-extra";
 import { techniqueGuides } from "@/data/technique-guides";
-import { lenses } from "@/data/lenses";
+import { lenses as baseLenses } from "@/data/lenses";
+import { lensImages } from "@/data/lens-images";
 import { normalizeCameraType, COMPACT_CAMERA_TYPE } from "@/lib/camera-types";
 import { filmSamples } from "@/lib/film-samples";
 import type { SearchEntity } from "@/types";
@@ -41,7 +42,11 @@ export const cameras = rawCameras.map((camera) => ({
 }));
 
 export const techniques = [...baseTechniques, ...extraTechniques];
-export { lenses };
+export const lenses = baseLenses.map((lens) => ({
+  ...lens,
+  image: lensImages[lens.slug]?.image,
+  imageMatch: lensImages[lens.slug]?.match,
+}));
 export const allEntities: SearchEntity[] = [...films, ...cameras, ...lenses, ...techniques];
 
 export const catalogStats = {
@@ -77,6 +82,11 @@ if (filmsWithoutSamples.length) {
 const techniquesWithoutGuides = techniques.filter((technique) => !techniqueGuides[technique.slug]);
 if (techniquesWithoutGuides.length) {
   throw new Error(`FilmIndex technique-guide regression: missing practical guides for ${techniquesWithoutGuides.map((technique) => technique.slug).join(", ")}.`);
+}
+
+const lensesWithoutImages = lenses.filter((lens) => !lens.image);
+if (lensesWithoutImages.length) {
+  throw new Error(`FilmIndex lens-image regression: missing sourced lens media for ${lensesWithoutImages.map((lens) => lens.slug).join(", ")}.`);
 }
 
 export function findBySlug<T extends { slug: string }>(items: T[], slug: string) {
