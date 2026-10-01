@@ -52,6 +52,7 @@ export function Header() {
         <Link href={withLocale("/films", locale)}>{copy.nav.films}</Link>
         <Link href={withLocale("/cameras", locale)}>{copy.nav.cameras}</Link>
         <Link href={withLocale("/lenses", locale)}>{locale === "th" ? "เลนส์" : "Lenses"}</Link>
+        <Link href={withLocale("/mounts", locale)}>{locale === "th" ? "เมาท์" : "Mounts"}</Link>
         <Link href={withLocale("/finder", locale)}>{locale === "th" ? "ค้นหาฟิล์ม" : "Finder"}</Link>
         <Link href={withLocale("/tools", locale)}>{locale === "th" ? "เครื่องมือ" : "Tools"}</Link>
         <Link href={withLocale("/techniques", locale)}>{copy.nav.techniques}</Link>
