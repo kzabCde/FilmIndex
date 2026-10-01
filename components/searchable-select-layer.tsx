@@ -1,184 +1,258 @@
 "use client";
 
 import { createPortal } from "react-dom";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type SelectBinding = {
   select: HTMLSelectElement;
+  mount: HTMLSpanElement;
   id: string;
 };
 
-type PositionedBinding = SelectBinding & {
-  top: number;
-  left: number;
-  width: number;
-  height: number;
-  visible: boolean;
+type SelectOption = {
+  value: string;
+  label: string;
+  disabled: boolean;
 };
 
 function optionText(option: HTMLOptionElement | undefined) {
   return (option?.textContent ?? "").trim();
 }
 
+function selectedText(select: HTMLSelectElement) {
+  return optionText(select.options[select.selectedIndex]);
+}
+
 function labelForSelect(select: HTMLSelectElement) {
   const explicit = select.getAttribute("aria-label");
   if (explicit) return explicit;
   const label = select.closest("label");
-  const heading = label?.querySelector("span")?.textContent?.trim();
+  const heading = label?.querySelector(":scope > span")?.textContent?.trim()
+    ?? label?.querySelector("span")?.textContent?.trim();
   return heading || select.name || "Select option";
 }
 
-function isVisible(element: HTMLElement) {
-  const rect = element.getBoundingClientRect();
-  const style = window.getComputedStyle(element);
-  return rect.width > 0 && rect.height > 0 && style.display !== "none" && style.visibility !== "hidden";
+function readOptions(select: HTMLSelectElement): SelectOption[] {
+  return Array.from(select.options).map((option) => ({
+    value: option.value,
+    label: optionText(option),
+    disabled: option.disabled,
+  }));
 }
 
-function positionOf(binding: SelectBinding): PositionedBinding {
-  const rect = binding.select.getBoundingClientRect();
-  return {
-    ...binding,
-    top: rect.top,
-    left: rect.left,
-    width: rect.width,
-    height: rect.height,
-    visible: isVisible(binding.select),
-  };
-}
+function SearchableSelectInput({ binding }: { binding: SelectBinding }) {
+  const { select, id } = binding;
+  const rootRef = useRef<HTMLSpanElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [query, setQuery] = useState(() => selectedText(select));
+  const [open, setOpen] = useState(false);
+  const [typed, setTyped] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
+  const [, refreshOptions] = useState(0);
 
-function focusAdjacent(select: HTMLSelectElement, reverse: boolean) {
-  const candidates = Array.from(document.querySelectorAll<HTMLElement>(
-    'a[href],button:not([disabled]),input:not([disabled]):not([type="hidden"]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])',
-  )).filter((element) => !element.closest(".searchable-select-layer") && isVisible(element));
-  const index = candidates.indexOf(select);
-  const target = candidates[index + (reverse ? -1 : 1)];
-  target?.focus();
-}
-
-function SearchableSelectInput({ binding }: { binding: PositionedBinding }) {
-  const { select } = binding;
-  const [text, setText] = useState(() => optionText(select.options[select.selectedIndex]));
-  const [focused, setFocused] = useState(false);
-
-  const options = useMemo(
-    () => Array.from(select.options).map((option) => ({ value: option.value, label: optionText(option), disabled: option.disabled })),
-    [select, select.options.length],
-  );
+  const options = readOptions(select);
+  const needle = typed ? query.trim().toLocaleLowerCase() : "";
+  const filtered = options.filter((option) => !needle || option.label.toLocaleLowerCase().includes(needle));
+  const menuId = `${id}-menu`;
 
   useEffect(() => {
-    const sync = () => setText(optionText(select.options[select.selectedIndex]));
-    const redirectFocus = () => {
-      const input = document.querySelector<HTMLInputElement>(`[data-searchable-select-for="${binding.id}"] input`);
-      input?.focus();
+    const sync = () => {
+      setQuery(selectedText(select));
+      setTyped(false);
+      setActiveIndex(-1);
+      refreshOptions((value) => value + 1);
     };
     select.addEventListener("change", sync);
     select.addEventListener("input", sync);
-    select.addEventListener("focus", redirectFocus);
     return () => {
       select.removeEventListener("change", sync);
       select.removeEventListener("input", sync);
-      select.removeEventListener("focus", redirectFocus);
     };
-  }, [binding.id, select]);
+  }, [select]);
 
-  function commit(raw: string) {
-    const normalized = raw.trim().toLocaleLowerCase();
-    const match = options.find((option) => option.label.toLocaleLowerCase() === normalized)
-      ?? options.find((option) => option.value.toLocaleLowerCase() === normalized);
-    if (!match || match.disabled) return false;
-    if (select.value !== match.value) {
-      const valueSetter = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, "value")?.set;
-      valueSetter?.call(select, match.value);
+  function choose(option: SelectOption) {
+    if (option.disabled) return;
+    if (select.value !== option.value) {
+      const setter = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, "value")?.set;
+      setter?.call(select, option.value);
       select.dispatchEvent(new Event("input", { bubbles: true }));
       select.dispatchEvent(new Event("change", { bubbles: true }));
     }
-    setText(match.label);
-    return true;
+    setQuery(option.label);
+    setTyped(false);
+    setOpen(false);
+    setActiveIndex(-1);
+    inputRef.current?.focus();
   }
 
-  function restore() {
-    setText(optionText(select.options[select.selectedIndex]));
+  function openMenu() {
+    refreshOptions((value) => value + 1);
+    setQuery(selectedText(select));
+    setTyped(false);
+    setActiveIndex(-1);
+    setOpen(true);
   }
 
-  if (!binding.visible) return null;
+  function closeMenu() {
+    setOpen(false);
+    setTyped(false);
+    setActiveIndex(-1);
+    setQuery(selectedText(select));
+  }
+
+  function moveActive(delta: number) {
+    const enabled = filtered.map((option, index) => ({ option, index })).filter(({ option }) => !option.disabled);
+    if (!enabled.length) return;
+    const currentPosition = enabled.findIndex(({ index }) => index === activeIndex);
+    const nextPosition = currentPosition < 0
+      ? (delta > 0 ? 0 : enabled.length - 1)
+      : (currentPosition + delta + enabled.length) % enabled.length;
+    setActiveIndex(enabled[nextPosition].index);
+  }
 
   return (
-    <div
-      className={`searchable-select-overlay${focused ? " is-focused" : ""}`}
-      style={{ top: binding.top, left: binding.left, width: binding.width, height: binding.height }}
-      data-searchable-select-for={binding.id}
-    >
-      <input
-        type="text"
-        role="combobox"
-        tabIndex={-1}
-        aria-label={labelForSelect(select)}
-        aria-autocomplete="list"
-        aria-expanded={focused}
-        list={`${binding.id}-options`}
-        value={text}
-        onFocus={(event) => {
-          setFocused(true);
-          event.currentTarget.select();
-        }}
-        onChange={(event) => {
-          const next = event.target.value;
-          setText(next);
-          commit(next);
-        }}
-        onBlur={() => {
-          setFocused(false);
-          if (!commit(text)) restore();
-        }}
-        onKeyDown={(event) => {
-          if (event.key === "Enter") {
-            event.preventDefault();
-            if (commit(text)) event.currentTarget.blur();
-          } else if (event.key === "Escape") {
-            event.preventDefault();
-            restore();
-            event.currentTarget.blur();
-          } else if (event.key === "Tab") {
-            event.preventDefault();
-            if (!commit(text)) restore();
-            focusAdjacent(select, event.shiftKey);
-          } else if (event.key === "ArrowDown" && !focused) {
-            setFocused(true);
-          }
-        }}
-      />
-      <span className="searchable-select-chevron" aria-hidden="true">⌄</span>
-      <datalist id={`${binding.id}-options`}>
-        {options.map((option, index) => (
-          <option key={`${option.value}-${index}`} value={option.label}>{option.label}</option>
-        ))}
-      </datalist>
-    </div>
+    <span className={`searchable-select${open ? " is-open" : ""}`} ref={rootRef} data-searchable-select-for={id}>
+      <span className="searchable-select-control">
+        <input
+          ref={inputRef}
+          type="text"
+          role="combobox"
+          autoComplete="off"
+          aria-label={labelForSelect(select)}
+          aria-autocomplete="list"
+          aria-controls={menuId}
+          aria-expanded={open}
+          aria-activedescendant={open && activeIndex >= 0 ? `${id}-option-${activeIndex}` : undefined}
+          value={query}
+          onFocus={(event) => {
+            if (!open) openMenu();
+            event.currentTarget.select();
+          }}
+          onClick={() => {
+            if (!open) openMenu();
+          }}
+          onChange={(event) => {
+            setQuery(event.target.value);
+            setTyped(true);
+            setOpen(true);
+            setActiveIndex(-1);
+          }}
+          onBlur={() => {
+            window.setTimeout(() => {
+              if (!rootRef.current?.contains(document.activeElement)) closeMenu();
+            }, 0);
+          }}
+          onKeyDown={(event) => {
+            if (event.key === "ArrowDown") {
+              event.preventDefault();
+              if (!open) openMenu();
+              moveActive(1);
+            } else if (event.key === "ArrowUp") {
+              event.preventDefault();
+              if (!open) openMenu();
+              moveActive(-1);
+            } else if (event.key === "Enter" && open) {
+              const target = activeIndex >= 0 ? filtered[activeIndex] : filtered.find((option) => !option.disabled);
+              if (target) {
+                event.preventDefault();
+                choose(target);
+              }
+            } else if (event.key === "Escape") {
+              event.preventDefault();
+              closeMenu();
+              event.currentTarget.select();
+            }
+          }}
+        />
+        <button
+          type="button"
+          className="searchable-select-toggle"
+          tabIndex={-1}
+          aria-label={open ? "Close options" : "Open options"}
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => {
+            if (open) closeMenu();
+            else openMenu();
+            inputRef.current?.focus();
+          }}
+        >
+          <span aria-hidden="true">⌄</span>
+        </button>
+      </span>
+
+      {open ? (
+        <span className="searchable-select-menu" id={menuId} role="listbox">
+          {filtered.length ? filtered.map((option, index) => (
+            <button
+              id={`${id}-option-${index}`}
+              key={`${option.value}-${index}`}
+              type="button"
+              role="option"
+              aria-selected={select.value === option.value}
+              disabled={option.disabled}
+              className={index === activeIndex ? "is-active" : ""}
+              onMouseDown={(event) => event.preventDefault()}
+              onMouseEnter={() => setActiveIndex(index)}
+              onClick={() => choose(option)}
+            >
+              {option.label || "—"}
+            </button>
+          )) : <span className="searchable-select-empty">No matching options</span>}
+        </span>
+      ) : null}
+    </span>
   );
 }
 
 export function SearchableSelectLayer() {
-  const [bindings, setBindings] = useState<PositionedBinding[]>([]);
-  const [mounted, setMounted] = useState(false);
+  const [bindings, setBindings] = useState<SelectBinding[]>([]);
 
   useEffect(() => {
-    setMounted(true);
     let raf = 0;
     let nextId = 0;
     const ids = new WeakMap<HTMLSelectElement, string>();
+    const originals = new WeakMap<HTMLSelectElement, { tabIndex: string | null; ariaHidden: string | null }>();
+    let previous: SelectBinding[] = [];
 
     const scan = () => {
-      const selects = Array.from(document.querySelectorAll("select"));
+      const selects = Array.from(document.querySelectorAll<HTMLSelectElement>("select:not([data-no-search-enhance])"));
+      const activeSelects = new Set(selects);
+
+      previous.forEach((binding) => {
+        if (!activeSelects.has(binding.select) || !binding.select.isConnected) binding.mount.remove();
+      });
+
       const next = selects.map((select) => {
         let id = ids.get(select);
         if (!id) {
           nextId += 1;
           id = `filmindex-searchable-select-${nextId}`;
           ids.set(select, id);
-          select.dataset.searchableSelectEnhanced = "true";
+          originals.set(select, {
+            tabIndex: select.getAttribute("tabindex"),
+            ariaHidden: select.getAttribute("aria-hidden"),
+          });
         }
-        return positionOf({ select, id });
+
+        let mount = select.nextElementSibling instanceof HTMLSpanElement && select.nextElementSibling.classList.contains("searchable-select-mount")
+          ? select.nextElementSibling
+          : null;
+
+        if (!mount) {
+          mount = document.createElement("span");
+          mount.className = "searchable-select-mount";
+          select.insertAdjacentElement("afterend", mount);
+        }
+
+        select.dataset.searchableSelectEnhanced = "true";
+        select.classList.add("searchable-select-native");
+        select.tabIndex = -1;
+        select.setAttribute("aria-hidden", "true");
+
+        return { select, mount, id };
       });
+
+      previous = next;
       setBindings(next);
     };
 
@@ -187,29 +261,32 @@ export function SearchableSelectLayer() {
       raf = requestAnimationFrame(scan);
     };
 
-    const observer = new MutationObserver(scheduleScan);
+    const observer = new MutationObserver((mutations) => {
+      const relevant = mutations.some((mutation) => {
+        const target = mutation.target;
+        return !(target instanceof Element && target.closest(".searchable-select-mount"));
+      });
+      if (relevant) scheduleScan();
+    });
+
     observer.observe(document.body, { childList: true, subtree: true });
-    const resizeObserver = new ResizeObserver(scheduleScan);
-    resizeObserver.observe(document.documentElement);
-    window.addEventListener("resize", scheduleScan);
-    window.addEventListener("scroll", scheduleScan, true);
     scan();
 
     return () => {
       cancelAnimationFrame(raf);
       observer.disconnect();
-      resizeObserver.disconnect();
-      window.removeEventListener("resize", scheduleScan);
-      window.removeEventListener("scroll", scheduleScan, true);
-      document.querySelectorAll("select[data-searchable-select-enhanced]").forEach((select) => delete (select as HTMLElement).dataset.searchableSelectEnhanced);
+      previous.forEach(({ select, mount }) => {
+        mount.remove();
+        select.classList.remove("searchable-select-native");
+        delete select.dataset.searchableSelectEnhanced;
+        const original = originals.get(select);
+        if (original?.tabIndex === null) select.removeAttribute("tabindex");
+        else if (original) select.setAttribute("tabindex", original.tabIndex);
+        if (original?.ariaHidden === null) select.removeAttribute("aria-hidden");
+        else if (original) select.setAttribute("aria-hidden", original.ariaHidden);
+      });
     };
   }, []);
 
-  if (!mounted) return null;
-  return createPortal(
-    <div className="searchable-select-layer" aria-hidden={false}>
-      {bindings.map((binding) => <SearchableSelectInput key={binding.id} binding={binding} />)}
-    </div>,
-    document.body,
-  );
+  return <>{bindings.map((binding) => createPortal(<SearchableSelectInput binding={binding} />, binding.mount, binding.id))}</>;
 }
