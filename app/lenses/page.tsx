@@ -1,21 +1,60 @@
 import Image from "next/image";
 import Link from "next/link";
+import { CatalogFilters } from "@/components/catalog-filters";
 import { lenses } from "@/lib/catalog";
 import { parseLocale } from "@/lib/i18n";
+
+const stringParam = (value: string | string[] | undefined) => typeof value === "string" ? value : "";
 
 export default async function LensesPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const params = await searchParams;
   const locale = parseLocale(params.lang);
   const isTh = locale === "th";
-  const query = typeof params.q === "string" ? params.q.trim().toLowerCase() : "";
-  const brand = typeof params.brand === "string" ? params.brand : "All";
-  const mount = typeof params.mount === "string" ? params.mount : "All";
+  const brand = stringParam(params.brand);
+  const mount = stringParam(params.mount);
+  const focalLength = stringParam(params.focalLength);
+  const focusType = stringParam(params.focusType);
+  const coverage = stringParam(params.coverage);
+
   const brands = [...new Set(lenses.map((lens) => lens.brand))].sort();
   const mounts = [...new Set(lenses.map((lens) => lens.mount))].sort();
-  const filtered = lenses.filter((lens) => {
-    const matchesQuery = !query || `${lens.name} ${lens.brand} ${lens.mount} ${lens.focalLength} ${lens.description}`.toLowerCase().includes(query);
-    return matchesQuery && (brand === "All" || lens.brand === brand) && (mount === "All" || lens.mount === mount);
-  });
+  const focalLengths = [...new Set(lenses.map((lens) => lens.focalLength))].sort((a, b) => parseFloat(a) - parseFloat(b));
+  const focusTypes = [...new Set(lenses.map((lens) => lens.focusType))].sort();
+  const coverages = [...new Set(lenses.map((lens) => lens.coverage))].sort();
+
+  const filtered = lenses.filter((lens) =>
+    (!brand || lens.brand === brand) &&
+    (!mount || lens.mount === mount) &&
+    (!focalLength || lens.focalLength === focalLength) &&
+    (!focusType || lens.focusType === focusType) &&
+    (!coverage || lens.coverage === coverage)
+  );
+
+  const filterCopy = isTh
+    ? {
+        brand: "แบรนด์",
+        mount: "เมาท์",
+        focalLength: "ทางยาวโฟกัส",
+        focusType: "ระบบโฟกัส",
+        coverage: "ขนาดฟิล์ม",
+        manual: "แมนนวล",
+        autofocus: "ออโต้โฟกัส",
+        apply: "ใช้ตัวกรอง",
+        clear: "ล้างตัวกรอง",
+        results: "รายการ",
+      }
+    : {
+        brand: "Brand",
+        mount: "Mount",
+        focalLength: "Focal length",
+        focusType: "Focus type",
+        coverage: "Coverage",
+        manual: "Manual",
+        autofocus: "Autofocus",
+        apply: "Apply filters",
+        clear: "Clear filters",
+        results: "results",
+      };
 
   return <section className="shell listing-page lens-page">
     <header>
@@ -24,15 +63,23 @@ export default async function LensesPage({ searchParams }: { searchParams: Promi
       <p>{isTh ? `ฐานข้อมูลเลนส์ฟิล์มแบบ local จำนวน ${lenses.length} รุ่น ครอบคลุมระบบ SLR, Rangefinder และ Medium Format หลัก พร้อมภาพอ้างอิงและแหล่งที่มา` : `${lenses.length} locally bundled film-camera lenses across major SLR, rangefinder, and medium-format systems, now with sourced reference media.`}</p>
     </header>
 
-    <form className="lens-filter-form" action="/lenses">
-      <input type="hidden" name="lang" value={locale} />
-      <label><span>{isTh ? "ค้นหา" : "Search"}</span><input name="q" defaultValue={typeof params.q === "string" ? params.q : ""} placeholder={isTh ? "ชื่อเลนส์ เมาท์ หรือทางยาวโฟกัส" : "Lens, mount, or focal length"} /></label>
-      <label><span>{isTh ? "แบรนด์" : "Brand"}</span><select name="brand" defaultValue={brand}><option value="All">{isTh ? "ทั้งหมด" : "All"}</option>{brands.map((item) => <option key={item}>{item}</option>)}</select></label>
-      <label><span>{isTh ? "เมาท์" : "Mount"}</span><select name="mount" defaultValue={mount}><option value="All">{isTh ? "ทั้งหมด" : "All"}</option>{mounts.map((item) => <option key={item}>{item}</option>)}</select></label>
-      <button type="submit">{isTh ? "กรอง" : "Filter"}</button>
-    </form>
+    <CatalogFilters
+      action="/lenses"
+      locale={locale}
+      values={{ brand, mount, focalLength, focusType, coverage }}
+      applyLabel={filterCopy.apply}
+      clearLabel={filterCopy.clear}
+      resultLabel={filterCopy.results}
+      resultCount={filtered.length}
+      filters={[
+        { name: "brand", label: filterCopy.brand, options: brands.map((value) => ({ value, label: value })) },
+        { name: "mount", label: filterCopy.mount, options: mounts.map((value) => ({ value, label: value })) },
+        { name: "focalLength", label: filterCopy.focalLength, options: focalLengths.map((value) => ({ value, label: value })) },
+        { name: "focusType", label: filterCopy.focusType, options: focusTypes.map((value) => ({ value, label: value === "Manual" ? filterCopy.manual : filterCopy.autofocus })) },
+        { name: "coverage", label: filterCopy.coverage, options: coverages.map((value) => ({ value, label: value })) },
+      ]}
+    />
 
-    <div className="lens-results-meta"><strong>{filtered.length}</strong><span>{isTh ? "รายการ" : "lenses"}</span></div>
     <div className="lens-grid">
       {filtered.map((lens) => <Link className="lens-card lens-card-with-media" href={`/lenses/${lens.slug}?lang=${locale}`} key={lens.slug}>
         {lens.image ? <div className="lens-card-media"><Image src={lens.image.url} alt={lens.image.alt} width={900} height={650} sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" /><span>{lens.imageMatch === "representative" ? (isTh ? "ภาพอ้างอิงระบบ/ตระกูล" : "System/family reference") : (isTh ? "ภาพอ้างอิงรุ่น" : "Model reference")}</span></div> : null}
@@ -44,5 +91,6 @@ export default async function LensesPage({ searchParams }: { searchParams: Promi
         </div>
       </Link>)}
     </div>
+    {!filtered.length && <p className="empty-state">{isTh ? "ไม่พบเลนส์ที่ตรงกับตัวกรอง" : "No lenses match these filters."}</p>}
   </section>;
 }
