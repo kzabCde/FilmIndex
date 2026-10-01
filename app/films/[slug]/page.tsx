@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { DataQualityPanel } from "@/components/data-quality-panel";
 import { EntityCard } from "@/components/entity-card";
 import { FavoriteButton } from "@/components/favorite-button";
 import { FilmSampleGallery } from "@/components/film-sample-gallery";
@@ -72,6 +73,7 @@ export default async function FilmDetail({ params, searchParams }: { params: Pro
         <p className="notice">{locale === "th" ? "รายการใกล้เคียงคำนวณจากประเภทฟิล์ม ISO กระบวนการล้าง งานที่เหมาะ และลักษณะเกรนใน catalog" : "Related items are calculated locally from film family, ISO, process, typical uses, and grain characteristics in the catalog."}</p>
       </section>
 
+      <DataQualityPanel provenance={film.provenance} locale={locale} />
       {film.image && <section className="source-card"><h2>{copy.imageSource}</h2><p>{film.image.creator} · {film.image.license}</p><a href={film.image.sourceUrl} target="_blank" rel="noreferrer">{copy.openSource}</a></section>}
       <Link className="back-link" href={withLocale("/films", locale)}>{copy.backFilms}</Link>
     </article>
