@@ -10,6 +10,7 @@ import { wave7Cameras } from "@/data/cameras-wave7";
 import { wave8Cameras } from "@/data/cameras-wave8";
 import { wave9Cameras } from "@/data/cameras-wave9";
 import { wave10Cameras } from "@/data/cameras-wave10";
+import { wave11Cameras } from "@/data/cameras-wave11";
 import { compactWave1Cameras } from "@/data/cameras-compact-wave1";
 import { compactWave2Cameras } from "@/data/cameras-compact-wave2";
 import { compactWave3Cameras } from "@/data/cameras-compact-wave3";
@@ -39,7 +40,7 @@ import type { SearchEntity } from "@/types";
 const rawFilms = [...baseFilms, ...extraFilms, ...wave2Films, ...wave2FilmsB, ...wave3Films, ...wave4Films, ...wave5Films, ...wave6Films, ...wave7Films, ...wave8Films, ...wave9Films, ...wave10Films, ...wave11Films];
 export const films = rawFilms.map((film) => withProvenance(film));
 
-const rawCameras = [...baseCameras, ...extraCameras, ...wave2Cameras, ...wave2CamerasB, ...wave3Cameras, ...wave4Cameras, ...wave5Cameras, ...wave6Cameras, ...wave7Cameras, ...wave8Cameras, ...wave9Cameras, ...compactWave1Cameras, ...compactWave2Cameras, ...compactWave3Cameras, ...compactWave4Cameras, ...wave10Cameras];
+const rawCameras = [...baseCameras, ...extraCameras, ...wave2Cameras, ...wave2CamerasB, ...wave3Cameras, ...wave4Cameras, ...wave5Cameras, ...wave6Cameras, ...wave7Cameras, ...wave8Cameras, ...wave9Cameras, ...compactWave1Cameras, ...compactWave2Cameras, ...compactWave3Cameras, ...compactWave4Cameras, ...wave10Cameras, ...wave11Cameras];
 export const cameras = rawCameras.map((camera) => withProvenance({
   ...camera,
   cameraType: normalizeCameraType(camera.cameraType),
@@ -84,7 +85,7 @@ export const catalogQualityStats = {
   total: qualityRecords.length,
 } as const;
 
-const minimums = { films: 105, cameras: 130, lenses: 100, techniques: 15 } as const;
+const minimums = { films: 105, cameras: 135, lenses: 100, techniques: 15 } as const;
 for (const key of Object.keys(minimums) as Array<keyof typeof minimums>) {
   if (catalogStats[key] < minimums[key]) {
     throw new Error(`FilmIndex catalog regression: ${key} has ${catalogStats[key]} entries; catalog expansion requires at least ${minimums[key]}.`);
