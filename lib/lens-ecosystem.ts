@@ -1,34 +1,43 @@
+import { findMountByName, mountAdapters, mounts } from "@/data/mounts";
 import type { Camera, Film, Lens } from "@/types";
 
 export type CompatibilityStatus = "native" | "adapter" | "fixed-lens" | "not-compatible";
 
-const ADAPTER_RULES: Record<string, string> = {
-  "M42->Pentax K": "M42-to-Pentax K mechanical adapter; stop-down metering may be required.",
-  "M42->Canon FD": "M42-to-Canon FD adapter; normally manual focus and stop-down operation.",
-  "M42->Canon EF": "M42-to-Canon EF adapter; manual focus and manual aperture operation.",
-  "Nikon F->Canon EF": "Nikon F-to-Canon EF mechanical adapter; aperture automation is normally unavailable.",
-  "Olympus OM->Canon EF": "Olympus OM-to-Canon EF adapter; manual focus and manual aperture operation.",
-  "Contax/Yashica->Canon EF": "C/Y-to-Canon EF adapter; manual focus and manual aperture operation.",
-};
-
 export function normalizeMount(value: string) {
-  const source = value.trim().toLowerCase();
+  const source = value.trim();
+  const lower = source.toLowerCase();
   if (!source) return "Unknown";
-  if (source.includes("fixed") || source.includes("built-in") || source.includes("integrated") || source.includes("non-interchangeable")) return "Fixed lens";
-  if (source.includes("canon ef")) return "Canon EF";
-  if (source.includes("canon fd")) return "Canon FD";
-  if (source.includes("nikon f")) return "Nikon F";
-  if (source.includes("m42")) return "M42";
-  if (source.includes("pentax k")) return "Pentax K";
-  if (source.includes("minolta") && (source.includes("sr") || source.includes("md") || source.includes("mc"))) return "Minolta SR";
-  if (source.includes("olympus om") || source === "om") return "Olympus OM";
-  if (source.includes("leica m")) return "Leica M";
-  if (source.includes("contax g")) return "Contax G";
-  if (source.includes("contax") || source.includes("yashica")) return "Contax/Yashica";
-  if (source.includes("mamiya 645")) return "Mamiya 645";
-  if (source.includes("hasselblad") && source.includes("v")) return "Hasselblad V";
-  if (source.includes("pentax 67") || source.includes("pentax 6x7") || source.includes("pentax 6×7")) return "Pentax 67";
-  return value.trim();
+  if (lower.includes("fixed") || lower.includes("built-in") || lower.includes("integrated") || lower.includes("non-interchangeable")) return "Fixed lens";
+
+  const exact = findMountByName(source);
+  if (exact) return exact.name;
+
+  if (lower.includes("canon ef")) return "Canon EF";
+  if (lower.includes("canon fd") || lower === "fd") return "Canon FD";
+  if (lower.includes("nikon f")) return "Nikon F";
+  if (lower.includes("m42")) return "M42";
+  if (lower.includes("pentax 67") || lower.includes("pentax 6x7") || lower.includes("pentax 6×7")) return "Pentax 67";
+  if (lower.includes("pentax 645")) return "Pentax 645";
+  if (lower.includes("pentax k") || lower.includes("kaf") || lower.includes("k-a")) return "Pentax K";
+  if (lower.includes("minolta") && (lower.includes("sr") || lower.includes("md") || lower.includes("mc"))) return "Minolta SR";
+  if (lower.includes("olympus om") || lower === "om") return "Olympus OM";
+  if (lower.includes("leica m") || lower.includes("m-compatible")) return "Leica M";
+  if (lower.includes("contax g")) return "Contax G";
+  if (lower.includes("contax") || lower.includes("yashica") || lower === "c/y") return "Contax/Yashica";
+  if (lower.includes("mamiya 645")) return "Mamiya 645";
+  if (lower.includes("hasselblad") && lower.includes("v")) return "Hasselblad V";
+  return source;
+}
+
+export function getMountRecord(value: string) {
+  const normalized = normalizeMount(value);
+  return mounts.find((mount) => mount.name === normalized);
+}
+
+export function getAdapterPath(lensMount: string, cameraMount: string) {
+  const from = normalizeMount(lensMount);
+  const to = normalizeMount(cameraMount);
+  return mountAdapters.find((adapter) => adapter.fromMount === from && adapter.toMount === to);
 }
 
 function cameraFormatFamily(camera: Camera) {
@@ -41,13 +50,21 @@ function cameraFormatFamily(camera: Camera) {
   return camera.filmFormat;
 }
 
+function coverageRank(value: string) {
+  if (value === "35mm") return 1;
+  if (value === "645") return 2;
+  if (value === "6x6") return 3;
+  if (value === "6x7") return 4;
+  return 0;
+}
+
 function formatCanUseLens(camera: Camera, lens: Lens) {
   const cameraFormat = cameraFormatFamily(camera);
-  if (cameraFormat === "35mm") return lens.coverage === "35mm";
-  if (cameraFormat === "645") return lens.coverage === "645" || lens.coverage === "6x6" || lens.coverage === "6x7";
-  if (cameraFormat === "6x6") return lens.coverage === "6x6" || lens.coverage === "6x7";
-  if (cameraFormat === "6x7") return lens.coverage === "6x7";
-  return true;
+  if (cameraFormat === "120") return true;
+  const cameraRank = coverageRank(cameraFormat);
+  const lensRank = coverageRank(lens.coverage);
+  if (!cameraRank || !lensRank) return true;
+  return lensRank >= cameraRank;
 }
 
 export function checkCameraLensCompatibility(camera: Camera, lens: Lens) {
@@ -60,6 +77,7 @@ export function checkCameraLensCompatibility(camera: Camera, lens: Lens) {
       cameraMount,
       lensMount,
       note: "This camera has a built-in/fixed lens and does not accept interchangeable lenses.",
+      adapter: undefined,
     };
   }
 
@@ -69,25 +87,27 @@ export function checkCameraLensCompatibility(camera: Camera, lens: Lens) {
         status: "not-compatible" as CompatibilityStatus,
         cameraMount,
         lensMount,
-        note: "The mount name matches, but the recorded image-circle coverage does not match this camera format.",
+        note: "The physical mount family matches, but the recorded lens image-circle coverage is too small for this camera format.",
+        adapter: undefined,
       };
     }
     return {
       status: "native" as CompatibilityStatus,
       cameraMount,
       lensMount,
-      note: "Native mount match. Body-specific metering, aperture coupling, and autofocus support can still vary by generation.",
+      note: "Native mount family match. Meter coupling, aperture automation, autofocus, mirror clearance, and feature support can still vary by body/lens generation.",
+      adapter: undefined,
     };
   }
 
-  const adapterKey = `${lensMount}->${cameraMount}`;
-  const adapterNote = ADAPTER_RULES[adapterKey];
-  if (adapterNote && formatCanUseLens(camera, lens)) {
+  const adapter = getAdapterPath(lensMount, cameraMount);
+  if (adapter && formatCanUseLens(camera, lens)) {
     return {
       status: "adapter" as CompatibilityStatus,
       cameraMount,
       lensMount,
-      note: adapterNote,
+      note: adapter.note,
+      adapter,
     };
   }
 
@@ -95,8 +115,28 @@ export function checkCameraLensCompatibility(camera: Camera, lens: Lens) {
     status: "not-compatible" as CompatibilityStatus,
     cameraMount,
     lensMount,
-    note: "No native or explicitly supported adapter path is recorded in FilmIndex. Do not assume physical or optical compatibility from mount diameter alone.",
+    note: "No native or explicitly supported adapter path is recorded in FilmIndex. A flange-distance difference alone is not treated as proof of safe physical or optical compatibility.",
+    adapter: undefined,
   };
+}
+
+const STATUS_ORDER: Record<CompatibilityStatus, number> = {
+  native: 0,
+  adapter: 1,
+  "not-compatible": 2,
+  "fixed-lens": 3,
+};
+
+export function getCameraLensMatches(camera: Camera, lensRecords: Lens[]) {
+  return lensRecords
+    .map((lens) => ({ lens, compatibility: checkCameraLensCompatibility(camera, lens) }))
+    .sort((a, b) => STATUS_ORDER[a.compatibility.status] - STATUS_ORDER[b.compatibility.status] || a.lens.name.localeCompare(b.lens.name));
+}
+
+export function getLensCameraMatches(lens: Lens, cameraRecords: Camera[]) {
+  return cameraRecords
+    .map((camera) => ({ camera, compatibility: checkCameraLensCompatibility(camera, lens) }))
+    .sort((a, b) => STATUS_ORDER[a.compatibility.status] - STATUS_ORDER[b.compatibility.status] || a.camera.name.localeCompare(b.camera.name));
 }
 
 export type FilmScenario = "daylight" | "everyday" | "portrait" | "night" | "street" | "landscape";
