@@ -33,6 +33,9 @@ const cameraBrandSources: Record<string, SourcePreset> = {
   Olympus: { label: "Olympus camera museum", publisher: "Olympus", url: "https://www.olympus-global.com/technology/museum/camera/", scope: "brand-catalog" },
   Leica: { label: "Leica photography system", publisher: "Leica Camera", url: "https://leica-camera.com/en-int/photography", scope: "brand-catalog" },
   Polaroid: { label: "Polaroid cameras", publisher: "Polaroid", url: "https://www.polaroid.com/collections/instant-cameras", scope: "brand-catalog" },
+  Contax: { label: "Contax camera reference", publisher: "Camera-wiki.org", url: "https://camera-wiki.org/wiki/Contax", scope: "community" },
+  Mamiya: { label: "Mamiya camera reference", publisher: "Camera-wiki.org", url: "https://camera-wiki.org/wiki/Mamiya", scope: "community" },
+  Hasselblad: { label: "Hasselblad historical reference", publisher: "Hasselblad Historical", url: "https://www.hasselbladhistorical.eu/", scope: "community" },
 };
 
 const lensMountSources: Record<string, SourcePreset> = {
@@ -110,6 +113,26 @@ const exactSources: Record<string, { provenance: Partial<RecordProvenance>; sour
       notes: ["Eastman Kodak introduced EKTACOLOR PRO 800 in 2026 as the direct-distribution counterpart to the familiar Portra 800 emulsion family; Portra-branded inventory may still coexist in the market."],
     },
     sources: [source("KODAK EKTACOLOR PRO 800", "Eastman Kodak Company", "https://www.kodak.com/en/still-film/product/professional/ektacolor/ektacolor-pro-800-film/", "series")],
+  },
+  "nikon-fm3a": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 2001, countryOfManufacture: "Japan", generation: "Nikon FM / FE hybrid lineage" },
+    sources: [source("Nikon FM3A Camera Chronicle and major specifications", "Nikon", "https://imaging.nikon.com/imaging/information/chronicle/history-fm3a/", "model")],
+  },
+  "canon-eos-1v": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 2000, countryOfManufacture: "Japan", generation: "EOS-1 professional film SLR" },
+    sources: [source("EOS-1V", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film218.html", "model")],
+  },
+  "contax-g2": {
+    provenance: { confidence: "community-reference", productStatus: "historical", introducedYear: 1996, countryOfManufacture: "Japan", generation: "Contax G autofocus rangefinder system" },
+    sources: [source("Contax G system reference", "Camera-wiki.org", "https://camera-wiki.org/wiki/Contax_G", "community")],
+  },
+  "mamiya-7": {
+    provenance: { confidence: "community-reference", productStatus: "historical", introducedYear: 1995, productionYears: { from: 1995, to: 1999 }, countryOfManufacture: "Japan", generation: "Mamiya 7 6×7 rangefinder system" },
+    sources: [source("Mamiya 7 specifications", "Camera_DATA", "https://camera-data.com/camera/rangefinder/mamiya/7", "community")],
+  },
+  "hasselblad-503cw": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1996, productionYears: { from: 1996, to: 2013 }, countryOfManufacture: "Sweden", generation: "Hasselblad V-system 500 series" },
+    sources: [source("Hasselblad 503CW Service Manual", "Hasselblad service documentation mirror", "https://manualzz.com/doc/3204070/hasselblad-500-c-m--501-c--501-cm--503-cw--503-cxi--503-c...", "manual")],
   },
 };
 
