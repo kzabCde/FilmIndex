@@ -10,6 +10,7 @@ import { wave7Cameras } from "@/data/cameras-wave7";
 import { wave8Cameras } from "@/data/cameras-wave8";
 import { wave9Cameras } from "@/data/cameras-wave9";
 import { wave10Cameras } from "@/data/cameras-wave10";
+import { wave11Cameras } from "@/data/cameras-wave11";
 import { compactWave1Cameras } from "@/data/cameras-compact-wave1";
 import { compactWave2Cameras } from "@/data/cameras-compact-wave2";
 import { compactWave3Cameras } from "@/data/cameras-compact-wave3";
@@ -56,6 +57,7 @@ const cameraSourceGroups = [
   ["cameras-compact-wave3", compactWave3Cameras],
   ["cameras-compact-wave4", compactWave4Cameras],
   ["cameras-wave10", wave10Cameras],
+  ["cameras-wave11", wave11Cameras],
 ] as const;
 
 const cameraSlugSources = new Map<string, string[]>();
