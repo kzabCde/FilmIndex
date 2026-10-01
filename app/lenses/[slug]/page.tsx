@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { DataQualityPanel } from "@/components/data-quality-panel";
 import { cameras, findBySlug, lenses } from "@/lib/catalog";
 import { parseLocale } from "@/lib/i18n";
-import { checkCameraLensCompatibility } from "@/lib/lens-ecosystem";
+import { getLensCameraMatches, getMountRecord } from "@/lib/lens-ecosystem";
 
 export function generateStaticParams() {
   return lenses.map((lens) => ({ slug: lens.slug }));
@@ -17,12 +17,17 @@ export default async function LensDetailPage({ params, searchParams }: { params:
   const isTh = locale === "th";
   const lens = findBySlug(lenses, slug);
   if (!lens) notFound();
-  const nativeCameras = cameras.filter((camera) => checkCameraLensCompatibility(camera, lens).status === "native").slice(0, 10);
+
+  const mount = getMountRecord(lens.mount);
+  const matches = getLensCameraMatches(lens, cameras);
+  const nativeMatches = matches.filter(({ compatibility }) => compatibility.status === "native");
+  const adapterMatches = matches.filter(({ compatibility }) => compatibility.status === "adapter");
+  const incompatibleCount = matches.filter(({ compatibility }) => compatibility.status === "not-compatible" || compatibility.status === "fixed-lens").length;
 
   return <section className="shell detail-page lens-detail-page">
     <nav className="tool-breadcrumb" aria-label="Breadcrumb"><Link href={`/lenses?lang=${locale}`}>{isTh ? "เลนส์ทั้งหมด" : "All lenses"}</Link><span>/</span><span>{lens.name}</span></nav>
     <header className="lens-detail-header">
-      <div><p className="eyebrow">{lens.mount} · {lens.coverage}</p><h1>{lens.name}</h1><p>{isTh ? lens.descriptionTh : lens.description}</p></div>
+      <div><p className="eyebrow">{lens.mount} · {lens.coverage}</p><h1>{lens.name}</h1><p>{isTh ? lens.descriptionTh : lens.description}</p>{mount ? <p><Link className="mount-link" href={`/mounts/${mount.slug}?lang=${locale}`}>{isTh ? "ดูฐานข้อมูลเมาท์" : "Open mount database"} · {mount.name} ↗</Link></p> : null}</div>
       <div className="lens-hero-spec"><span>{lens.focalLength}</span><strong>{lens.maxAperture}</strong></div>
     </header>
 
@@ -44,13 +49,20 @@ export default async function LensDetailPage({ params, searchParams }: { params:
       {lens.filterThread ? <div><span>{isTh ? "ฟิลเตอร์" : "Filter"}</span><strong>Ø {lens.filterThread}</strong></div> : null}
     </div>
 
-    <DataQualityPanel provenance={lens.provenance} locale={locale} />
-
-    <section className="lens-compatible-section">
-      <p className="eyebrow">Native camera matches</p>
-      <h2>{isTh ? "กล้องในฐานข้อมูลที่ใช้เมาท์เดียวกัน" : "Cameras with a native mount match"}</h2>
-      {nativeCameras.length ? <div className="lens-camera-list">{nativeCameras.map((camera) => <Link href={`/cameras/${camera.slug}?lang=${locale}`} key={camera.slug}><strong>{camera.name}</strong><span>{camera.filmFormat} · {camera.lensMount}</span></Link>)}</div> : <p className="micro">{isTh ? "ยังไม่พบกล้องที่ตรงแบบ native ในฐานข้อมูลปัจจุบัน" : "No native camera match is currently recorded in the camera database."}</p>}
+    <section className="compatibility-ecosystem">
+      <div className="compatibility-heading">
+        <div><p className="eyebrow">v0.9 · Camera ecosystem</p><h2>{isTh ? "กล้องที่ใช้กับเลนส์นี้" : "Compatible camera bodies"}</h2></div>
+        <div className="compatibility-summary"><span>Native {nativeMatches.length}</span><span>Adapter {adapterMatches.length}</span><span>Not compatible {incompatibleCount}</span></div>
+      </div>
+      {[...nativeMatches, ...adapterMatches].length ? <div className="compatibility-list">{[...nativeMatches, ...adapterMatches].map(({ camera, compatibility }) => <Link className="compatibility-row" href={`/cameras/${camera.slug}?lang=${locale}`} key={camera.slug}>
+        <div className="compatibility-entity"><strong>{camera.name}</strong><span>{camera.filmFormat} · {camera.lensMount}</span></div>
+        <span className={`compatibility-status ${compatibility.status}`}>{compatibility.status === "native" ? "Native" : "Adapter"}</span>
+        <p>{isTh && compatibility.adapter?.noteTh ? compatibility.adapter.noteTh : compatibility.note}</p>
+      </Link>)}</div> : <div className="compatibility-note-box"><span className="compatibility-status not-compatible">Not compatible</span><p>{isTh ? "ยังไม่มีกล้องในฐานข้อมูลที่มี native match หรือ adapter path ที่บันทึกไว้สำหรับเลนส์นี้" : "No camera in the current database has a native match or explicitly recorded adapter path for this lens."}</p></div>}
+      <p className="micro" style={{ marginTop:14 }}>{isTh ? `กล้องอีก ${incompatibleCount} รุ่นถูกจัดเป็น Not compatible หรือเป็นกล้องเลนส์ติดตาย` : `${incompatibleCount} additional bodies are classified Not compatible or use fixed lenses.`}</p>
       <Link className="tool-primary-button inline-tool-link" href={`/tools/camera-lens-compatibility?lang=${locale}`}>{isTh ? "เปิด Compatibility Checker" : "Open Compatibility Checker"}</Link>
     </section>
+
+    <DataQualityPanel provenance={lens.provenance} locale={locale} />
   </section>;
 }
