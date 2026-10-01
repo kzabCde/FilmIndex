@@ -13,6 +13,7 @@ import "./lens-ecosystem.css";
 import "./techniques.css";
 import "./searchable-selects.css";
 import "./lens-media.css";
+import "./data-quality.css";
 
 export const metadata: Metadata = {
   title: { default: "FilmIndex — Analog Photography Database", template: "%s | FilmIndex" },
