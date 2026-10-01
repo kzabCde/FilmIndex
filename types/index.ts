@@ -33,6 +33,32 @@ export type RecordProvenance = {
   notes?: string[];
 };
 
+export type LensMount = {
+  kind: "mount";
+  slug: string;
+  name: string;
+  aliases: string[];
+  system: string;
+  mountType: string;
+  format: string;
+  flangeDistanceMm: number;
+  introducedYear?: number;
+  description: string;
+  descriptionTh?: string;
+  sourceLabel: string;
+  sourceUrl: string;
+};
+
+export type MountAdapter = {
+  fromMount: string;
+  toMount: string;
+  infinityFocus: "yes" | "optical-correction" | "no";
+  apertureControl: "manual" | "mechanical" | "electronic";
+  autofocus: boolean;
+  note: string;
+  noteTh?: string;
+};
+
 export type Film = {
   kind: "film";
   slug: string;
