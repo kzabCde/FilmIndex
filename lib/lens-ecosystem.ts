@@ -23,6 +23,7 @@ export function normalizeMount(value: string) {
   if (source.includes("minolta") && (source.includes("sr") || source.includes("md") || source.includes("mc"))) return "Minolta SR";
   if (source.includes("olympus om") || source === "om") return "Olympus OM";
   if (source.includes("leica m")) return "Leica M";
+  if (source.includes("contax g")) return "Contax G";
   if (source.includes("contax") || source.includes("yashica")) return "Contax/Yashica";
   if (source.includes("mamiya 645")) return "Mamiya 645";
   if (source.includes("hasselblad") && source.includes("v")) return "Hasselblad V";
