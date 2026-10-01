@@ -1,0 +1,48 @@
+.advanced-compare { display:grid; gap:24px; }
+.advanced-compare-tabs { margin-bottom:0; flex-wrap:wrap; }
+.compare-picker-header { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:16px; align-items:end; }
+.compare-search-field { display:grid; gap:8px; }
+.compare-search-field span { font-size:12px; color:var(--muted); }
+.compare-search-field input { width:100%; border:1px solid var(--line); background:var(--panel); color:var(--text); padding:13px 15px; outline:none; }
+.compare-search-field input:focus { border-color:var(--text); }
+.compare-selection-meta { min-width:90px; display:grid; justify-items:end; gap:2px; }
+.compare-selection-meta strong { font-size:24px; }
+.compare-selection-meta span { color:var(--muted); font-size:11px; }
+.compare-selected-strip { display:flex; flex-wrap:wrap; gap:8px; }
+.compare-selected-strip button { display:flex; gap:10px; align-items:center; border:1px solid var(--text); background:var(--invert); color:var(--invert-text); padding:8px 11px; cursor:pointer; }
+.advanced-picker-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; max-height:360px; overflow:auto; padding-right:4px; }
+.advanced-picker-grid button { min-width:0; display:grid; gap:4px; text-align:left; border:1px solid var(--line); background:transparent; color:var(--text); padding:11px 12px; cursor:pointer; }
+.advanced-picker-grid button span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.advanced-picker-grid button small { color:var(--muted); }
+.advanced-picker-grid button.active { background:var(--invert); color:var(--invert-text); border-color:var(--invert); }
+.advanced-picker-grid button.active small { color:color-mix(in srgb, var(--invert-text) 70%, transparent); }
+.advanced-picker-grid button:disabled { opacity:.35; cursor:not-allowed; }
+.compare-share-row { display:flex; align-items:center; justify-content:space-between; gap:16px; border-top:1px solid var(--line); padding-top:18px; }
+.compare-share-row p { margin:0; }
+.compare-share-button { border:1px solid var(--line); background:transparent; color:var(--text); padding:10px 13px; cursor:pointer; white-space:nowrap; }
+.compare-share-button:disabled { opacity:.4; cursor:not-allowed; }
+.advanced-compare-scroll { overflow:auto; border:1px solid var(--line); max-width:100%; }
+.advanced-compare-table { min-width:760px; width:100%; }
+.advanced-compare-table thead th { position:sticky; top:0; z-index:3; background:var(--panel); }
+.advanced-compare-table thead th:first-child { min-width:170px; }
+.advanced-compare-table thead a { display:grid; gap:4px; }
+.advanced-compare-table thead a span { font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); }
+.advanced-compare-table thead a strong { font-size:15px; }
+.advanced-compare-table tbody th { background:var(--bg); font-weight:700; }
+.advanced-compare-table tbody th small { display:inline-grid; place-items:center; width:20px; height:20px; margin-left:8px; border:1px solid var(--line); border-radius:50%; color:var(--muted); font-size:10px; }
+.advanced-compare-table tr.has-difference > th { background:color-mix(in srgb, var(--panel) 72%, var(--bg)); }
+.advanced-compare-table td.compare-value-different { background:color-mix(in srgb, var(--panel) 62%, var(--bg)); font-weight:700; }
+@media (max-width:900px) { .advanced-picker-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:600px) {
+  .compare-picker-header { grid-template-columns:1fr; align-items:stretch; }
+  .compare-selection-meta { justify-items:start; grid-template-columns:auto 1fr; align-items:baseline; gap:8px; }
+  .advanced-picker-grid { grid-template-columns:1fr; max-height:300px; }
+  .compare-share-row { align-items:stretch; flex-direction:column; }
+  .compare-share-button { width:100%; }
+  .advanced-compare-scroll { margin-inline:calc((100vw - 100%) / -2); border-left:0; border-right:0; }
+  .advanced-compare-table { min-width:700px; }
+  .advanced-compare-table th:first-child { position:sticky; left:0; z-index:4; box-shadow:1px 0 0 var(--line); }
+  .advanced-compare-table thead th:first-child { z-index:6; background:var(--panel); }
+  .advanced-compare-table tbody th:first-child { background:var(--bg); }
+  .advanced-compare-table tr.has-difference > th:first-child { background:var(--panel); }
+}

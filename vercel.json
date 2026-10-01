@@ -3,7 +3,8 @@
   "git": {
     "deploymentEnabled": {
       "feature/v0.8-data-depth-quality": false,
-      "feature/v0.9-compatibility-ecosystem": false
+      "feature/v0.9-compatibility-ecosystem": false,
+      "feature/v0.10-advanced-compare": false
     }
   }
 }
