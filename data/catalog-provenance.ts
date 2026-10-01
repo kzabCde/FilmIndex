@@ -69,6 +69,18 @@ const exactSources: Record<string, { provenance: Partial<RecordProvenance>; sour
     provenance: { confidence: "verified", productStatus: "current", introducedYear: 2008, countryOfManufacture: "United States" },
     sources: [source("KODAK EKTAR 100 Film", "Eastman Kodak Company", "https://www.kodak.com/en/still-film/product/professional/ektar-100-film/", "model")],
   },
+  "kodak-ektapan-100": {
+    provenance: {
+      confidence: "verified",
+      productStatus: "current",
+      introducedYear: 2026,
+      countryOfManufacture: "United States",
+      generation: "EKTAPAN / T-Grain 100-speed family",
+      variants: ["KODAK PROFESSIONAL T-MAX 100 (Kodak Alaris-distributed related name/emulsion family)"],
+      notes: ["Eastman Kodak introduced the EKTAPAN 100 direct-distribution name in 2026. The sample image is explicitly an emulsion-family reference made on T-MAX 100 rather than an image labelled EKTAPAN 100 at capture time."],
+    },
+    sources: [source("KODAK EKTAPAN 100 Black & White Negative Film", "Eastman Kodak Company", "https://www.kodak.com/en/still-film/product/professional/ektapan/ektapan-100-film/", "model")],
+  },
   "kodak-portra-160": {
     provenance: {
       confidence: "community-reference",
