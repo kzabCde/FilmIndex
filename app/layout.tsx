@@ -15,6 +15,7 @@ import "./searchable-selects.css";
 import "./lens-media.css";
 import "./data-quality.css";
 import "./mount-ecosystem.css";
+import "./advanced-compare.css";
 
 export const metadata: Metadata = {
   title: { default: "FilmIndex — Analog Photography Database", template: "%s | FilmIndex" },
