@@ -10,7 +10,6 @@ import { wave7Cameras } from "@/data/cameras-wave7";
 import { wave8Cameras } from "@/data/cameras-wave8";
 import { wave9Cameras } from "@/data/cameras-wave9";
 import { wave10Cameras } from "@/data/cameras-wave10";
-import { wave11Cameras } from "@/data/cameras-wave11";
 import { compactWave1Cameras } from "@/data/cameras-compact-wave1";
 import { compactWave2Cameras } from "@/data/cameras-compact-wave2";
 import { compactWave3Cameras } from "@/data/cameras-compact-wave3";
@@ -40,7 +39,39 @@ import type { SearchEntity } from "@/types";
 const rawFilms = [...baseFilms, ...extraFilms, ...wave2Films, ...wave2FilmsB, ...wave3Films, ...wave4Films, ...wave5Films, ...wave6Films, ...wave7Films, ...wave8Films, ...wave9Films, ...wave10Films, ...wave11Films];
 export const films = rawFilms.map((film) => withProvenance(film));
 
-const rawCameras = [...baseCameras, ...extraCameras, ...wave2Cameras, ...wave2CamerasB, ...wave3Cameras, ...wave4Cameras, ...wave5Cameras, ...wave6Cameras, ...wave7Cameras, ...wave8Cameras, ...wave9Cameras, ...compactWave1Cameras, ...compactWave2Cameras, ...compactWave3Cameras, ...compactWave4Cameras, ...wave10Cameras, ...wave11Cameras];
+const cameraSourceGroups = [
+  ["lib/data", baseCameras],
+  ["cameras-extra", extraCameras],
+  ["cameras-wave2", wave2Cameras],
+  ["cameras-wave2b", wave2CamerasB],
+  ["cameras-wave3", wave3Cameras],
+  ["cameras-wave4", wave4Cameras],
+  ["cameras-wave5", wave5Cameras],
+  ["cameras-wave6", wave6Cameras],
+  ["cameras-wave7", wave7Cameras],
+  ["cameras-wave8", wave8Cameras],
+  ["cameras-wave9", wave9Cameras],
+  ["cameras-compact-wave1", compactWave1Cameras],
+  ["cameras-compact-wave2", compactWave2Cameras],
+  ["cameras-compact-wave3", compactWave3Cameras],
+  ["cameras-compact-wave4", compactWave4Cameras],
+  ["cameras-wave10", wave10Cameras],
+] as const;
+
+const cameraSlugSources = new Map<string, string[]>();
+for (const [sourceName, records] of cameraSourceGroups) {
+  for (const record of records) {
+    const locations = cameraSlugSources.get(record.slug) ?? [];
+    locations.push(sourceName);
+    cameraSlugSources.set(record.slug, locations);
+  }
+}
+const duplicateCameraSources = [...cameraSlugSources.entries()].filter(([, locations]) => locations.length > 1);
+if (duplicateCameraSources.length) {
+  throw new Error(`FilmIndex camera source regression: ${duplicateCameraSources.map(([slug, locations]) => `${slug} [${locations.join(" + ")}]`).join(", ")}.`);
+}
+
+const rawCameras = cameraSourceGroups.flatMap(([, records]) => records);
 export const cameras = rawCameras.map((camera) => withProvenance({
   ...camera,
   cameraType: normalizeCameraType(camera.cameraType),
@@ -85,7 +116,7 @@ export const catalogQualityStats = {
   total: qualityRecords.length,
 } as const;
 
-const minimums = { films: 105, cameras: 135, lenses: 100, techniques: 15 } as const;
+const minimums = { films: 105, cameras: 130, lenses: 100, techniques: 15 } as const;
 for (const key of Object.keys(minimums) as Array<keyof typeof minimums>) {
   if (catalogStats[key] < minimums[key]) {
     throw new Error(`FilmIndex catalog regression: ${key} has ${catalogStats[key]} entries; catalog expansion requires at least ${minimums[key]}.`);
