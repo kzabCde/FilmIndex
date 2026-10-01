@@ -14,10 +14,11 @@ import "./techniques.css";
 import "./searchable-selects.css";
 import "./lens-media.css";
 import "./data-quality.css";
+import "./mount-ecosystem.css";
 
 export const metadata: Metadata = {
   title: { default: "FilmIndex — Analog Photography Database", template: "%s | FilmIndex" },
-  description: "Explore films, classic cameras, lenses, analog techniques, discovery tools, specifications, sources, and comparisons in one modern archive.",
+  description: "Explore films, classic cameras, lenses, lens mounts, compatibility, analog techniques, discovery tools, specifications, sources, and comparisons in one modern archive.",
   icons: {
     icon: "/filmindex-icon.svg",
     shortcut: "/filmindex-icon.svg",
