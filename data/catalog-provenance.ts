@@ -1,6 +1,6 @@
 import type { Camera, Film, Lens, RecordProvenance, RecordSource } from "@/types";
 
-export const CATALOG_VERIFIED_ON = "2026-10-01";
+export const CATALOG_VERIFIED_ON = "2026-10-02";
 
 type CatalogRecord = Film | Camera | Lens;
 
@@ -113,6 +113,26 @@ const exactSources: Record<string, { provenance: Partial<RecordProvenance>; sour
       notes: ["Eastman Kodak introduced EKTACOLOR PRO 800 in 2026 as the direct-distribution counterpart to the familiar Portra 800 emulsion family; Portra-branded inventory may still coexist in the market."],
     },
     sources: [source("KODAK EKTACOLOR PRO 800", "Eastman Kodak Company", "https://www.kodak.com/en/still-film/product/professional/ektacolor/ektacolor-pro-800-film/", "series")],
+  },
+  "canon-af35ml": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1981, generation: "Canon AF35M / Autoboy autofocus compact series" },
+    sources: [source("AF35ML / Super Sure Shot", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film104.html", "model")],
+  },
+  "canon-af35m-ii": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1983, generation: "Canon AF35M / Autoboy autofocus compact series" },
+    sources: [source("AF35M II / (New) Sure Shot / Autoboy 2", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film110.html", "model")],
+  },
+  "canon-sure-shot-supreme": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1986, generation: "Canon Autoboy / Sure Shot autofocus compact series" },
+    sources: [source("Sure Shot Supreme / Autoboy 3 / Top Shot", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film120.html", "model")],
+  },
+  "canon-sure-shot-tele-max": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1991, generation: "Canon Autoboy Mini / Sure Shot compact series" },
+    sources: [source("Sure Shot Tele Max / Autoboy Mini T / Prima Twin S", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film152.html", "model")],
+  },
+  "canon-autoboy-zoom-105": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1991, generation: "Canon Autoboy Zoom / Sure Shot Mega Zoom series" },
+    sources: [source("Autoboy Zoom 105 / Sure Shot Mega Zoom 105", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film146.html", "model")],
   },
   "nikon-fm3a": {
     provenance: { confidence: "verified", productStatus: "historical", introducedYear: 2001, countryOfManufacture: "Japan", generation: "Nikon FM / FE hybrid lineage" },

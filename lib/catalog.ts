@@ -15,6 +15,7 @@ import { compactWave1Cameras } from "@/data/cameras-compact-wave1";
 import { compactWave2Cameras } from "@/data/cameras-compact-wave2";
 import { compactWave3Cameras } from "@/data/cameras-compact-wave3";
 import { compactWave4Cameras } from "@/data/cameras-compact-wave4";
+import { compactWave5Cameras } from "@/data/cameras-compact-wave5";
 import { extraFilms } from "@/data/films-extra";
 import { wave2Films } from "@/data/films-wave2";
 import { wave2FilmsB } from "@/data/films-wave2b";
@@ -56,6 +57,7 @@ const cameraSourceGroups = [
   ["cameras-compact-wave2", compactWave2Cameras],
   ["cameras-compact-wave3", compactWave3Cameras],
   ["cameras-compact-wave4", compactWave4Cameras],
+  ["cameras-compact-wave5", compactWave5Cameras],
   ["cameras-wave10", wave10Cameras],
   ["cameras-wave11", wave11Cameras],
 ] as const;
@@ -118,7 +120,7 @@ export const catalogQualityStats = {
   total: qualityRecords.length,
 } as const;
 
-const minimums = { films: 105, cameras: 130, lenses: 100, techniques: 15 } as const;
+const minimums = { films: 105, cameras: 135, lenses: 100, techniques: 15 } as const;
 for (const key of Object.keys(minimums) as Array<keyof typeof minimums>) {
   if (catalogStats[key] < minimums[key]) {
     throw new Error(`FilmIndex catalog regression: ${key} has ${catalogStats[key]} entries; catalog expansion requires at least ${minimums[key]}.`);
@@ -149,7 +151,7 @@ for (const [kind, records] of [["film", films], ["camera", cameras], ["lens", le
 }
 
 const compactCameraCount = cameras.filter((camera) => camera.cameraType === COMPACT_CAMERA_TYPE).length;
-const minimumCompactCameras = 28;
+const minimumCompactCameras = 33;
 if (compactCameraCount < minimumCompactCameras) {
   throw new Error(`FilmIndex compact-camera regression: expected at least ${minimumCompactCameras} Compact cameras, found ${compactCameraCount}.`);
 }
