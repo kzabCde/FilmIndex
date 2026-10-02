@@ -5,7 +5,8 @@
       "feature/v0.8-data-depth-quality": false,
       "feature/v0.9-compatibility-ecosystem": false,
       "feature/v0.10-advanced-compare": false,
-      "feat/compact-camera-wave5": false
+      "feat/compact-camera-wave5": false,
+      "feat/catalog-150-wave6": false
     }
   }
 }
