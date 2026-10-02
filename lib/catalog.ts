@@ -11,6 +11,8 @@ import { wave8Cameras } from "@/data/cameras-wave8";
 import { wave9Cameras } from "@/data/cameras-wave9";
 import { wave10Cameras } from "@/data/cameras-wave10";
 import { wave11Cameras } from "@/data/cameras-wave11";
+import { wave12Cameras } from "@/data/cameras-wave12";
+import { wave13Cameras } from "@/data/cameras-wave13";
 import { compactWave1Cameras } from "@/data/cameras-compact-wave1";
 import { compactWave2Cameras } from "@/data/cameras-compact-wave2";
 import { compactWave3Cameras } from "@/data/cameras-compact-wave3";
@@ -65,6 +67,8 @@ const cameraSourceGroups = [
   ["cameras-compact-wave5", compactWave5Cameras],
   ["cameras-wave10", wave10Cameras],
   ["cameras-wave11", wave11Cameras],
+  ["cameras-wave12", wave12Cameras],
+  ["cameras-wave13", wave13Cameras],
 ] as const;
 
 const cameraSlugSources = new Map<string, string[]>();
@@ -125,7 +129,7 @@ export const catalogQualityStats = {
   total: qualityRecords.length,
 } as const;
 
-const minimums = { films: 105, cameras: 135, lenses: 150, techniques: 15 } as const;
+const minimums = { films: 105, cameras: 150, lenses: 150, techniques: 15 } as const;
 for (const key of Object.keys(minimums) as Array<keyof typeof minimums>) {
   if (catalogStats[key] < minimums[key]) {
     throw new Error(`FilmIndex catalog regression: ${key} has ${catalogStats[key]} entries; catalog expansion requires at least ${minimums[key]}.`);
