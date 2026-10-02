@@ -134,6 +134,66 @@ const exactSources: Record<string, { provenance: Partial<RecordProvenance>; sour
     provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1991, generation: "Canon Autoboy Zoom / Sure Shot Mega Zoom series" },
     sources: [source("Autoboy Zoom 105 / Sure Shot Mega Zoom 105", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film146.html", "model")],
   },
+  "canon-ae-1": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1976, countryOfManufacture: "Japan", generation: "Canon A-series" },
+    sources: [source("AE-1", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film93.html", "model")],
+  },
+  "canon-a-1": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1978, countryOfManufacture: "Japan", generation: "Canon A-series" },
+    sources: [source("A-1", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film100.html", "model")],
+  },
+  "canon-at-1": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1976, countryOfManufacture: "Japan", generation: "Canon A-series" },
+    sources: [source("AT-1", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film96.html", "model")],
+  },
+  "canon-ef-1973": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1973, countryOfManufacture: "Japan", generation: "Canon FD electronic SLR" },
+    sources: [source("EF", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film88.html", "model")],
+  },
+  "canon-ft-ql": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1966, countryOfManufacture: "Japan", generation: "Canon FL SLR" },
+    sources: [source("FTQL", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film62.html", "model")],
+  },
+  "canon-tlb": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1976, countryOfManufacture: "Japan", generation: "Canon FD manual SLR" },
+    sources: [source("TLb", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film94.html", "model")],
+  },
+  "canon-t50": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1983, countryOfManufacture: "Japan", generation: "Canon T-series" },
+    sources: [source("T50", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film109.html", "model")],
+  },
+  "canon-t70": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1984, countryOfManufacture: "Japan", generation: "Canon T-series" },
+    sources: [source("T70", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film112.html", "model")],
+  },
+  "canon-t80": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1985, countryOfManufacture: "Japan", generation: "Canon T-series autofocus transition" },
+    sources: [source("T80", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film115.html", "model")],
+  },
+  "canon-t60": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1990, countryOfManufacture: "Japan", generation: "Canon T-series" },
+    sources: [source("T60", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film143.html", "model")],
+  },
+  "canon-eos-620": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1987, countryOfManufacture: "Japan", generation: "Canon EOS film SLR" },
+    sources: [source("EOS620", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film123.html", "model")],
+  },
+  "canon-al-1": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1982, countryOfManufacture: "Japan", generation: "Canon A-series focus-assist SLR" },
+    sources: [source("AL-1", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film106.html", "model")],
+  },
+  "canon-p": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1959, countryOfManufacture: "Japan", generation: "Canon screw-mount rangefinder" },
+    sources: [source("P (Populaire)", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film37.html", "model")],
+  },
+  "canonet-ql19": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1965, countryOfManufacture: "Japan", generation: "Canonet QL rangefinder" },
+    sources: [source("Canonet QL19", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film54.html", "model")],
+  },
+  "canonet-giii-19": {
+    provenance: { confidence: "verified", productStatus: "historical", introducedYear: 1972, countryOfManufacture: "Japan", generation: "Canonet G-III rangefinder" },
+    sources: [source("Canonet G-III 19", "Canon Camera Museum", "https://global.canon/en/c-museum/product/film85.html", "model")],
+  },
   "nikon-fm3a": {
     provenance: { confidence: "verified", productStatus: "historical", introducedYear: 2001, countryOfManufacture: "Japan", generation: "Nikon FM / FE hybrid lineage" },
     sources: [source("Nikon FM3A Camera Chronicle and major specifications", "Nikon", "https://imaging.nikon.com/imaging/information/chronicle/history-fm3a/", "model")],
