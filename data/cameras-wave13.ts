@@ -1,0 +1,60 @@
+import type { Camera } from "@/types";
+
+export const wave13Cameras: Camera[] = [
+  {
+    kind: "camera", slug: "canon-t80", name: "Canon T80", brand: "Canon",
+    releaseYear: 1985, cameraType: "SLR", filmFormat: "35mm", lensMount: "Canon FD / AC autofocus lenses",
+    shutter: "Vertical-travel electronic focal-plane shutter", shutterSpeed: "2s–1/1000s; manual B or 1/60s", metering: "TTL full-aperture SPC center-weighted averaging",
+    exposureModes: ["Program","Preset Aperture"], battery: "4× AAA", weight: "555 g", flashSync: "X-sync at 1/90s",
+    description: "Canon's transitional autofocus FD-system SLR, using dedicated AC lenses for CCD-based TTL autofocus while remaining compatible with manual-focus FD lenses.", descriptionTh: "SLR ช่วงเปลี่ยนผ่านสู่ระบบออโต้โฟกัสของ Canon ใช้เลนส์ AC สำหรับ AF แบบ CCD TTL และยังรองรับเลนส์ FD โฟกัสมือ",
+    image: { url: "https://commons.wikimedia.org/wiki/Special:FilePath/Canon%20T80%20top.jpg?width=1400", sourceName: "Wikimedia Commons", sourceUrl: "https://commons.wikimedia.org/wiki/File:Canon_T80_top.jpg", creator: "Mike Caine", license: "CC BY-SA 2.0", attributionRequired: true, alt: "Canon T80 film camera" },
+  },
+  {
+    kind: "camera", slug: "canon-t60", name: "Canon T60", brand: "Canon",
+    releaseYear: 1990, cameraType: "SLR", filmFormat: "35mm", lensMount: "Canon FD",
+    shutter: "Vertical-travel electronic metal focal-plane shutter", shutterSpeed: "Auto 8s–1/1000s; manual 1s–1/1000s + B", metering: "TTL full-aperture SPC center-weighted averaging",
+    exposureModes: ["Aperture Priority","Manual"], battery: "2× 1.5V G-13 cells", weight: "365 g with batteries", flashSync: "X-sync at 1/60s",
+    description: "A compact export-market FD-mount SLR offering aperture-priority AE and metered manual exposure with a vertical metal shutter.", descriptionTh: "SLR เมาท์ FD สำหรับตลาดส่งออก ขนาดกะทัดรัด รองรับ Aperture Priority และ Manual พร้อมมิเตอร์ ใช้ชัตเตอร์โลหะแนวตั้ง",
+    image: { url: "https://commons.wikimedia.org/wiki/Special:FilePath/Canon%20T60.jpg?width=1400", sourceName: "Wikimedia Commons", sourceUrl: "https://commons.wikimedia.org/wiki/File:Canon_T60.jpg", creator: "Javier M. de Lucas Cruz", license: "CC BY-SA 2.0", attributionRequired: true, alt: "Canon T60 film camera" },
+  },
+  {
+    kind: "camera", slug: "canon-eos-620", name: "Canon EOS 620", brand: "Canon",
+    releaseYear: 1987, cameraType: "SLR", filmFormat: "35mm", lensMount: "Canon EF",
+    shutter: "Vertical-travel electronic focal-plane shutter", shutterSpeed: "30s–1/4000s + B", metering: "TTL 6-zone evaluative or 6.5% partial SPC metering",
+    exposureModes: ["Program","Shutter Priority","Aperture Priority","Manual"], battery: "1× 2CR5 6V lithium", weight: "700 g", flashSync: "X-sync at 1/250s",
+    description: "An early high-end EOS autofocus film SLR with EF mount, 1/4000s top speed, 1/250s X-sync, evaluative metering and multiple exposure modes.", descriptionTh: "SLR ฟิล์มออโต้โฟกัส EOS ระดับสูงยุคแรก ใช้เมาท์ EF ชัตเตอร์เร็วสุด 1/4000 วินาที ซิงก์แฟลช 1/250 และวัดแสงแบบ Evaluative",
+    image: { url: "https://commons.wikimedia.org/wiki/Special:FilePath/Canon%20EOS%20620%20kit.jpg?width=1400", sourceName: "Wikimedia Commons", sourceUrl: "https://commons.wikimedia.org/wiki/File:Canon_EOS_620_kit.jpg", creator: "zoolpsu", license: "CC BY 2.0", attributionRequired: true, alt: "Canon EOS 620 film camera" },
+  },
+  {
+    kind: "camera", slug: "canon-al-1", name: "Canon AL-1", brand: "Canon",
+    releaseYear: 1982, cameraType: "SLR", filmFormat: "35mm", lensMount: "Canon FD",
+    shutter: "Electronically controlled horizontal-travel cloth focal-plane shutter", shutterSpeed: "Auto 2s–1/1000s; manual 1/15s–1/1000s + B", metering: "TTL full-aperture SPC center-weighted averaging",
+    exposureModes: ["Aperture Priority","Manual"], battery: "2× 1.5V cells", weight: "490 g", flashSync: "X-sync via hot shoe/German socket",
+    description: "An FD-mount aperture-priority SLR distinguished by Canon's CCD electronic focus-assist system for manual-focus lenses.", descriptionTh: "SLR เมาท์ FD แบบ Aperture Priority ที่เด่นด้วยระบบช่วยโฟกัสอิเล็กทรอนิกส์ CCD สำหรับเลนส์โฟกัสมือ",
+    image: { url: "https://commons.wikimedia.org/wiki/Special:FilePath/Canon%20AL-1%20film%20camera.jpg?width=1400", sourceName: "Wikimedia Commons", sourceUrl: "https://commons.wikimedia.org/wiki/File:Canon_AL-1_film_camera.jpg", creator: "Riverguardian", license: "CC BY-SA 4.0", attributionRequired: true, alt: "Canon AL-1 film camera" },
+  },
+  {
+    kind: "camera", slug: "canon-p", name: "Canon P (Populaire)", brand: "Canon",
+    releaseYear: 1959, cameraType: "Rangefinder", filmFormat: "35mm", lensMount: "Canon threaded rangefinder mount",
+    shutter: "Horizontal-travel metal focal-plane shutter", shutterSpeed: "X, B, 1s–1/1000s", metering: "No built-in meter; optional Canon selenium meter",
+    exposureModes: ["Manual"], battery: "None required for camera body", weight: "790 g with 50mm f/2.8", flashSync: "FP/X sync; X-sync 1/55s",
+    description: "A streamlined Canon screw-mount rangefinder with a 1x bright-line finder for 35mm, 50mm and 100mm lenses and a metal focal-plane shutter.", descriptionTh: "เรนจ์ไฟน์เดอร์เมาท์เกลียวของ Canon ที่เรียบง่าย ใช้ช่องมองภาพ 1x พร้อมกรอบ 35/50/100mm และชัตเตอร์ม่านโลหะ",
+    image: { url: "https://commons.wikimedia.org/wiki/Special:FilePath/CANON-P.JPG?width=1400", sourceName: "Wikimedia Commons", sourceUrl: "https://commons.wikimedia.org/wiki/File:CANON-P.JPG", creator: "Eastwind41", license: "Copyrighted free use", attributionRequired: false, alt: "Canon P (Populaire) film camera" },
+  },
+  {
+    kind: "camera", slug: "canonet-ql19", name: "Canonet QL19", brand: "Canon",
+    releaseYear: 1965, cameraType: "Rangefinder", filmFormat: "35mm", lensMount: "Fixed Canon SE 45mm f/1.9",
+    shutter: "Copal SV lens shutter", shutterSpeed: "B, 1s–1/500s", metering: "CdS shutter-priority EE metering",
+    exposureModes: ["Shutter Priority","Manual"], battery: "1× 1.3V MP mercury cell", weight: "800 g", flashSync: "M/X switchable sync via German socket",
+    description: "A Quick Loading Canonet rangefinder with a 45mm f/1.9 lens, shutter-priority automatic exposure and full manual override.", descriptionTh: "เรนจ์ไฟน์เดอร์ Canonet ระบบ Quick Loading พร้อมเลนส์ 45mm f/1.9 ระบบ Shutter Priority อัตโนมัติ และ Manual เต็มรูปแบบ",
+    image: { url: "https://commons.wikimedia.org/wiki/Special:FilePath/Canonet%20QL19.jpg?width=1400", sourceName: "Wikimedia Commons", sourceUrl: "https://commons.wikimedia.org/wiki/File:Canonet_QL19.jpg", creator: "E Magnuson", license: "CC BY 2.0", attributionRequired: true, alt: "Canonet QL19 film camera" },
+  },
+  {
+    kind: "camera", slug: "canonet-giii-19", name: "Canonet G-III 19", brand: "Canon",
+    releaseYear: 1972, cameraType: "Rangefinder", filmFormat: "35mm", lensMount: "Fixed 45mm f/1.9",
+    shutter: "Copal lens shutter", shutterSpeed: "B, 1/4s–1/500s", metering: "CdS shutter-priority EE metering",
+    exposureModes: ["Shutter Priority","Manual"], battery: "1× 1.3V H-D mercury cell", weight: "620 g", flashSync: "X-sync via hot shoe and German socket",
+    description: "A compact G-III Canonet rangefinder using a 45mm f/1.9 lens, shutter-priority EE and manual exposure in a smaller body than the earlier QL19.", descriptionTh: "เรนจ์ไฟน์เดอร์ Canonet G-III ขนาดกะทัดรัด ใช้เลนส์ 45mm f/1.9 ระบบ Shutter Priority EE และ Manual ในบอดี้ที่เล็กกว่ารุ่น QL19 ก่อนหน้า",
+    image: { url: "https://commons.wikimedia.org/wiki/Special:FilePath/Canon%20Canonet%20QL19%20GIII%20(7036983939).jpg?width=1400", sourceName: "Wikimedia Commons", sourceUrl: "https://commons.wikimedia.org/wiki/File:Canon_Canonet_QL19_GIII_(7036983939).jpg", creator: "Michele M. F.", license: "CC BY-SA 2.0", attributionRequired: true, alt: "Canonet G-III 19 film camera" },
+  },
+];
