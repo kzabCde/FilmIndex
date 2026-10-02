@@ -32,6 +32,11 @@ import { extraTechniques } from "@/data/techniques-extra";
 import { techniqueGuides } from "@/data/technique-guides";
 import { lenses as baseLenses } from "@/data/lenses";
 import { wave8Lenses } from "@/data/lenses-wave8";
+import { wave9Lenses } from "@/data/lenses-wave9";
+import { wave10Lenses } from "@/data/lenses-wave10";
+import { wave11Lenses } from "@/data/lenses-wave11";
+import { wave12Lenses } from "@/data/lenses-wave12";
+import { wave13Lenses } from "@/data/lenses-wave13";
 import { lensImages } from "@/data/lens-images";
 import { withProvenance } from "@/data/catalog-provenance";
 import { normalizeCameraType, COMPACT_CAMERA_TYPE } from "@/lib/camera-types";
@@ -83,7 +88,7 @@ export const cameras = rawCameras.map((camera) => withProvenance({
 
 export const techniques = [...baseTechniques, ...extraTechniques];
 
-const rawLenses = [...baseLenses, ...wave8Lenses];
+const rawLenses = [...baseLenses, ...wave8Lenses, ...wave9Lenses, ...wave10Lenses, ...wave11Lenses, ...wave12Lenses, ...wave13Lenses];
 const lensFallbackSlugByMount = new Map<string, string>();
 for (const lens of baseLenses) {
   if (lensImages[lens.slug] && !lensFallbackSlugByMount.has(lens.mount)) {
@@ -120,7 +125,7 @@ export const catalogQualityStats = {
   total: qualityRecords.length,
 } as const;
 
-const minimums = { films: 105, cameras: 135, lenses: 100, techniques: 15 } as const;
+const minimums = { films: 105, cameras: 135, lenses: 150, techniques: 15 } as const;
 for (const key of Object.keys(minimums) as Array<keyof typeof minimums>) {
   if (catalogStats[key] < minimums[key]) {
     throw new Error(`FilmIndex catalog regression: ${key} has ${catalogStats[key]} entries; catalog expansion requires at least ${minimums[key]}.`);
