@@ -1,0 +1,68 @@
+import type { Camera } from "@/types";
+
+export const wave12Cameras: Camera[] = [
+  {
+    kind: "camera", slug: "canon-ae-1", name: "Canon AE-1", brand: "Canon",
+    releaseYear: 1976, cameraType: "SLR", filmFormat: "35mm", lensMount: "Canon FD",
+    shutter: "Electronically controlled horizontal-travel cloth focal-plane shutter", shutterSpeed: "B, 2s–1/1000s", metering: "TTL full-aperture SPC center-weighted averaging; stopped-down manual metering",
+    exposureModes: ["Shutter Priority","Manual"], battery: "1× 4LR44 alkaline or 4G-13 6V", weight: "590 g", flashSync: "X-sync via hot shoe/German socket",
+    description: "Canon's landmark microprocessor-controlled A-series SLR with FD mount, shutter-priority auto exposure, TTL metering, and manual exposure support.", descriptionTh: "SLR ตระกูล A รุ่นสำคัญของ Canon ใช้เมาท์ FD ระบบ Shutter Priority อัตโนมัติ วัดแสง TTL และรองรับการถ่ายแบบ Manual",
+    image: { url: "https://commons.wikimedia.org/wiki/Special:FilePath/Canon%20AE-1%20front.jpg?width=1400", sourceName: "Wikimedia Commons", sourceUrl: "https://commons.wikimedia.org/wiki/File:Canon_AE-1_front.jpg", creator: "Cburnett", license: "CC BY-SA 3.0", attributionRequired: true, alt: "Canon AE-1 film camera" },
+  },
+  {
+    kind: "camera", slug: "canon-a-1", name: "Canon A-1", brand: "Canon",
+    releaseYear: 1978, cameraType: "SLR", filmFormat: "35mm", lensMount: "Canon FD",
+    shutter: "Electronically controlled horizontal-travel cloth focal-plane shutter", shutterSpeed: "30s–1/1000s + B", metering: "TTL full-aperture SPC center-weighted averaging",
+    exposureModes: ["Program","Shutter Priority","Aperture Priority","Manual"], battery: "1× 4LR44 alkaline or 4G-13 6V", weight: "620 g", flashSync: "X-sync via hot shoe/German socket",
+    description: "Canon's top A-series electronic SLR, combining program, shutter-priority, aperture-priority and manual exposure in one FD-mount body.", descriptionTh: "SLR อิเล็กทรอนิกส์ระดับสูงของตระกูล A รวม Program, Shutter Priority, Aperture Priority และ Manual ไว้ในบอดี้เมาท์ FD",
+    image: { url: "https://commons.wikimedia.org/wiki/Special:FilePath/Canon%20A-1.jpg?width=1400", sourceName: "Wikimedia Commons", sourceUrl: "https://commons.wikimedia.org/wiki/File:Canon_A-1.jpg", creator: "Mark Probst", license: "CC BY-SA 2.0", attributionRequired: true, alt: "Canon A-1 film camera" },
+  },
+  {
+    kind: "camera", slug: "canon-at-1", name: "Canon AT-1", brand: "Canon",
+    releaseYear: 1976, cameraType: "SLR", filmFormat: "35mm", lensMount: "Canon FD",
+    shutter: "Electronically controlled horizontal-travel cloth focal-plane shutter", shutterSpeed: "X, B, 2s–1/1000s", metering: "TTL full-aperture CdS center-weighted match-needle metering",
+    exposureModes: ["Manual"], battery: "1× 4LR44 alkaline or 4G-13 6V", weight: "590 g", flashSync: "X-sync via hot shoe/German socket",
+    description: "A manual-exposure A-series SLR derived from the AE-1 body, with FD mount and TTL center-weighted match-needle metering.", descriptionTh: "SLR แมนนวลตระกูล A ที่ใช้พื้นฐานบอดี้ AE-1 พร้อมเมาท์ FD และมิเตอร์ TTL แบบเข็มจับคู่กลางภาพ",
+    image: { url: "https://commons.wikimedia.org/wiki/Special:FilePath/Canon%20At-1.JPG?width=1400", sourceName: "Wikimedia Commons", sourceUrl: "https://commons.wikimedia.org/wiki/File:Canon_At-1.JPG", creator: "Calivara", license: "CC BY-SA 3.0", attributionRequired: true, alt: "Canon AT-1 film camera" },
+  },
+  {
+    kind: "camera", slug: "canon-ef-1973", name: "Canon EF", brand: "Canon",
+    releaseYear: 1973, cameraType: "SLR", filmFormat: "35mm", lensMount: "Canon FD",
+    shutter: "Hybrid Copal Square focal-plane shutter; mechanical fast speeds and electronic slow speeds", shutterSpeed: "30s–1/1000s + B; X 1/125s", metering: "TTL full-aperture SPC center-weighted averaging",
+    exposureModes: ["Shutter Priority","Manual"], battery: "2× 1.3V HD mercury cells", weight: "760 g", flashSync: "X-sync at 1/125s via hot shoe/German socket",
+    description: "A hybrid electronic-mechanical FD-mount SLR with shutter-priority AE and a Copal Square shutter that retains mechanical operation at faster speeds.", descriptionTh: "SLR เมาท์ FD แบบไฮบริดอิเล็กทรอนิกส์และกลไก มี Shutter Priority AE และชัตเตอร์ Copal Square ที่ยังทำงานแบบกลไกในสปีดสูง",
+    image: { url: "https://commons.wikimedia.org/wiki/Special:FilePath/Canon%20EF.jpg?width=1400", sourceName: "Wikimedia Commons", sourceUrl: "https://commons.wikimedia.org/wiki/File:Canon_EF.jpg", creator: "RRT877", license: "CC0 1.0", attributionRequired: false, alt: "Canon EF film camera" },
+  },
+  {
+    kind: "camera", slug: "canon-ft-ql", name: "Canon FT QL", brand: "Canon",
+    releaseYear: 1966, cameraType: "SLR", filmFormat: "35mm", lensMount: "Canon FL",
+    shutter: "Horizontal-travel cloth focal-plane shutter", shutterSpeed: "T, X, 1s–1/1000s", metering: "TTL stopped-down CdS 12% central partial match-needle metering",
+    exposureModes: ["Manual"], battery: "1× 1.3V MD mercury cell", weight: "1,095 g with FL 58mm f/1.2", flashSync: "FP/X sync via German socket",
+    description: "An FL-mount manual SLR with Quick Loading, quick-return mirror and stop-down TTL partial metering through a beam-splitting condenser system.", descriptionTh: "SLR แมนนวลเมาท์ FL พร้อมระบบ Quick Loading กระจกสะท้อนกลับเร็ว และมิเตอร์ TTL แบบหรี่รูรับแสงวัดพื้นที่กลางภาพ",
+    image: { url: "https://commons.wikimedia.org/wiki/Special:FilePath/Canon%20FT-QL.jpg?width=1400", sourceName: "Wikimedia Commons", sourceUrl: "https://commons.wikimedia.org/wiki/File:Canon_FT-QL.jpg", creator: "pointnshoot", license: "CC BY 2.0", attributionRequired: true, alt: "Canon FT QL film camera" },
+  },
+  {
+    kind: "camera", slug: "canon-tlb", name: "Canon TLb", brand: "Canon",
+    releaseYear: 1976, cameraType: "SLR", filmFormat: "35mm", lensMount: "Canon FD",
+    shutter: "Horizontal-travel cloth focal-plane shutter", shutterSpeed: "X, B, 1s–1/500s", metering: "TTL full-aperture CdS center-weighted match-needle metering",
+    exposureModes: ["Manual"], battery: "1× 1.35V HD mercury cell", weight: "680 g", flashSync: "X-sync through PC terminal on overseas TLb specification",
+    description: "A simplified FD-mount manual SLR related to the FTb/TX family, retaining TTL center-weighted metering while reducing features for lower cost.", descriptionTh: "SLR แมนนวลเมาท์ FD รุ่นประหยัดในสาย FTb/TX ยังคงมิเตอร์ TTL เฉลี่ยเน้นกลาง แต่ตัดฟังก์ชันบางส่วนเพื่อลดราคา",
+    image: { url: "https://commons.wikimedia.org/wiki/Special:FilePath/Canon%20TLb%20front.jpg?width=1400", sourceName: "Wikimedia Commons", sourceUrl: "https://commons.wikimedia.org/wiki/File:Canon_TLb_front.jpg", creator: "TaitaFkm", license: "CC BY-SA 3.0", attributionRequired: true, alt: "Canon TLb film camera" },
+  },
+  {
+    kind: "camera", slug: "canon-t50", name: "Canon T50", brand: "Canon",
+    releaseYear: 1983, cameraType: "SLR", filmFormat: "35mm", lensMount: "Canon FD",
+    shutter: "Vertical-travel electronic focal-plane shutter", shutterSpeed: "Program 2s–1/1000s; manual 1/60s", metering: "TTL full-aperture SPC center-weighted averaging",
+    exposureModes: ["Program"], battery: "2× AA", weight: "490 g", flashSync: "X-sync at 1/60s",
+    description: "An FD-mount program-auto SLR with built-in motorized film advance, simplified controls and full-aperture TTL metering.", descriptionTh: "SLR เมาท์ FD แบบ Program Auto พร้อมมอเตอร์เดินฟิล์มในตัว การควบคุมเรียบง่าย และวัดแสง TTL แบบเปิดรูรับแสงเต็ม",
+    image: { url: "https://commons.wikimedia.org/wiki/Special:FilePath/Canon%20T50.jpg?width=1400", sourceName: "Wikimedia Commons", sourceUrl: "https://commons.wikimedia.org/wiki/File:Canon_T50.jpg", creator: "Ben Eenhoorn", license: "CC BY 2.0", attributionRequired: true, alt: "Canon T50 film camera" },
+  },
+  {
+    kind: "camera", slug: "canon-t70", name: "Canon T70", brand: "Canon",
+    releaseYear: 1984, cameraType: "SLR", filmFormat: "35mm", lensMount: "Canon FD",
+    shutter: "Vertical-travel electronic focal-plane shutter", shutterSpeed: "2s–1/1000s + B", metering: "TTL full-aperture composite SPC; center-weighted or partial",
+    exposureModes: ["Program","Shutter Priority","Manual"], battery: "2× AA", weight: "580 g with batteries", flashSync: "X-sync at 1/90s",
+    description: "A motorized FD-mount SLR with multi-program AE, shutter-priority AE, partial metering option, LCD controls and powered rewind.", descriptionTh: "SLR เมาท์ FD พร้อมมอเตอร์ มี Multi-Program AE, Shutter Priority, ตัวเลือกวัดแสงบางส่วน จอ LCD และกรอฟิล์มด้วยมอเตอร์",
+    image: { url: "https://commons.wikimedia.org/wiki/Special:FilePath/Canon%20t70.jpg?width=1400", sourceName: "Wikimedia Commons", sourceUrl: "https://commons.wikimedia.org/wiki/File:Canon_t70.jpg", creator: "Astrocog", license: "CC BY-SA 3.0", attributionRequired: true, alt: "Canon T70 film camera" },
+  },
+];
